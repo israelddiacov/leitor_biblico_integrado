@@ -1,0 +1,1110 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Timeline Histórica Bíblica Comparada: Adão a Cristo, Concílios, Impérios & Mitos</title>
+  
+  <!-- Vis-Timeline -->
+  <script type="text/javascript" src="https://unpkg.com/vis-timeline@latest/standalone/umd/vis-timeline-graph2d.min.js"></script>
+  <link href="https://unpkg.com/vis-timeline@latest/styles/vis-timeline-graph2d.min.css" rel="stylesheet" type="text/css" />
+
+  <!-- Google Fonts: Inter & JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg-main: #060911;
+      --bg-surface: #0b1120;
+      --bg-card: #131c31;
+      --bg-card-hover: #1c2844;
+      --border-color: #233252;
+      --border-highlight: #38bdf8;
+      --text-primary: #f8fafc;
+      --text-secondary: #94a3b8;
+      --text-muted: #64748b;
+      
+      --color-secular: #0284c7;
+      --color-biblico: #d97706;
+      --color-mitologia: #7c3aed;
+      --color-canon: #059669;
+      --color-accent: #38bdf8;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: var(--bg-main);
+      color: var(--text-primary);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow-x: hidden;
+    }
+
+    /* HEADER INTEGRADO */
+    header {
+      background: linear-gradient(180deg, #0d1527 0%, #060911 100%);
+      border-bottom: 1px solid var(--border-color);
+      padding: 10px 18px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .brand-tag {
+      background: rgba(56, 189, 248, 0.12);
+      color: #38bdf8;
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      padding: 3px 8px;
+      border-radius: 12px;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+
+    .brand h1 {
+      font-family: 'Cinzel', serif;
+      font-size: 16px;
+      font-weight: 700;
+      letter-spacing: 0.4px;
+      background: linear-gradient(90deg, #38bdf8, #818cf8, #fbbf24);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin: 0;
+    }
+
+    .brand p {
+      font-size: 11px;
+      color: var(--text-secondary);
+      margin: 0;
+    }
+
+    .header-stats {
+      display: flex;
+      gap: 6px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .stat-badge {
+      background: rgba(19, 28, 49, 0.7);
+      border: 1px solid var(--border-color);
+      border-radius: 14px;
+      padding: 3px 8px;
+      font-size: 10.5px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      color: var(--text-secondary);
+    }
+
+    .stat-badge b {
+      color: var(--color-accent);
+    }
+
+    /* TOOLBAR COM MENUS DROPDOWN MODERNOS */
+    .controls-bar {
+      background: var(--bg-surface);
+      border-bottom: 1px solid var(--border-color);
+      padding: 8px 20px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .dropdown-container {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .control-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .control-label {
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: var(--text-muted);
+      white-space: nowrap;
+    }
+
+    .modern-select {
+      background: #131c31;
+      border: 1px solid var(--border-color);
+      color: var(--text-primary);
+      padding: 6px 10px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-family: inherit;
+      outline: none;
+      cursor: pointer;
+      transition: all 0.2s;
+      min-width: 170px;
+    }
+
+    .modern-select:hover {
+      border-color: var(--border-highlight);
+      background: #1a2642;
+    }
+
+    .modern-select:focus {
+      border-color: var(--color-accent);
+      box-shadow: 0 0 0 2px rgba(56, 189, 248, 0.2);
+    }
+
+    .btn-toggle-labels {
+      background: #131c31;
+      border: 1px solid var(--border-color);
+      color: var(--text-secondary);
+      padding: 6px 10px;
+      border-radius: 6px;
+      font-size: 11.5px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      transition: all 0.2s;
+    }
+
+    .btn-toggle-labels:hover {
+      background: #1a2642;
+      color: var(--text-primary);
+      border-color: var(--border-highlight);
+    }
+
+    .search-input {
+      background: #131c31;
+      border: 1px solid var(--border-color);
+      color: var(--text-primary);
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-size: 12px;
+      width: 210px;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .search-input:focus {
+      border-color: var(--color-accent);
+      box-shadow: 0 0 0 2px rgba(56, 189, 248, 0.2);
+    }
+
+    /* MARCADOR SINCRONIZADOR DE ÉPOCA */
+    .epoch-scrubber-bar {
+      background: linear-gradient(90deg, #090e1a 0%, #1e1b4b 50%, #090e1a 100%);
+      border-bottom: 1px solid #3730a3;
+      padding: 6px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .scrubber-indicator {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .scrubber-title {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+      color: #a5b4fc;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .scrubber-year {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 14px;
+      font-weight: 700;
+      color: #38bdf8;
+      background: rgba(0,0,0,0.5);
+      padding: 2px 8px;
+      border-radius: 5px;
+      border: 1px solid #38bdf8;
+    }
+
+    .epoch-summary-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+      flex: 1;
+      max-width: 900px;
+    }
+
+    .epoch-track-pill {
+      background: rgba(11, 17, 32, 0.85);
+      border: 1px solid var(--border-color);
+      border-radius: 5px;
+      padding: 3px 7px;
+      font-size: 10.5px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .epoch-track-pill span {
+      color: var(--text-muted);
+      font-size: 9px;
+      font-weight: 700;
+      display: block;
+    }
+
+    /* MAIN APP BODY */
+    .app-body {
+      display: flex;
+      flex: 1;
+      height: calc(100vh - 195px);
+      min-height: 520px;
+      position: relative;
+    }
+
+    #timeline-container {
+      flex: 1;
+      height: 100%;
+      background: #060911;
+      border-right: 1px solid var(--border-color);
+      position: relative;
+    }
+
+    /* VIS-TIMELINE OVERRIDES: RÓTULOS ENCOLHIDOS E FONTE REFINADA */
+    .vis-timeline {
+      border: none !important;
+      font-family: 'Inter', sans-serif !important;
+    }
+
+    .vis-panel.vis-center, .vis-panel.vis-left, .vis-panel.vis-right, .vis-panel.vis-top, .vis-panel.vis-bottom {
+      border-color: var(--border-color) !important;
+    }
+
+    /* RÓTULOS LATERAIS DOS EIXOS: CARDS REFINADOS E ELEGANTES */
+    .vis-panel.vis-left {
+    /* RÓTULOS LATERAIS DOS EIXOS: SEM ÍCONES, COR SINCRONIZADOR DE ÉPOCA (#a5b4fc) */
+    .vis-panel.vis-left {
+      width: 180px !important;
+      min-width: 180px !important;
+      max-width: 180px !important;
+      transition: width 0.25s ease;
+    }
+
+    .vis-labelset .vis-label {
+      background: #0b1120 !important;
+      border-bottom: 1px solid var(--border-color) !important;
+      border-right: 1px solid var(--border-color) !important;
+      padding: 6px 10px !important;
+      display: flex !important;
+      align-items: center !important;
+      width: 180px !important;
+      min-width: 180px !important;
+      max-width: 180px !important;
+      box-sizing: border-box !important;
+      transition: width 0.25s ease;
+    }
+
+    .eixo-card {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      width: 100%;
+      box-sizing: border-box;
+    }
+
+    .eixo-bar {
+      width: 4px;
+      height: 28px;
+      border-radius: 2px;
+      flex-shrink: 0;
+      box-shadow: 0 0 8px var(--eixo-cor);
+    }
+
+    .eixo-textos {
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+      overflow: hidden;
+    }
+
+    .eixo-titulo {
+      font-family: 'Inter', sans-serif;
+      font-size: 12px;
+      font-weight: 700;
+      color: #a5b4fc !important; /* Mesma cor do texto 'Sincronizador de Época' */
+      letter-spacing: 0.3px;
+      line-height: 1.3;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .eixo-subtitulo {
+      font-size: 9.5px;
+      font-weight: 500;
+      color: #94a3b8;
+      line-height: 1.2;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      margin-top: 2px;
+    }
+
+    /* MODO ULTRA COMPACTO */
+    body.labels-ultra-compact .vis-panel.vis-left,
+    body.labels-ultra-compact .vis-labelset .vis-label {
+      width: 36px !important;
+      min-width: 36px !important;
+      max-width: 36px !important;
+      padding: 4px 2px !important;
+    }
+
+    body.labels-ultra-compact .eixo-card {
+      justify-content: center;
+      padding: 0;
+    }
+
+    body.labels-ultra-compact .eixo-textos {
+      display: none !important;
+    }
+
+    body.labels-ultra-compact .eixo-bar {
+      width: 5px;
+      height: 30px;
+    }
+
+    .vis-time-axis .vis-text {
+      color: #94a3b8 !important;
+      font-family: 'JetBrains Mono', monospace !important;
+      font-size: 10.5px !important;
+    }
+
+    /* MARCADOR SINCRONIZADOR DE ÉPOCA (ARRASTÁVEL) */
+    .vis-custom-time.marcador-epoca {
+      background-color: #f43f5e !important;
+      width: 2px !important;
+      cursor: ew-resize !important;
+      z-index: 100 !important;
+    }
+
+    .vis-custom-time.marcador-epoca:after {
+      content: '📍 Época';
+      position: absolute;
+      top: 0;
+      left: 4px;
+      background: #f43f5e;
+      color: #fff;
+      font-size: 9px;
+      font-weight: 700;
+      padding: 1px 4px;
+      border-radius: 3px;
+      white-space: nowrap;
+    }
+
+    /* MARCADOR DO DILÚVIO: LINHA AZUL CLARA DE ALTO A BAIXO */
+    .vis-custom-time.marcador-diluvio {
+      background-color: #38bdf8 !important; /* Azul claro */
+      width: 2.5px !important;
+      z-index: 95 !important;
+      box-shadow: 0 0 10px rgba(56, 189, 248, 0.8) !important;
+      pointer-events: none;
+    }
+
+    .vis-custom-time.marcador-diluvio:after {
+      content: '🌊 O DILÚVIO (2348 a.C.)';
+      position: absolute;
+      top: 2px;
+      left: 4px;
+      background: linear-gradient(135deg, #0284c7, #0369a1);
+      color: #f0f9ff;
+      border: 1px solid #38bdf8;
+      font-size: 9.5px;
+      font-weight: 700;
+      padding: 2px 7px;
+      border-radius: 4px;
+      white-space: nowrap;
+      pointer-events: none;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.6);
+    }
+      pointer-events: none;
+    }
+
+    /* TEXTOS QUE CABEM DENTRO DAS BARRAS */
+    .vis-item {
+      border-radius: 4px !important;
+      font-size: 11px !important;
+      color: #ffffff !important;
+      cursor: pointer !important;
+      min-width: 18px !important;
+      height: 23px !important;
+      display: flex !important;
+      align-items: center !important;
+      transition: transform 0.1s ease, box-shadow 0.1s ease !important;
+    }
+
+    .vis-item .vis-item-content {
+      padding: 1px 5px !important;
+      font-size: 10.5px !important;
+      font-weight: 500 !important;
+      letter-spacing: 0.1px !important;
+      line-height: 18px !important;
+      white-space: nowrap !important;
+      overflow: hidden !important;
+      text-overflow: ellipsis !important;
+    }
+
+    .vis-item:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.7) !important;
+      z-index: 50 !important;
+    }
+
+    .vis-item:hover .vis-item-content {
+      overflow: visible !important;
+    }
+
+    .vis-item.vis-selected {
+      border-color: #38bdf8 !important;
+      box-shadow: 0 0 0 2px #38bdf8, 0 6px 18px rgba(56, 189, 248, 0.4) !important;
+    }
+
+    /* Categorias */
+    .cat-antediluviano { background: linear-gradient(135deg, #065f46 0%, #047857 100%) !important; border: 1px solid #34d399 !important; }
+    .cat-patriarca { background: linear-gradient(135deg, #b45309 0%, #d97706 100%) !important; border: 1px solid #fbbf24 !important; }
+    .cat-juiz { background: linear-gradient(135deg, #1d4ed8 0%, #2563eb 100%) !important; border: 1px solid #60a5fa !important; }
+    .cat-rei_israel, .cat-rei_juda { background: linear-gradient(135deg, #854d0e 0%, #a16207 100%) !important; border: 1px solid #fde047 !important; }
+    .cat-profeta { background: linear-gradient(135deg, #be123c 0%, #e11d48 100%) !important; border: 1px solid #fda4af !important; }
+    .item-secular { background: linear-gradient(135deg, #0369a1 0%, #0284c7 100%) !important; border: 1px solid #38bdf8 !important; }
+    .item-mitologia { background: linear-gradient(135deg, #6d28d9 0%, #7c3aed 100%) !important; border: 1px solid #c084fc !important; }
+    .cat-concilio { background: linear-gradient(135deg, #047857 0%, #10b981 100%) !important; border: 2px solid #6ee7b7 !important; font-weight: 700 !important; }
+    .item-livro-bloco { background: #131c31 !important; border: 1px dashed #64748b !important; }
+
+    /* Status Canônico */
+    .status-canonico-destaque { border: 2px solid #10b981 !important; box-shadow: 0 0 8px rgba(16, 185, 129, 0.4) !important; }
+    .status-deuterocanonico-destaque { border: 2px solid #8b5cf6 !important; box-shadow: 0 0 8px rgba(139, 92, 246, 0.4) !important; }
+    .status-apocrifo-destaque { border: 1px dashed #f59e0b !important; opacity: 0.75 !important; }
+    .status-rejeitado-destaque { border: 1px solid #ef4444 !important; opacity: 0.3 !important; filter: grayscale(80%) !important; }
+
+    /* SIDEBAR DRAWER */
+    .sidebar-drawer {
+      width: 420px;
+      background: var(--bg-surface);
+      display: flex;
+      flex-direction: column;
+      overflow-y: auto;
+      border-left: 1px solid var(--border-color);
+    }
+
+    .drawer-header {
+      padding: 14px 18px;
+      background: #0d1527;
+      border-bottom: 1px solid var(--border-color);
+      position: sticky;
+      top: 0;
+      z-index: 20;
+    }
+
+    .drawer-header h2 {
+      font-size: 14.5px;
+      font-weight: 700;
+      color: var(--text-primary);
+    }
+
+    .drawer-body {
+      padding: 16px 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      font-size: 12.5px;
+      line-height: 1.55;
+      color: #cbd5e1;
+    }
+
+    .detail-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 7px;
+      padding: 12px 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+    }
+
+    .card-title {
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      color: var(--color-accent);
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 2px 7px;
+      border-radius: 4px;
+      font-size: 10px;
+      font-weight: 600;
+    }
+
+    .badge-secular { background: rgba(2, 132, 199, 0.2); color: #38bdf8; border: 1px solid #0284c7; }
+    .badge-biblico { background: rgba(217, 119, 6, 0.2); color: #fbbf24; border: 1px solid #d97706; }
+    .badge-mitologia { background: rgba(124, 58, 237, 0.2); color: #c084fc; border: 1px solid #7c3aed; }
+    .badge-canon { background: rgba(5, 150, 105, 0.2); color: #34d399; border: 1px solid #059669; }
+
+    .wiki-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      background: #131c31;
+      color: #38bdf8;
+      border: 1px solid #38bdf8;
+      border-radius: 6px;
+      padding: 7px 12px;
+      font-size: 11.5px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.2s;
+      margin-top: 4px;
+    }
+
+    .wiki-btn:hover {
+      background: #38bdf8;
+      color: #060911;
+    }
+
+    .canon-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 11px;
+      margin-top: 4px;
+    }
+
+    .canon-table th, .canon-table td {
+      padding: 5px 7px;
+      text-align: left;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .canon-table th {
+      color: var(--text-muted);
+      font-weight: 600;
+      background: rgba(11, 17, 32, 0.6);
+    }
+
+    .status-pill {
+      display: inline-block;
+      padding: 2px 5px;
+      border-radius: 4px;
+      font-size: 9px;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+
+    .status-CANONICO { background: #064e3b; color: #6ee7b7; border: 1px solid #059669; }
+    .status-DEUTEROCANONICO { background: #4c1d95; color: #c4b5fd; border: 1px solid #7c3aed; }
+    .status-ANAGINOSKOMENA { background: #1e1b4b; color: #a5b4fc; border: 1px solid #6366f1; }
+    .status-APOCRIFO { background: #78350f; color: #fcd34d; border: 1px solid #d97706; }
+    .status-REJEITADO { background: #450a0a; color: #fca5a5; border: 1px solid #dc2626; }
+
+    footer {
+      background: #060911;
+      border-top: 1px solid var(--border-color);
+      padding: 6px 20px;
+      font-size: 10.5px;
+      color: var(--text-muted);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    @media (max-width: 1024px) {
+      .epoch-summary-grid { display: none; }
+      .app-body { flex-direction: column; height: auto; }
+      #timeline-container { height: 480px; }
+      .sidebar-drawer { width: 100%; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER INTEGRADO -->
+  <header>
+    <div class="brand">
+      <span class="brand-tag">Sincronismo Histórico</span>
+      <h1>Linha do Tempo Comparada de 4 Eixos</h1>
+      <p>4004 a.C. a 1546 d.C. • 112 Registros Conectados</p>
+    </div>
+    <div class="header-stats">
+      <div class="stat-badge">🌱 <b>Adão a Noé</b></div>
+      <div class="stat-badge">⛺ <b>Patriarcas</b></div>
+      <div class="stat-badge">⚖️ <b>Juízes</b></div>
+      <div class="stat-badge">👑 <b>Reis</b></div>
+      <div class="stat-badge">🔥 <b>Profetas</b></div>
+      <div class="stat-badge">⛪ <b>Cânon & Concílios</b></div>
+    </div>
+  </header>
+
+  <!-- TOOLBAR COM MENUS DROPDOWN (SUBSTITUINDO CHIPS E BOTÕES EXCESSIVOS) -->
+  <div class="controls-bar">
+    <div class="dropdown-container">
+      
+      <!-- 1. Dropdown de Filtro Temático -->
+      <div class="control-item">
+        <label for="select-categoria" class="control-label">🏷️ Categoria:</label>
+        <select id="select-categoria" class="modern-select" onchange="filtrarCategoria(this.value)">
+          <option value="TODOS">🌐 Todos os Registros (112)</option>
+          <option value="antediluviano">🌱 Antediluvianos (Adão a Noé)</option>
+          <option value="patriarca">⛺ Grandes Patriarcas (Abraão a Josué)</option>
+          <option value="juiz">⚖️ Juízes de Israel (Otniel a Samuel)</option>
+          <option value="rei">👑 Reis de Israel & Judá</option>
+          <option value="profeta">🔥 Profetas (Elias a João Batista)</option>
+          <option value="imperio">🏛️ Grandes Impérios Seculares</option>
+          <option value="mito">🏺 Mitologias & Cosmogonias</option>
+          <option value="concilio">⛪ Concílios & Sínodos</option>
+          <option value="livro">📖 Livros Bíblicos & Cânon</option>
+        </select>
+      </div>
+
+      <!-- 2. Dropdown de Salto Rápido de Época -->
+      <div class="control-item">
+        <label for="select-salto" class="control-label">⚡ Salto Histórico:</label>
+        <select id="select-salto" class="modern-select" onchange="if(this.value) executarSalto(this.value)">
+          <option value="">🎯 Pular para uma Época...</option>
+          <option value="-4004,600">🌱 4004 a.C. — Adão & Eva (Origens)</option>
+          <option value="-2348,400">🌊 2348 a.C. — O Grande Dilúvio & Noé</option>
+          <option value="-2066,350">⛺ 2066 a.C. — Era Patriarcal (Abraão & Isaque)</option>
+          <option value="-1750,300">🏺 1750 a.C. — Hamurabi & Babilônia</option>
+          <option value="-1446,250">📜 1446 a.C. — Êxodo de Moisés & Sinai</option>
+          <option value="-1200,200">⚖️ 1200 a.C. — Débora, Gideão & Juízes</option>
+          <option value="-1010,200">👑 1010 a.C. — Monarquia Unida (Rei Davi)</option>
+          <option value="-853,150">⚔️ 853 a.C. — Acabe, Elias & Batalha de Qarqar</option>
+          <option value="-722,120">⚡ 722 a.C. — Queda de Samaria ante Assíria</option>
+          <option value="-587,120">🔥 587 a.C. — Queda de Jerusalém & Exílio</option>
+          <option value="-538,120">📜 538 a.C. — Edito de Ciro & Retorno</option>
+          <option value="-250,150">📖 250 a.C. — Septuaginta LXX & Qumran</option>
+          <option value="30,60">✝️ 30 d.C. — Jesus Cristo & Império Romano</option>
+          <option value="70,60">🏛️ 70 d.C. — Queda do 2º Templo por Tito</option>
+          <option value="393,80">⛪ 393 d.C. — Hipona & Santo Agostinho</option>
+          <option value="1546,80">⚜️ 1546 d.C. — Concílio de Trento</option>
+        </select>
+      </div>
+
+      <!-- 3. Dropdown de Tradição Canônica -->
+      <div class="control-item">
+        <label for="select-tradicao" class="control-label">📖 Cânon:</label>
+        <select id="select-tradicao" class="modern-select" onchange="filtrarTradicao(this.value)" style="min-width: 140px;">
+          <option value="TODAS">🌐 Todas as Tradições</option>
+          <option value="CATOLICA">⛪ Católica (73 Livros)</option>
+          <option value="PROTESTANTE">📖 Protestante (66 Livros)</option>
+          <option value="ORTODOXA">☦️ Ortodoxa (76+ Livros)</option>
+          <option value="JUDAICA">✡️ Judaica / Tanakh (24)</option>
+        </select>
+      </div>
+
+      <!-- 4. Botão para Encolher / Expandir Rótulos do Lado Esquerdo -->
+      <button class="btn-toggle-labels" id="btn-toggle-labels" onclick="toggleRótulos()" title="Alterna entre rótulos compactos e ultra-encolhidos">
+        <span id="icone-toggle-labels">◀</span> <span id="texto-toggle-labels">Encolher Rótulos</span>
+      </button>
+
+    </div>
+
+    <!-- Busca Rápida -->
+    <div class="control-item">
+      <input type="text" id="campo-busca" class="search-input" placeholder="🔍 Buscar nome, rei, livro..." onkeyup="buscarTimeline(this.value)">
+    </div>
+  </div>
+
+  <!-- MARCADOR SINCRONIZADOR DE ÉPOCA -->
+  <div class="epoch-scrubber-bar">
+    <div class="scrubber-indicator">
+      <div class="scrubber-title">⚡ Sincronizador de Época:</div>
+      <div id="display-ano-marcador" class="scrubber-year">-1010 a.C.</div>
+    </div>
+    <div class="epoch-summary-grid">
+      <div class="epoch-track-pill" id="pill-secular">
+        <span>🏛️ SECULAR</span>
+        <b id="txt-secular">Carregando...</b>
+      </div>
+      <div class="epoch-track-pill" id="pill-biblico">
+        <span>📜 BÍBLICO</span>
+        <b id="txt-biblico">Carregando...</b>
+      </div>
+      <div class="epoch-track-pill" id="pill-mitologia">
+        <span>🏺 MITOLOGIAS</span>
+        <b id="txt-mitologia">Carregando...</b>
+      </div>
+      <div class="epoch-track-pill" id="pill-canon">
+        <span>⛪ CÂNON & CONCÍLIOS</span>
+        <b id="txt-canon">Carregando...</b>
+      </div>
+    </div>
+  </div>
+
+  <!-- CORPO PRINCIPAL -->
+  <div class="app-body">
+    <div id="timeline-container"></div>
+
+    <aside class="sidebar-drawer" id="sidebar-drawer">
+      <div class="drawer-header">
+        <h2 id="drawer-titulo">Selecione um Personagem ou Evento</h2>
+      </div>
+      <div class="drawer-body" id="drawer-body">
+        <div class="detail-card">
+          <div class="card-title">ℹ️ Navegação Otimizada</div>
+          <p>• <b>Zoom Calibrado:</b> O zoom inicial foi focado para que os nomes e datas caibam confortavelmente dentro das barras de cada personagem e império.</p>
+          <p>• <b>Rótulos Encolhidos:</b> Os títulos do lado esquerdo foram compactados. Use o botão <b>◀ Encolher Rótulos</b> para ocultar os textos e ver apenas os ícones.</p>
+          <p>• <b>Menus Dropdown:</b> Use os menus suspensos superiores para saltar instantaneamente de época ou isolar grupos (Patriarcas, Juízes, Reis ou Profetas).</p>
+        </div>
+      </div>
+    </aside>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div>Cronologia bíblica estruturada com base no Texto Massorético (Gn 5 e 11), Edwin Thiele e verificação na <b>Wikipédia</b>.</div>
+    <div>Total: <b>112 registros</b> sincronizados no SQLite.</div>
+  </footer>
+
+  <!-- SCRIPT JS -->
+  <script type="text/javascript">
+    const RAW_GROUPS = [{"id": 1, "codigo": "SECULAR", "content": "<div class='eixo-card' style='--eixo-cor: #0284c7;' title='História Secular — Impérios & Civilizações'>  <div class='eixo-bar' style='background: #0284c7;'></div>  <div class='eixo-textos'>    <div class='eixo-titulo'>História Secular</div>    <div class='eixo-subtitulo'>Impérios & Civilizações</div>  </div></div>", "order": 1, "cor": "#0284c7"}, {"id": 2, "codigo": "BIBLICO", "content": "<div class='eixo-card' style='--eixo-cor: #d97706;' title='Cronologia Bíblica — Patriarcas, Reis & Profetas'>  <div class='eixo-bar' style='background: #d97706;'></div>  <div class='eixo-textos'>    <div class='eixo-titulo'>Cronologia Bíblica</div>    <div class='eixo-subtitulo'>Patriarcas, Reis & Profetas</div>  </div></div>", "order": 2, "cor": "#d97706"}, {"id": 3, "codigo": "MITOLOGIA", "content": "<div class='eixo-card' style='--eixo-cor: #7c3aed;' title='Mitologias Antigas — Cosmogonias & Poemas'>  <div class='eixo-bar' style='background: #7c3aed;'></div>  <div class='eixo-textos'>    <div class='eixo-titulo'>Mitologias Antigas</div>    <div class='eixo-subtitulo'>Cosmogonias & Poemas</div>  </div></div>", "order": 3, "cor": "#7c3aed"}, {"id": 4, "codigo": "CANON", "content": "<div class='eixo-card' style='--eixo-cor: #059669;' title='Cânon & Concílios — Manuscritos & Sínodos'>  <div class='eixo-bar' style='background: #059669;'></div>  <div class='eixo-textos'>    <div class='eixo-titulo'>Cânon & Concílios</div>    <div class='eixo-subtitulo'>Manuscritos & Sínodos</div>  </div></div>", "order": 4, "cor": "#059669"}];
+    const RAW_ITEMS = [{"id": "ev_8", "group": 2, "content": "<span class='item-titulo'>🌱 Adão (Vida: 930 anos)</span>", "start": "-004004-01-01", "type": "range", "className": "item-biblico cat-antediluviano", "meta": {"tipo_item": "evento", "titulo": "Adão (Vida: 930 anos)", "subtitulo": "Criação e Primeiro Homem", "eixo_codigo": "BIBLICO", "categoria": "antediluviano", "cultura": "Origens", "ano_inicio": -4004, "ano_fim": -3074, "data_legivel": "4004 a.C. até 3074 a.C.", "incerteza": 50, "descricao": "Criado por Deus no sexto dia da criação; expulso do Jardim do Éden após a queda; viveu 930 anos segundo o Texto Massorético (Gênesis 5:3-5).", "fontes": "Gênesis 1-5; Lucas 3:38.", "wikipedia_url": "https://en.wikipedia.org/wiki/Adam", "localizacao": "Jardim do Éden / Mesopotâmia", "latitude": 31.0, "longitude": 47.0, "tags": "adao,criacao,antediluviano,origens", "concilio": null}, "end": "-003074-12-31"}, {"id": "ev_9", "group": 2, "content": "<span class='item-titulo'>🌱 Eva (Mãe de Todos os Viventes)</span>", "start": "-004004-01-01", "type": "range", "className": "item-biblico cat-antediluviano", "meta": {"tipo_item": "evento", "titulo": "Eva (Mãe de Todos os Viventes)", "subtitulo": "Primeira Mulher", "eixo_codigo": "BIBLICO", "categoria": "antediluviano", "cultura": "Origens", "ano_inicio": -4004, "ano_fim": -3074, "data_legivel": "4004 a.C. até 3074 a.C.", "incerteza": 50, "descricao": "Formada da costela de Adão para ser sua adjutora idônea; mãe de Caim, Abel e Sete; 'mãe de todos os viventes' (Gênesis 3:20).", "fontes": "Gênesis 2-4.", "wikipedia_url": "https://en.wikipedia.org/wiki/Eve", "localizacao": "Jardim do Éden / Mesopotâmia", "latitude": 31.0, "longitude": 47.0, "tags": "eva,antediluviano,origens", "concilio": null}, "end": "-003074-12-31"}, {"id": "ev_10", "group": 2, "content": "<span class='item-titulo'>🌱 Sete (Vida: 912 anos)</span>", "start": "-003874-01-01", "type": "range", "className": "item-biblico cat-antediluviano", "meta": {"tipo_item": "evento", "titulo": "Sete (Vida: 912 anos)", "subtitulo": "Substituto de Abel e Linhagem Piedosa", "eixo_codigo": "BIBLICO", "categoria": "antediluviano", "cultura": "Origens", "ano_inicio": -3874, "ano_fim": -2962, "data_legivel": "3874 a.C. até 2962 a.C.", "incerteza": 50, "descricao": "Nascido quando Adão tinha 130 anos, após a morte de Abel; dele procede a linhagem dos justos que invocaram o nome do Senhor (Gn 4:26, 5:6-8).", "fontes": "Gênesis 4:25, 5:6-8; 1 Crônicas 1:1.", "wikipedia_url": "https://en.wikipedia.org/wiki/Seth", "localizacao": "Mesopotâmia", "latitude": 31.5, "longitude": 46.5, "tags": "sete,antediluviano,linhagem", "concilio": null}, "end": "-002962-12-31"}, {"id": "ev_11", "group": 2, "content": "<span class='item-titulo'>🌱 Enos (Vida: 905 anos)</span>", "start": "-003769-01-01", "type": "range", "className": "item-biblico cat-antediluviano", "meta": {"tipo_item": "evento", "titulo": "Enos (Vida: 905 anos)", "subtitulo": "Início da Invocação Pública a Yahweh", "eixo_codigo": "BIBLICO", "categoria": "antediluviano", "cultura": "Origens", "ano_inicio": -3769, "ano_fim": -2864, "data_legivel": "3769 a.C. até 2864 a.C.", "incerteza": 50, "descricao": "Filho de Sete, nascido quando este tinha 105 anos. Em seus dias começou-se a invocar solenemente o nome do Senhor (Gn 4:26, 5:9-11).", "fontes": "Gênesis 5:9-11; Lucas 3:38.", "wikipedia_url": "https://en.wikipedia.org/wiki/Enos_(biblical_figure)", "localizacao": "Mesopotâmia", "latitude": 31.5, "longitude": 46.5, "tags": "enos,antediluviano", "concilio": null}, "end": "-002864-12-31"}, {"id": "ev_12", "group": 2, "content": "<span class='item-titulo'>🌱 Cainã (Vida: 910 anos)</span>", "start": "-003679-01-01", "type": "range", "className": "item-biblico cat-antediluviano", "meta": {"tipo_item": "evento", "titulo": "Cainã (Vida: 910 anos)", "subtitulo": "Patriarca Antediluviano", "eixo_codigo": "BIBLICO", "categoria": "antediluviano", "cultura": "Origens", "ano_inicio": -3679, "ano_fim": -2769, "data_legivel": "3679 a.C. até 2769 a.C.", "incerteza": 50, "descricao": "Filho de Enos, gerado quando este tinha 90 anos; viveu 910 anos (Gênesis 5:12-14).", "fontes": "Gênesis 5:12-14; 1 Crônicas 1:2.", "wikipedia_url": "https://en.wikipedia.org/wiki/Kenan", "localizacao": "Mesopotâmia", "latitude": 31.5, "longitude": 46.5, "tags": "caina,antediluviano", "concilio": null}, "end": "-002769-12-31"}, {"id": "ev_13", "group": 2, "content": "<span class='item-titulo'>🌱 Maalalel (Vida: 895 anos)</span>", "start": "-003609-01-01", "type": "range", "className": "item-biblico cat-antediluviano", "meta": {"tipo_item": "evento", "titulo": "Maalalel (Vida: 895 anos)", "subtitulo": "Patriarca Antediluviano", "eixo_codigo": "BIBLICO", "categoria": "antediluviano", "cultura": "Origens", "ano_inicio": -3609, "ano_fim": -2714, "data_legivel": "3609 a.C. até 2714 a.C.", "incerteza": 50, "descricao": "Filho de Cainã, gerado aos 70 anos; viveu 895 anos e gerou a Jarede (Gênesis 5:15-17).", "fontes": "Gênesis 5:15-17; Lucas 3:37.", "wikipedia_url": "https://en.wikipedia.org/wiki/Mahalalel", "localizacao": "Mesopotâmia", "latitude": 31.5, "longitude": 46.5, "tags": "maalalel,antediluviano", "concilio": null}, "end": "-002714-12-31"}, {"id": "ev_14", "group": 2, "content": "<span class='item-titulo'>🌱 Jarede (Vida: 962 anos)</span>", "start": "-003544-01-01", "type": "range", "className": "item-biblico cat-antediluviano", "meta": {"tipo_item": "evento", "titulo": "Jarede (Vida: 962 anos)", "subtitulo": "Segundo Homem Mais Longevo", "eixo_codigo": "BIBLICO", "categoria": "antediluviano", "cultura": "Origens", "ano_inicio": -3544, "ano_fim": -2582, "data_legivel": "3544 a.C. até 2582 a.C.", "incerteza": 50, "descricao": "Filho de Maalalel; viveu 962 anos, sendo o segundo patriarca mais longevo de toda a Bíblia, superado apenas por Matusalém (Gênesis 5:18-20).", "fontes": "Gênesis 5:18-20; 1 Crônicas 1:2.", "wikipedia_url": "https://en.wikipedia.org/wiki/Jared_(biblical_figure)", "localizacao": "Mesopotâmia", "latitude": 31.5, "longitude": 46.5, "tags": "jarede,antediluviano", "concilio": null}, "end": "-002582-12-31"}, {"id": "ev_15", "group": 2, "content": "<span class='item-titulo'>🌱 Enoque (Vida: 365 anos - Arrebatado)</span>", "start": "-003382-01-01", "type": "range", "className": "item-biblico cat-antediluviano", "meta": {"tipo_item": "evento", "titulo": "Enoque (Vida: 365 anos - Arrebatado)", "subtitulo": "Andou com Deus e Não Viu a Morte", "eixo_codigo": "BIBLICO", "categoria": "antediluviano", "cultura": "Origens", "ano_inicio": -3382, "ano_fim": -3017, "data_legivel": "3382 a.C. até 3017 a.C.", "incerteza": 50, "descricao": "Filho de Jarede; andou intimamente com Deus por 300 anos após gerar Matusalém e 'desapareceu, porque Deus o levou' (arrebatamento sem experimentar a morte física).", "fontes": "Gênesis 5:21-24; Hebreus 11:5; Judas 1:14.", "wikipedia_url": "https://en.wikipedia.org/wiki/Enoch_(ancestor_of_Noah)", "localizacao": "Mesopotâmia", "latitude": 31.5, "longitude": 46.5, "tags": "enoque,arrebatamento,antediluviano", "concilio": null}, "end": "-003017-12-31"}, {"id": "ev_16", "group": 2, "content": "<span class='item-titulo'>🌱 Matusalém (Vida: 969 anos)</span>", "start": "-003317-01-01", "type": "range", "className": "item-biblico cat-antediluviano", "meta": {"tipo_item": "evento", "titulo": "Matusalém (Vida: 969 anos)", "subtitulo": "O Homem Mais Velho da História Bíblica", "eixo_codigo": "BIBLICO", "categoria": "antediluviano", "cultura": "Origens", "ano_inicio": -3317, "ano_fim": -2348, "data_legivel": "3317 a.C. até 2348 a.C.", "incerteza": 50, "descricao": "Filho de Enoque; homem de maior longevidade registrada nas Escrituras (969 anos). Segundo a cronologia bíblica masorética, faleceu no próprio ano do Dilúvio.", "fontes": "Gênesis 5:25-27; 1 Crônicas 1:3.", "wikipedia_url": "https://en.wikipedia.org/wiki/Methuselah", "localizacao": "Mesopotâmia", "latitude": 31.5, "longitude": 46.5, "tags": "matusalem,longevidade,diluvio,antediluviano", "concilio": null}, "end": "-002348-12-31"}, {"id": "ev_17", "group": 2, "content": "<span class='item-titulo'>🌱 Lameque (Vida: 777 anos)</span>", "start": "-003130-01-01", "type": "range", "className": "item-biblico cat-antediluviano", "meta": {"tipo_item": "evento", "titulo": "Lameque (Vida: 777 anos)", "subtitulo": "Pai do Patriarca Noé", "eixo_codigo": "BIBLICO", "categoria": "antediluviano", "cultura": "Origens", "ano_inicio": -3130, "ano_fim": -2353, "data_legivel": "3130 a.C. até 2353 a.C.", "incerteza": 50, "descricao": "Filho de Matusalém; profetizou ao dar o nome a Noé: 'Este nos consolará dos nossos trabalhos e da fadiga de nossas mãos' (Gênesis 5:28-31). Faleceu 5 anos antes do Dilúvio.", "fontes": "Gênesis 5:28-31; Lucas 3:36.", "wikipedia_url": "https://en.wikipedia.org/wiki/Lamech_(father_of_Noah)", "localizacao": "Mesopotâmia", "latitude": 31.5, "longitude": 46.5, "tags": "lameque,pai_noe,antediluviano", "concilio": null}, "end": "-002353-12-31"}, {"id": "ev_18", "group": 2, "content": "<span class='item-titulo'>🌱 Noé (Vida: 950 anos)</span>", "start": "-002948-01-01", "type": "range", "className": "item-biblico cat-antediluviano", "meta": {"tipo_item": "evento", "titulo": "Noé (Vida: 950 anos)", "subtitulo": "A Arca e a Aliança do Arco-Íris", "eixo_codigo": "BIBLICO", "categoria": "antediluviano", "cultura": "Mesopotâmia / Ararate", "ano_inicio": -2948, "ano_fim": -1998, "data_legivel": "2948 a.C. até 1998 a.C.", "incerteza": 50, "descricao": "Homem justo e íntegro entre seus contemporâneos; construiu a Arca por ordem divina para salvar sua família e os animais do Dilúvio quando tinha 600 anos; viveu mais 350 anos após o cataclismo.", "fontes": "Gênesis 6-9; Hebreus 11:7; 1 Pedro 3:20.", "wikipedia_url": "https://en.wikipedia.org/wiki/Noah", "localizacao": "Monte Ararate", "latitude": 39.7025, "longitude": 44.2992, "tags": "noe,arca,diluvio,alianca,antediluviano", "concilio": null}, "end": "-001998-12-31"}, {"id": "ev_1", "group": 1, "content": "<span class='item-titulo'>🏛️ Império Antigo Egípcio (Era das Pirâmides)</span>", "start": "-002686-01-01", "type": "range", "className": "item-secular cat-imperio", "meta": {"tipo_item": "evento", "titulo": "Império Antigo Egípcio (Era das Pirâmides)", "subtitulo": "Dinastias III a VI (Mênfis)", "eixo_codigo": "SECULAR", "categoria": "imperio", "cultura": "Egito", "ano_inicio": -2686, "ano_fim": -2181, "data_legivel": "2686 a.C. até 2181 a.C.", "incerteza": 50, "descricao": "Consolidação do Estado egípcio centralizado e ereção das grandes pirâmides de Gizé (Quéops, Quéfren e Miquerinos).", "fontes": "Cânon Real de Turim; Papiro de Westcar; Manetão (Aegyptiaca).", "wikipedia_url": "https://en.wikipedia.org/wiki/Old_Kingdom_of_Egypt", "localizacao": "Mênfis / Gizé (Egito)", "latitude": 29.9792, "longitude": 31.1342, "tags": "egito,piramides,farao,imperio", "concilio": null}, "end": "-002181-12-31"}, {"id": "ev_20", "group": 2, "content": "<span class='item-titulo'>⛺ Sem (Vida: 600 anos)</span>", "start": "-002446-01-01", "type": "range", "className": "item-biblico cat-patriarca", "meta": {"tipo_item": "evento", "titulo": "Sem (Vida: 600 anos)", "subtitulo": "Filho de Noé e Progenitor dos Semitas", "eixo_codigo": "BIBLICO", "categoria": "patriarca", "cultura": "Oriente Próximo", "ano_inicio": -2446, "ano_fim": -1846, "data_legivel": "2446 a.C. até 1846 a.C.", "incerteza": 50, "descricao": "Filho de Noé que cobriu a nudez do pai; recebeu a bênção patriarcal de onde procedem Abraão e a linhagem messiânica (povos semitas).", "fontes": "Gênesis 9:26-27, 10:21-31, 11:10-11.", "wikipedia_url": "https://en.wikipedia.org/wiki/Shem", "localizacao": "Oriente Próximo", "latitude": 32.0, "longitude": 44.0, "tags": "sem,semitas,linhagem_abencoadas", "concilio": null}, "end": "-001846-12-31"}, {"id": "ev_81", "group": 3, "content": "<span class='item-titulo'>🏺 Cosmogonia de Heliópolis e o Mito de Osíris</span>", "start": "-002400-01-01", "type": "range", "className": "item-mitologia cat-mito", "meta": {"tipo_item": "evento", "titulo": "Cosmogonia de Heliópolis e o Mito de Osíris", "subtitulo": "Atum, o Oceano Nun e a Ressurreição no Duat", "eixo_codigo": "MITOLOGIA", "categoria": "mito", "cultura": "Egito", "ano_inicio": -2400, "ano_fim": -1000, "data_legivel": "2400 a.C. até 1000 a.C.", "incerteza": 200, "descricao": "O deus solar Atum auto-emerge das águas caóticas primordiais de Nun gerando a Enéade sagrada; o ciclo de Osíris, Ísis e Hórus fundamenta a doutrina do julgamento da alma (Psicostasia).", "fontes": "Textos das Pirâmides (Saqqara); Papiro de Ani (Livro dos Mortos).", "wikipedia_url": "https://en.wikipedia.org/wiki/Ancient_Egyptian_creation_myths", "localizacao": "Heliópolis / Tebas (Egito)", "latitude": 30.129, "longitude": 31.306, "tags": "egito,atum,osiris,nun,livro_dos_mortos", "concilio": null}, "end": "-001000-01-01"}, {"id": "ev_19", "group": 2, "content": "<span class='item-titulo'>O Grande Dilúvio Universal</span>", "start": "-002348-02-17", "type": "range", "className": "item-biblico cat-narrativa", "meta": {"tipo_item": "evento", "titulo": "O Grande Dilúvio Universal", "subtitulo": "Ano 600 da Vida de Noé", "eixo_codigo": "BIBLICO", "categoria": "narrativa", "cultura": "Global / Mesopotâmia", "ano_inicio": -2348, "ano_fim": -2347, "data_legivel": "2348 a.C. até 2347 a.C.", "incerteza": 50, "descricao": "As fontes do grande abismo se romperam e as comportas dos céus se abriram por 40 dias e 40 noites; águas prevaleceram por 150 dias até a Arca repousar nos Montes de Ararate.", "fontes": "Gênesis 7-8; Tabuinha XI de Gilgamesh (Utnapishtim).", "wikipedia_url": "https://en.wikipedia.org/wiki/Genesis_flood_narrative", "localizacao": "Montes de Ararate", "latitude": 39.7025, "longitude": 44.2992, "tags": "diluvio,cataclisma,arca,ararate", "concilio": null}, "end": "-002347-02-27"}, {"id": "ev_21", "group": 2, "content": "<span class='item-titulo'>⛺ Abraão (Vida: 175 anos)</span>", "start": "-002166-01-01", "type": "range", "className": "item-biblico cat-patriarca", "meta": {"tipo_item": "evento", "titulo": "Abraão (Vida: 175 anos)", "subtitulo": "Pai da Fé e Aliança Abraâmica", "eixo_codigo": "BIBLICO", "categoria": "patriarca", "cultura": "Ur / Canaã", "ano_inicio": -2166, "ano_fim": -1991, "data_legivel": "2166 a.C. até 1991 a.C.", "incerteza": 25, "descricao": "Chamado por Deus para sair de Ur dos Caldeus para a terra prometida de Canaã; pai de Ismael e Isaque; recebeu a promessa de que nele seriam benditas todas as famílias da terra.", "fontes": "Gênesis 12-25; Romanos 4; Gálatas 3.", "wikipedia_url": "https://en.wikipedia.org/wiki/Abraham", "localizacao": "Ur / Harã / Hebrom", "latitude": 31.5292, "longitude": 35.0938, "tags": "abraao,alianca,pai_da_fe,canaa,patriarca", "concilio": null}, "end": "-001991-12-31"}, {"id": "ev_22", "group": 2, "content": "<span class='item-titulo'>⛺ Sara (Vida: 127 anos)</span>", "start": "-002156-01-01", "type": "range", "className": "item-biblico cat-patriarca", "meta": {"tipo_item": "evento", "titulo": "Sara (Vida: 127 anos)", "subtitulo": "Matriarca da Promessa e Mãe de Isaque", "eixo_codigo": "BIBLICO", "categoria": "patriarca", "cultura": "Canaã / Hebrom", "ano_inicio": -2156, "ano_fim": -2029, "data_legivel": "2156 a.C. até 2029 a.C.", "incerteza": 25, "descricao": "Esposa estéril de Abraão que deu à luz Isaque aos 90 anos de idade pelo poder da promessa divina; sepultada na caverna de Macpela em Hebrom.", "fontes": "Gênesis 17:15-21, 18, 21, 23; 1 Pedro 3:6.", "wikipedia_url": "https://en.wikipedia.org/wiki/Sarah", "localizacao": "Hebrom (Caverna de Macpela)", "latitude": 31.5247, "longitude": 35.1107, "tags": "sara,matriarca,macpela,patriarca", "concilio": null}, "end": "-002029-12-31"}, {"id": "ev_80", "group": 3, "content": "<span class='item-titulo'>🏺 Epopeia de Gilgamesh e o Dilúvio Mesopotâmico</span>", "start": "-002100-01-01", "type": "range", "className": "item-mitologia cat-mito", "meta": {"tipo_item": "evento", "titulo": "Epopeia de Gilgamesh e o Dilúvio Mesopotâmico", "subtitulo": "A Tabuinha XI de Utnapishtim e a Arca", "eixo_codigo": "MITOLOGIA", "categoria": "mito", "cultura": "Suméria/Babilônia", "ano_inicio": -2100, "ano_fim": -1200, "data_legivel": "2100 a.C. até 1200 a.C.", "incerteza": 150, "descricao": "Obra monumental da literatura mesopotâmica; a Tábua XI traz a narrativa do dilúvio mandado pelos deuses e a salvação de Utnapishtim em uma embarcação vedada com betume, paralela a Gênesis 6-9.", "fontes": "Tabuletas cuneiformes decifradas por George Smith em 1872 (Museu Britânico).", "wikipedia_url": "https://en.wikipedia.org/wiki/Epic_of_Gilgamesh", "localizacao": "Uruk / Nínive", "latitude": 31.3222, "longitude": 45.6361, "tags": "gilgamesh,diluvio,utnapishtim,arca,mesopotamia", "concilio": null}, "end": "-001200-01-01"}, {"id": "ev_23", "group": 2, "content": "<span class='item-titulo'>⛺ Ismael (Vida: 137 anos)</span>", "start": "-002080-01-01", "type": "range", "className": "item-biblico cat-patriarca", "meta": {"tipo_item": "evento", "titulo": "Ismael (Vida: 137 anos)", "subtitulo": "Primogênito de Abraão com Agar", "eixo_codigo": "BIBLICO", "categoria": "patriarca", "cultura": "Deserto de Parã", "ano_inicio": -2080, "ano_fim": -1943, "data_legivel": "2080 a.C. até 1943 a.C.", "incerteza": 25, "descricao": "Filho de Abraão com a serva egípcia Agar; pai de doze príncipes e progenitor tradicional dos povos árabes no deserto.", "fontes": "Gênesis 16, 21:8-21, 25:12-18.", "wikipedia_url": "https://en.wikipedia.org/wiki/Ishmael", "localizacao": "Deserto de Parã", "latitude": 29.0, "longitude": 34.5, "tags": "ismael,agar,arabes,patriarca", "concilio": null}, "end": "-001943-12-31"}, {"id": "ev_24", "group": 2, "content": "<span class='item-titulo'>⛺ Isaque (Vida: 180 anos)</span>", "start": "-002066-01-01", "type": "range", "className": "item-biblico cat-patriarca", "meta": {"tipo_item": "evento", "titulo": "Isaque (Vida: 180 anos)", "subtitulo": "Filho da Promessa e Sacrifício no Moriá", "eixo_codigo": "BIBLICO", "categoria": "patriarca", "cultura": "Canaã / Berseba", "ano_inicio": -2066, "ano_fim": -1886, "data_legivel": "2066 a.C. até 1886 a.C.", "incerteza": 25, "descricao": "Gerado aos 100 anos de Abraão; oferecido no Monte Moriá onde Deus proveu o cordeiro; casou-se com Rebeca e foi pai de Esaú e Jacó.", "fontes": "Gênesis 21-28, 35:27-29; Hebreus 11:17-20.", "wikipedia_url": "https://en.wikipedia.org/wiki/Isaac", "localizacao": "Berseba / Hebrom", "latitude": 31.2589, "longitude": 34.7997, "tags": "isaque,moria,alianca,patriarca", "concilio": null}, "end": "-001886-12-31"}, {"id": "ev_25", "group": 2, "content": "<span class='item-titulo'>⛺ Jacó / Israel (Vida: 147 anos)</span>", "start": "-002006-01-01", "type": "range", "className": "item-biblico cat-patriarca", "meta": {"tipo_item": "evento", "titulo": "Jacó / Israel (Vida: 147 anos)", "subtitulo": "O Suplantador que Lutou com Deus", "eixo_codigo": "BIBLICO", "categoria": "patriarca", "cultura": "Canaã / Egito", "ano_inicio": -2006, "ano_fim": -1859, "data_legivel": "2006 a.C. até 1859 a.C.", "incerteza": 25, "descricao": "Filho de Isaque; comprou o direito de primogenitura; após lutar com o anjo em Peniel teve seu nome mudado para Israel; gerou os doze patriarcas das doze tribos; faleceu no Egito.", "fontes": "Gênesis 25-50; Oseias 12:3-4.", "wikipedia_url": "https://en.wikipedia.org/wiki/Jacob", "localizacao": "Bete-el / Peniel / Goshen", "latitude": 30.5, "longitude": 31.5, "tags": "jaco,israel,tribos,peniel,patriarca", "concilio": null}, "end": "-001859-12-31"}, {"id": "ev_26", "group": 2, "content": "<span class='item-titulo'>⛺ Levi (Vida: 137 anos)</span>", "start": "-001928-01-01", "type": "range", "className": "item-biblico cat-patriarca", "meta": {"tipo_item": "evento", "titulo": "Levi (Vida: 137 anos)", "subtitulo": "Progenitor da Tribo Sacerdotal", "eixo_codigo": "BIBLICO", "categoria": "patriarca", "cultura": "Canaã / Egito", "ano_inicio": -1928, "ano_fim": -1791, "data_legivel": "1928 a.C. até 1791 a.C.", "incerteza": 25, "descricao": "Terceiro filho de Jacó e Lia; dele descende a linhagem sacerdotal levítica, incluindo Moisés, Arão e os sacerdotes do Templo.", "fontes": "Gênesis 29:34, 34, 49:5-7; Êxodo 6:16.", "wikipedia_url": "https://en.wikipedia.org/wiki/Levi", "localizacao": "Egito (Goshen)", "latitude": 30.5, "longitude": 31.5, "tags": "levi,levitas,sacerdocio,patriarca", "concilio": null}, "end": "-001791-12-31"}, {"id": "ev_27", "group": 2, "content": "<span class='item-titulo'>⛺ Judá (Linhagem Real Davídica)</span>", "start": "-001925-01-01", "type": "range", "className": "item-biblico cat-patriarca", "meta": {"tipo_item": "evento", "titulo": "Judá (Linhagem Real Davídica)", "subtitulo": "Patriarca da Tribo Real", "eixo_codigo": "BIBLICO", "categoria": "patriarca", "cultura": "Canaã / Egito", "ano_inicio": -1925, "ano_fim": -1800, "data_legivel": "1925 a.C. até 1800 a.C.", "incerteza": 30, "descricao": "Quarto filho de Jacó; intercedeu por Benjamim diante de José; recebeu a bênção profética de que o cetro não se apartaria de seus pés até que viesse Siló (Messias).", "fontes": "Gênesis 29:35, 37, 43, 44, 49:8-12; Mateus 1:1-3.", "wikipedia_url": "https://en.wikipedia.org/wiki/Judah_(son_of_Jacob)", "localizacao": "Hebrom / Goshen", "latitude": 31.5, "longitude": 35.1, "tags": "juda,cetro,linhagem_real,leao_de_juda,patriarca", "concilio": null}, "end": "-001800-12-31"}, {"id": "ev_28", "group": 2, "content": "<span class='item-titulo'>⛺ José do Egito (Vida: 110 anos)</span>", "start": "-001915-01-01", "type": "range", "className": "item-biblico cat-patriarca", "meta": {"tipo_item": "evento", "titulo": "José do Egito (Vida: 110 anos)", "subtitulo": "Governador do Egito e Salvador de Israel", "eixo_codigo": "BIBLICO", "categoria": "patriarca", "cultura": "Canaã / Egito", "ano_inicio": -1915, "ano_fim": -1805, "data_legivel": "1915 a.C. até 1805 a.C.", "incerteza": 25, "descricao": "Filho amado de Jacó e Raquel; vendido pelos irmãos; interpretou os sonhos do Faraó e foi elevado a grão-vizir do Egito, preservando a família durante a fome; pai de Efraim e Manassés.", "fontes": "Gênesis 37-50; Salmo 105:16-22.", "wikipedia_url": "https://en.wikipedia.org/wiki/Joseph_(Genesis)", "localizacao": "Avaris / Mênfis (Egito)", "latitude": 30.7871, "longitude": 31.8214, "tags": "jose,egito,governador,farao,patriarca", "concilio": null}, "end": "-001805-12-31"}, {"id": "ev_79", "group": 3, "content": "<span class='item-titulo'>🏺 Enûma Eliš (Cosmogonia Babilônica da Criação)</span>", "start": "-001800-01-01", "type": "range", "className": "item-mitologia cat-mito", "meta": {"tipo_item": "evento", "titulo": "Enûma Eliš (Cosmogonia Babilônica da Criação)", "subtitulo": "Marduk e o Triunfo sobre o Caos Primordial de Tiamat", "eixo_codigo": "MITOLOGIA", "categoria": "mito", "cultura": "Babilônia", "ano_inicio": -1800, "ano_fim": -1100, "data_legivel": "1800 a.C. até 1100 a.C.", "incerteza": 200, "descricao": "Épico em 7 tábuas recitado anualmente no festival do Ano Novo (Akitu). Marduk divide o corpo do monstro aquático Tiamat para erigir o firmamento e a terra; confronto estilístico com Gênesis 1.", "fontes": "7 Tabuletas Cuneiformes da Biblioteca Real de Nínive.", "wikipedia_url": "https://en.wikipedia.org/wiki/En%C3%BBma_Eli%C5%A1", "localizacao": "Babilônia / Nínive", "latitude": 32.5363, "longitude": 44.4208, "tags": "enuma_elish,marduk,tiamat,cosmogonia,akitu", "concilio": null}, "end": "-001100-01-01"}, {"id": "ev_2", "group": 1, "content": "<span class='item-titulo'>🏛️ Império Paleobabilônico (Hamurabi)</span>", "start": "-001792-01-01", "type": "range", "className": "item-secular cat-imperio", "meta": {"tipo_item": "evento", "titulo": "Império Paleobabilônico (Hamurabi)", "subtitulo": "Dinastia Amorita de Babilônia", "eixo_codigo": "SECULAR", "categoria": "imperio", "cultura": "Babilônia", "ano_inicio": -1792, "ano_fim": -1750, "data_legivel": "1792 a.C. até 1750 a.C.", "incerteza": 10, "descricao": "Hamurabi unifica as cidades-estado sumério-acádias da Mesopotâmia e promulga seu monumental código legal gravado em estela de diorito.", "fontes": "Código de Hamurabi (Louvre, Sb 8); Cartas Reais de Mari.", "wikipedia_url": "https://en.wikipedia.org/wiki/First_Babylonian_Empire", "localizacao": "Babilônia (Mesopotâmia)", "latitude": 32.5363, "longitude": 44.4208, "tags": "babilonia,hamurabi,leis,mesopotamia", "concilio": null}, "end": "-001750-12-31"}, {"id": "ev_30", "group": 2, "content": "<span class='item-titulo'>⛺ Arão (Vida: 123 anos)</span>", "start": "-001529-01-01", "type": "range", "className": "item-biblico cat-patriarca", "meta": {"tipo_item": "evento", "titulo": "Arão (Vida: 123 anos)", "subtitulo": "Primeiro Sumo Sacerdote de Israel", "eixo_codigo": "BIBLICO", "categoria": "patriarca", "cultura": "Egito / Deserto / Hor", "ano_inicio": -1529, "ano_fim": -1406, "data_legivel": "1529 a.C. até 1406 a.C.", "incerteza": 30, "descricao": "Irmão mais velho de Moisés e seu porta-voz diante do Faraó; consagrado como o primeiro Sumo Sacerdote de Yahweh, inaugurando o sacerdócio aarônico permanente; faleceu no Monte Hor.", "fontes": "Êxodo 4:14, 28-29; Números 20:22-29.", "wikipedia_url": "https://en.wikipedia.org/wiki/Aaron", "localizacao": "Monte Hor", "latitude": 30.3167, "longitude": 35.4167, "tags": "arao,sumo_sacerdote,tabernaculo,patriarca", "concilio": null}, "end": "-001406-12-31"}, {"id": "ev_29", "group": 2, "content": "<span class='item-titulo'>⛺ Moisés (Vida: 120 anos)</span>", "start": "-001526-01-01", "type": "range", "className": "item-biblico cat-patriarca", "meta": {"tipo_item": "evento", "titulo": "Moisés (Vida: 120 anos)", "subtitulo": "O Libertador, Legislador e Profeta da Lei", "eixo_codigo": "BIBLICO", "categoria": "patriarca", "cultura": "Egito / Sinai / Nebo", "ano_inicio": -1526, "ano_fim": -1406, "data_legivel": "1526 a.C. até 1406 a.C.", "incerteza": 30, "descricao": "Salvo das águas do Nilo; viveu 40 anos na corte egípcia, 40 anos como pastor em Midiã e 40 anos conduzindo Israel pelo deserto; recebeu o Decálogo no Sinai e compôs a Torá.", "fontes": "Êxodo, Levítico, Números, Deuteronômio; Deuteronômio 34:1-12; Atos 7:20-40.", "wikipedia_url": "https://en.wikipedia.org/wiki/Moses", "localizacao": "Monte Sinai / Monte Nebo", "latitude": 31.7683, "longitude": 35.7253, "tags": "moises,lei,sinai,exodo,tora,patriarca", "concilio": null}, "end": "-001406-12-31"}, {"id": "ev_31", "group": 2, "content": "<span class='item-titulo'>⛺ Josué filho de Num (Vida: 110 anos)</span>", "start": "-001485-01-01", "type": "range", "className": "item-biblico cat-patriarca", "meta": {"tipo_item": "evento", "titulo": "Josué filho de Num (Vida: 110 anos)", "subtitulo": "Comandante da Conquista de Canaã", "eixo_codigo": "BIBLICO", "categoria": "patriarca", "cultura": "Canaã / Jericó", "ano_inicio": -1485, "ano_fim": -1375, "data_legivel": "1485 a.C. até 1375 a.C.", "incerteza": 30, "descricao": "Sucessor de Moisés na liderança de Israel; cruzou o Rio Jordão a pés enxutos, comandou a queda das muralhas de Jericó e conduziu a divisão da terra prometida entre as doze tribos.", "fontes": "Livro de Josué; Deuteronômio 31:7-8; Josué 24:29.", "wikipedia_url": "https://en.wikipedia.org/wiki/Joshua", "localizacao": "Jericó / Timnate-Sera", "latitude": 31.8706, "longitude": 35.4439, "tags": "josue,conquista,jerico,canaa,patriarca", "concilio": null}, "end": "-001375-12-31"}, {"id": "ev_82", "group": 3, "content": "<span class='item-titulo'>🏺 Ciclo Cananeu de Baal (Textos de Ugarit)</span>", "start": "-001400-01-01", "type": "range", "className": "item-mitologia cat-mito", "meta": {"tipo_item": "evento", "titulo": "Ciclo Cananeu de Baal (Textos de Ugarit)", "subtitulo": "Baal-Hadad contra Yam (Mar Caótico) e Mot (Morte)", "eixo_codigo": "MITOLOGIA", "categoria": "mito", "cultura": "Cananeia/Ugarit", "ano_inicio": -1400, "ano_fim": -1200, "data_legivel": "1400 a.C. até 1200 a.C.", "incerteza": 100, "descricao": "Mitologia da costa levantina encontrada em Ras Shamra; o deus El e o deus das tempestades Baal em conflito cósmico com as forças marinhas e da seca; contextualiza os anátemas dos profetas bíblicos.", "fontes": "Tabuletas alfabéticas cuneiformes de Ras Shamra (Ugarit, 1929).", "wikipedia_url": "https://en.wikipedia.org/wiki/Baal_Cycle", "localizacao": "Ras Shamra (Ugarit, Síria)", "latitude": 35.6022, "longitude": 35.7825, "tags": "ugarit,baal,cananeu,ras_shamra,el", "concilio": null}, "end": "-001200-01-01"}, {"id": "ev_32", "group": 2, "content": "<span class='item-titulo'>⚖️ Otniel (Primeiro Juiz de Israel)</span>", "start": "-001374-01-01", "type": "range", "className": "item-biblico cat-juiz", "meta": {"tipo_item": "evento", "titulo": "Otniel (Primeiro Juiz de Israel)", "subtitulo": "Libertação contra o Rei da Mesopotâmia", "eixo_codigo": "BIBLICO", "categoria": "juiz", "cultura": "Judá / Hebrom", "ano_inicio": -1374, "ano_fim": -1334, "data_legivel": "1374 a.C. até 1334 a.C.", "incerteza": 20, "descricao": "Sobrinho de Calebe; sobre ele veio o Espírito do Senhor para libertar Israel da opressão de Cuchã-Risataim, rei da Mesopotâmia; a terra repousou por 40 anos.", "fontes": "Juízes 3:7-11; Josué 15:17.", "wikipedia_url": "https://en.wikipedia.org/wiki/Othniel", "localizacao": "Hebrom / Debir", "latitude": 31.4333, "longitude": 34.9833, "tags": "otniel,juiz,calebe,libertacao", "concilio": null}, "end": "-001334-12-31"}, {"id": "ev_33", "group": 2, "content": "<span class='item-titulo'>⚖️ Eúde (Segundo Juiz de Israel)</span>", "start": "-001316-01-01", "type": "range", "className": "item-biblico cat-juiz", "meta": {"tipo_item": "evento", "titulo": "Eúde (Segundo Juiz de Israel)", "subtitulo": "O Libertador Canhoto contra Eglom de Moabe", "eixo_codigo": "BIBLICO", "categoria": "juiz", "cultura": "Benjamim / Jericó", "ano_inicio": -1316, "ano_fim": -1236, "data_legivel": "1316 a.C. até 1236 a.C.", "incerteza": 20, "descricao": "Benjamita canhoto que assassinou em audiência secreta o obeso rei Eglom de Moabe com um punhal de dois gumes, pondo fim a 18 anos de tirania moabita.", "fontes": "Juízes 3:12-30.", "wikipedia_url": "https://en.wikipedia.org/wiki/Ehud", "localizacao": "Cidade das Palmeiras (Jericó)", "latitude": 31.8706, "longitude": 35.4439, "tags": "eude,juiz,moabe,benjamim", "concilio": null}, "end": "-001236-12-31"}, {"id": "ev_34", "group": 2, "content": "<span class='item-titulo'>⚖️ Débora e Baraque (Quarto Juiz de Israel)</span>", "start": "-001209-01-01", "type": "range", "className": "item-biblico cat-juiz", "meta": {"tipo_item": "evento", "titulo": "Débora e Baraque (Quarto Juiz de Israel)", "subtitulo": "A Profetisa e a Derrota de Sísera", "eixo_codigo": "BIBLICO", "categoria": "juiz", "cultura": "Efraim / Monte Tabor", "ano_inicio": -1209, "ano_fim": -1169, "data_legivel": "1209 a.C. até 1169 a.C.", "incerteza": 20, "descricao": "Única juíza mulher de Israel; julgava sob a palmeira entre Ramá e Betel; convocou Baraque e juntos desbarataram os 900 carros de ferro de Sísera no ribeiro de Quisom.", "fontes": "Juízes 4-5 (O Cântico de Débora, um dos textos poéticos mais arcaicos da Bíblia).", "wikipedia_url": "https://en.wikipedia.org/wiki/Deborah", "localizacao": "Monte Tabor / Rio Quisom", "latitude": 32.6869, "longitude": 35.3889, "tags": "debora,baraque,sisera,tabor,juiz", "concilio": null}, "end": "-001169-12-31"}, {"id": "ev_35", "group": 2, "content": "<span class='item-titulo'>⚖️ Gideão / Jerubaal (Quinto Juiz de Israel)</span>", "start": "-001162-01-01", "type": "range", "className": "item-biblico cat-juiz", "meta": {"tipo_item": "evento", "titulo": "Gideão / Jerubaal (Quinto Juiz de Israel)", "subtitulo": "A Vitória dos 300 contra os Midianitas", "eixo_codigo": "BIBLICO", "categoria": "juiz", "cultura": "Manassés / Vale de Jezreel", "ano_inicio": -1162, "ano_fim": -1122, "data_legivel": "1162 a.C. até 1122 a.C.", "incerteza": 20, "descricao": "Derrubou o altar de Baal de seu pai; provou a vontade de Deus com a lã e o orvalho; derrotou o exército colossal de Midiã com apenas 300 guerreiros armados de tochas e trombetas.", "fontes": "Juízes 6-8; Hebreus 11:32.", "wikipedia_url": "https://en.wikipedia.org/wiki/Gideon", "localizacao": "Fonte de Harode / Vale de Jezreel", "latitude": 32.5486, "longitude": 35.385, "tags": "gideao,300_homens,midianitas,juiz", "concilio": null}, "end": "-001122-12-31"}, {"id": "ev_38", "group": 2, "content": "<span class='item-titulo'>⚖️ Eli (Sumo Sacerdote e Juiz por 40 anos)</span>", "start": "-001107-01-01", "type": "range", "className": "item-biblico cat-juiz", "meta": {"tipo_item": "evento", "titulo": "Eli (Sumo Sacerdote e Juiz por 40 anos)", "subtitulo": "Liderança Sacerdotal em Siló", "eixo_codigo": "BIBLICO", "categoria": "juiz", "cultura": "Siló", "ano_inicio": -1107, "ano_fim": -1067, "data_legivel": "1107 a.C. até 1067 a.C.", "incerteza": 15, "descricao": "Sacerdote da linhagem de Itamar; julgou Israel por 40 anos e criou o menino Samuel no Tabernáculo de Siló; faleceu aos 98 anos ao saber que a Arca da Aliança havia sido capturada pelos filisteus.", "fontes": "1 Samuel 1-4.", "wikipedia_url": "https://en.wikipedia.org/wiki/Eli_(biblical_figure)", "localizacao": "Siló (Samaria)", "latitude": 32.0556, "longitude": 35.2894, "tags": "eli,silo,tabernaculo,arca,juiz", "concilio": null}, "end": "-001067-12-31"}, {"id": "ev_39", "group": 2, "content": "<span class='item-titulo'>⚖️ Samuel (Vida: ~78 anos)</span>", "start": "-001090-01-01", "type": "range", "className": "item-biblico cat-juiz", "meta": {"tipo_item": "evento", "titulo": "Samuel (Vida: ~78 anos)", "subtitulo": "Último dos Juízes e Primeiro Grande Profeta Monárquico", "eixo_codigo": "BIBLICO", "categoria": "juiz", "cultura": "Ramá / Siló / Mispá", "ano_inicio": -1090, "ano_fim": -1012, "data_legivel": "1090 a.C. até 1012 a.C.", "incerteza": 15, "descricao": "Consagrado por sua mãe Ana; ouviu a voz audível de Deus ainda jovem em Siló; liderou a restauração espiritual de Israel e a derrota dos filisteus em Ebenézer; ungiu os dois primeiros reis: Saul e Davi.", "fontes": "1 Samuel 1-25; Atos 3:24; Hebreus 11:32.", "wikipedia_url": "https://en.wikipedia.org/wiki/Samuel", "localizacao": "Ramá de Benjamim", "latitude": 31.8542, "longitude": 35.2319, "tags": "samuel,profeta,juiz,uncao_saul_davi", "concilio": null}, "end": "-001012-12-31"}, {"id": "ev_37", "group": 2, "content": "<span class='item-titulo'>⚖️ Sansão (Vida e Juizado: 20 anos)</span>", "start": "-001075-01-01", "type": "range", "className": "item-biblico cat-juiz", "meta": {"tipo_item": "evento", "titulo": "Sansão (Vida e Juizado: 20 anos)", "subtitulo": "O Nazireu de Força Prodigiosa contra os Filisteus", "eixo_codigo": "BIBLICO", "categoria": "juiz", "cultura": "Dã / Gaza / Soreque", "ano_inicio": -1075, "ano_fim": -1055, "data_legivel": "1075 a.C. até 1055 a.C.", "incerteza": 15, "descricao": "Nazireu de Deus desde o ventre cuja força sobre-humana residia no voto de consagração; matou um leão com as mãos e 1.000 filisteus com uma queixada de jumento; traído por Dalila, derrubou o templo de Dagom em Gaza.", "fontes": "Juízes 13-16; Hebreus 11:32.", "wikipedia_url": "https://en.wikipedia.org/wiki/Samson", "localizacao": "Zorá / Gaza / Vale de Soreque", "latitude": 31.5, "longitude": 34.45, "tags": "sansao,dalila,filisteus,gaza,juiz", "concilio": null}, "end": "-001055-12-31"}, {"id": "ev_36", "group": 2, "content": "<span class='item-titulo'>⚖️ Jefté (Oitavo Juiz de Israel)</span>", "start": "-001074-01-01", "type": "range", "className": "item-biblico cat-juiz", "meta": {"tipo_item": "evento", "titulo": "Jefté (Oitavo Juiz de Israel)", "subtitulo": "Vitória sobre Amom e o Voto Trágico", "eixo_codigo": "BIBLICO", "categoria": "juiz", "cultura": "Gileade", "ano_inicio": -1074, "ano_fim": -1068, "data_legivel": "1074 a.C. até 1068 a.C.", "incerteza": 15, "descricao": "Guerreiro valoroso exilado pelos irmãos; convocado pelos anciãos de Gileade para repelir os amonitas; fez um voto solene que envolveu sua única filha; julgou Israel por 6 anos.", "fontes": "Juízes 11-12; Hebreus 11:32.", "wikipedia_url": "https://en.wikipedia.org/wiki/Jephthah", "localizacao": "Gileade / Mizpá", "latitude": 32.2, "longitude": 35.8, "tags": "jefte,voto,amon,gileade,juiz", "concilio": null}, "end": "-001068-12-31"}, {"id": "ev_40", "group": 2, "content": "<span class='item-titulo'>👑 Rei Saul (Reinado: 40 anos)</span>", "start": "-001050-01-01", "type": "range", "className": "item-biblico cat-rei_israel", "meta": {"tipo_item": "evento", "titulo": "Rei Saul (Reinado: 40 anos)", "subtitulo": "Primeiro Rei de Todo Israel", "eixo_codigo": "BIBLICO", "categoria": "rei_israel", "cultura": "Gibeá de Benjamim", "ano_inicio": -1050, "ano_fim": -1010, "data_legivel": "1050 a.C. até 1010 a.C.", "incerteza": 10, "descricao": "Umgido por Samuel a pedido do povo; homem de porte imponente da tribo de Benjamim; obteve vitórias militares contra os amonitas e filisteus, mas desobedeceu na guerra contra os amalequitas; pereceu na Batalha do Monte Gilboa.", "fontes": "1 Samuel 9-31; 1 Crônicas 10.", "wikipedia_url": "https://en.wikipedia.org/wiki/Saul", "localizacao": "Gibeá / Monte Gilboa", "latitude": 32.5028, "longitude": 35.4194, "tags": "saul,primeiro_rei,gilboa,monarquia_unida", "concilio": null}, "end": "-001010-12-31"}, {"id": "ev_41", "group": 2, "content": "<span class='item-titulo'>👑 Rei Davi (Vida: 70 anos / Reinado: 40 anos)</span>", "start": "-001040-01-01", "type": "range", "className": "item-biblico cat-rei_israel", "meta": {"tipo_item": "evento", "titulo": "Rei Davi (Vida: 70 anos / Reinado: 40 anos)", "subtitulo": "O Homem Segundo o Coração de Deus", "eixo_codigo": "BIBLICO", "categoria": "rei_israel", "cultura": "Hebrom / Jerusalém", "ano_inicio": -1040, "ano_fim": -970, "data_legivel": "1040 a.C. até 970 a.C.", "incerteza": 5, "descricao": "Pastor de Belém que derrotou o gigante Golias; ungiu como rei sobre Judá em Hebrom (-1010) e depois sobre todo Israel (-1003); conquistou a fortaleza jebuseia de Sião, fundando a Cidade de Davi; autor da maioria dos Salmos.", "fontes": "1 e 2 Samuel; 1 Crônicas 11-29; Inscrição de Tel Dã ('Casa de Davi').", "wikipedia_url": "https://en.wikipedia.org/wiki/David", "localizacao": "Jerusalém (Monte Sião)", "latitude": 31.7767, "longitude": 35.2345, "tags": "davi,salmos,jerusalem,casa_de_davi,monarquia", "concilio": null}, "end": "-000970-12-31"}, {"id": "ev_42", "group": 2, "content": "<span class='item-titulo'>👑 Rei Salomão (Reinado: 40 anos)</span>", "start": "-000990-01-01", "type": "range", "className": "item-biblico cat-rei_israel", "meta": {"tipo_item": "evento", "titulo": "Rei Salomão (Reinado: 40 anos)", "subtitulo": "Sabedoria Lendária e Construtor do Templo", "eixo_codigo": "BIBLICO", "categoria": "rei_israel", "cultura": "Jerusalém", "ano_inicio": -990, "ano_fim": -931, "data_legivel": "990 a.C. até 931 a.C.", "incerteza": 5, "descricao": "Filho de Davi e Bate-Seba; orou pedindo sabedoria para julgar o povo; edificou o monumental Primeiro Templo de Jerusalém no Monte Moriá; expandiu frotas comerciais até Társis e Ofir; compôs Provérbios, Eclesiastes e Cantares.", "fontes": "1 Reis 1-11; 2 Crônicas 1-9.", "wikipedia_url": "https://en.wikipedia.org/wiki/Solomon", "localizacao": "Jerusalém (Monte Moriá)", "latitude": 31.778, "longitude": 35.2354, "tags": "salomao,primeiro_templo,sabedoria,moria", "concilio": null}, "end": "-000931-12-31"}, {"id": "ev_49", "group": 2, "content": "<span class='item-titulo'>👑 Rei Roboão (Reinado: 17 anos)</span>", "start": "-000931-01-01", "type": "range", "className": "item-biblico cat-rei_juda", "meta": {"tipo_item": "evento", "titulo": "Rei Roboão (Reinado: 17 anos)", "subtitulo": "Filho de Salomão e Invasão de Sisaque", "eixo_codigo": "BIBLICO", "categoria": "rei_juda", "cultura": "Jerusalém", "ano_inicio": -931, "ano_fim": -913, "data_legivel": "931 a.C. até 913 a.C.", "incerteza": 2, "descricao": "Rejeitou o conselho dos anciãos e agravou os tributos, causando a cisão das 10 tribos; no quinto ano de seu reinado, o faraó Sisaque I (Sheshenq I) saqueou os tesouros do Templo de Jerusalém.", "fontes": "1 Reis 12, 14:21-31; Reliefs de Shoshenq I no Templo de Karnak.", "wikipedia_url": "https://en.wikipedia.org/wiki/Rehoboam", "localizacao": "Jerusalém", "latitude": 31.7767, "longitude": 35.2345, "tags": "roboao,sisaque,karnak,cisma,juda", "concilio": null}, "end": "-000913-12-31"}, {"id": "ev_43", "group": 2, "content": "<span class='item-titulo'>👑 Rei Jeroboão I (Reinado: 22 anos)</span>", "start": "-000931-01-01", "type": "range", "className": "item-biblico cat-rei_israel", "meta": {"tipo_item": "evento", "titulo": "Rei Jeroboão I (Reinado: 22 anos)", "subtitulo": "Cisma das 10 Tribos e Culto em Betel e Dã", "eixo_codigo": "BIBLICO", "categoria": "rei_israel", "cultura": "Siquém / Tirza / Samaria", "ano_inicio": -931, "ano_fim": -910, "data_legivel": "931 a.C. até 910 a.C.", "incerteza": 2, "descricao": "Líder da revolta do norte contra os pesados tributos de Roboão; estabeleceu bezerros de ouro em Betel e Dã para impedir que seus súditos peregrinassem ao Templo de Jerusalém, originando o infame 'pecado de Jeroboão'.", "fontes": "1 Reis 11:26-40, 12-14.", "wikipedia_url": "https://en.wikipedia.org/wiki/Jeroboam", "localizacao": "Siquém / Betel / Dã", "latitude": 32.2133, "longitude": 35.2819, "tags": "jeroboao,cisma,bezerros_de_ouro,reino_norte", "concilio": null}, "end": "-000910-12-31"}, {"id": "ev_50", "group": 2, "content": "<span class='item-titulo'>👑 Rei Asa (Reinado: 41 anos)</span>", "start": "-000911-01-01", "type": "range", "className": "item-biblico cat-rei_juda", "meta": {"tipo_item": "evento", "titulo": "Rei Asa (Reinado: 41 anos)", "subtitulo": "Grande Reforma Religiosa em Judá", "eixo_codigo": "BIBLICO", "categoria": "rei_juda", "cultura": "Jerusalém", "ano_inicio": -911, "ano_fim": -870, "data_legivel": "911 a.C. até 870 a.C.", "incerteza": 2, "descricao": "Neto de Roboão; coração reto diante do Senhor; removeu os altares dos deuses estranhos, derrubou os postes sagrados e depôs sua própria avó Maaca por causa de um ídolo obsceno.", "fontes": "1 Reis 15:9-24; 2 Crônicas 14-16.", "wikipedia_url": "https://en.wikipedia.org/wiki/Asa_of_Judah", "localizacao": "Jerusalém", "latitude": 31.7767, "longitude": 35.2345, "tags": "asa,reforma,juda,idolatria", "concilio": null}, "end": "-000870-12-31"}, {"id": "ev_60", "group": 2, "content": "<span class='item-titulo'>🔥 Profeta Elias, o Tesbita</span>", "start": "-000900-01-01", "type": "range", "className": "item-biblico cat-profeta", "meta": {"tipo_item": "evento", "titulo": "Profeta Elias, o Tesbita", "subtitulo": "O Confronto no Monte Carmelo e a Carruagem de Fogo", "eixo_codigo": "BIBLICO", "categoria": "profeta", "cultura": "Gileade / Monte Carmelo", "ano_inicio": -900, "ano_fim": -849, "data_legivel": "900 a.C. até 849 a.C.", "incerteza": 10, "descricao": "Profeta do Reino do Norte; ordenou a seca por 3 anos e meio; desafiou e venceu os 450 profetas de Baal no Monte Carmelo com fogo descido do céu; arrebatado aos céus em um redemoinho com uma carruagem e cavalos de fogo.", "fontes": "1 Reis 17-19, 21; 2 Reis 1-2; Malaquias 4:5; Mateus 17:1-3.", "wikipedia_url": "https://en.wikipedia.org/wiki/Elijah", "localizacao": "Monte Carmelo / Rio Jordão", "latitude": 32.7389, "longitude": 35.0444, "tags": "elias,carmelo,fogo_do_ceu,carruagem,profeta", "concilio": null}, "end": "-000849-12-31"}, {"id": "ev_61", "group": 2, "content": "<span class='item-titulo'>🔥 Profeta Eliseu</span>", "start": "-000890-01-01", "type": "range", "className": "item-biblico cat-profeta", "meta": {"tipo_item": "evento", "titulo": "Profeta Eliseu", "subtitulo": "Porção Dobrada do Espírito e Milagres em Israel", "eixo_codigo": "BIBLICO", "categoria": "profeta", "cultura": "Samaria / Rio Jordão", "ano_inicio": -890, "ano_fim": -800, "data_legivel": "890 a.C. até 800 a.C.", "incerteza": 10, "descricao": "Sucessor de Elias; recebeu porção dobrada de seu espírito; realizou inúmeros milagres (cura de Naamã o sírio da lepra, ressurreição do filho da sunamita, flutuação do machado de ferro); conselheiro espiritual de reis durante 60 anos.", "fontes": "1 Reis 19:16-21; 2 Reis 2-13; Lucas 4:27.", "wikipedia_url": "https://en.wikipedia.org/wiki/Elisha", "localizacao": "Samaria / Suném / Jericó", "latitude": 32.277, "longitude": 35.1906, "tags": "eliseu,milagres,naama,sunamita,profeta", "concilio": null}, "end": "-000800-12-31"}, {"id": "ev_44", "group": 2, "content": "<span class='item-titulo'>👑 Rei Onri (Reinado: 12 anos)</span>", "start": "-000885-01-01", "type": "range", "className": "item-biblico cat-rei_israel", "meta": {"tipo_item": "evento", "titulo": "Rei Onri (Reinado: 12 anos)", "subtitulo": "Fundador da Dinastia Onrida e Construtor de Samaria", "eixo_codigo": "BIBLICO", "categoria": "rei_israel", "cultura": "Samaria", "ano_inicio": -885, "ano_fim": -874, "data_legivel": "885 a.C. até 874 a.C.", "incerteza": 2, "descricao": "Comandante militar que tomou o poder; comprou a colina de Samaria e edificou a nova e fortificada capital do Reino do Norte; mencionado internacionalmente na célebre Estela de Mesa como soberano poderoso sobre Moabe.", "fontes": "1 Reis 16:21-28; Estela de Mesa (Pedra Moabita no Louvre).", "wikipedia_url": "https://en.wikipedia.org/wiki/Omri", "localizacao": "Samaria (Sebaste)", "latitude": 32.277, "longitude": 35.1906, "tags": "onri,samaria,estela_de_mesa,dinastia_onrida", "concilio": null}, "end": "-000874-12-31"}, {"id": "ev_45", "group": 2, "content": "<span class='item-titulo'>👑 Rei Acabe (Reinado: 22 anos)</span>", "start": "-000874-01-01", "type": "range", "className": "item-biblico cat-rei_israel", "meta": {"tipo_item": "evento", "titulo": "Rei Acabe (Reinado: 22 anos)", "subtitulo": "Casamento com Jezabel e Batalha de Qarqar", "eixo_codigo": "BIBLICO", "categoria": "rei_israel", "cultura": "Samaria / Jezreel", "ano_inicio": -874, "ano_fim": -853, "data_legivel": "874 a.C. até 853 a.C.", "incerteza": 1, "descricao": "Filho de Onri; desposou a princesa fenícia Jezabel de Tiro e promoveu o culto a Baal; enfrentou a oposição implacável do profeta Elias; liderou uma coalizão com 2.000 carros de guerra contra o imperador Salmaneser III na Batalha de Qarqar (-853).", "fontes": "1 Reis 16:29 - 22:40; Monólito de Curque (British Museum).", "wikipedia_url": "https://en.wikipedia.org/wiki/Ahab", "localizacao": "Samaria / Jezreel / Qarqar", "latitude": 35.7333, "longitude": 36.3833, "tags": "acabe,jezabel,elias,qarqar,assiria", "concilio": null}, "end": "-000853-12-31"}, {"id": "ev_51", "group": 2, "content": "<span class='item-titulo'>👑 Rei Josafá (Reinado: 25 anos)</span>", "start": "-000870-01-01", "type": "range", "className": "item-biblico cat-rei_juda", "meta": {"tipo_item": "evento", "titulo": "Rei Josafá (Reinado: 25 anos)", "subtitulo": "Piedade, Justiça e Vitória pela Adoração", "eixo_codigo": "BIBLICO", "categoria": "rei_juda", "cultura": "Jerusalém", "ano_inicio": -870, "ano_fim": -848, "data_legivel": "870 a.C. até 848 a.C.", "incerteza": 2, "descricao": "Enviou príncipes e levitas para ensinar a Lei de Deus em todas as cidades de Judá; estabeleceu juízes íntegros; alcançou vitória espetacular sobre a confederação moabita e amonita através de louvor sagrado.", "fontes": "1 Reis 22; 2 Crônicas 17-20.", "wikipedia_url": "https://en.wikipedia.org/wiki/Jehoshaphat", "localizacao": "Jerusalém / En-Gedi", "latitude": 31.45, "longitude": 35.3833, "tags": "josafa,ensino_da_lei,louvor,vitoria,juda", "concilio": null}, "end": "-000848-12-31"}, {"id": "ev_46", "group": 2, "content": "<span class='item-titulo'>👑 Rei Jeú (Reinado: 28 anos)</span>", "start": "-000841-01-01", "type": "range", "className": "item-biblico cat-rei_israel", "meta": {"tipo_item": "evento", "titulo": "Rei Jeú (Reinado: 28 anos)", "subtitulo": "Extermínio da Casa de Acabe e Tributo à Assíria", "eixo_codigo": "BIBLICO", "categoria": "rei_israel", "cultura": "Jezreel / Samaria", "ano_inicio": -841, "ano_fim": -814, "data_legivel": "841 a.C. até 814 a.C.", "incerteza": 1, "descricao": "Ungido por ordem de Eliseu; executou Jorão de Israel, Acazias de Judá e mandou lançar Jezabel da torre; expurgou os sacerdotes de Baal; retratado ajoelhado prestando tributo a Salmaneser III no Obelisco Negro de Nimrud.", "fontes": "2 Reis 9-10; Obelisco Negro de Salmaneser III (Museu Britânico).", "wikipedia_url": "https://en.wikipedia.org/wiki/Jehu", "localizacao": "Samaria / Jezreel", "latitude": 32.277, "longitude": 35.1906, "tags": "jeu,obelisco_negro,jezabel,salmaneser", "concilio": null}, "end": "-000814-12-31"}, {"id": "ev_52", "group": 2, "content": "<span class='item-titulo'>👑 Rei Joás de Judá (Reinado: 40 anos)</span>", "start": "-000835-01-01", "type": "range", "className": "item-biblico cat-rei_juda", "meta": {"tipo_item": "evento", "titulo": "Rei Joás de Judá (Reinado: 40 anos)", "subtitulo": "O Rei Menino Salvo da Usurpadora Atalia", "eixo_codigo": "BIBLICO", "categoria": "rei_juda", "cultura": "Jerusalém", "ano_inicio": -835, "ano_fim": -796, "data_legivel": "835 a.C. até 796 a.C.", "incerteza": 2, "descricao": "Escondido no Templo pelo sumo sacerdote Joiada durante o massacre promovido pela rainha Atalia; coroado aos 7 anos de idade; promoveu a grande restauração arquitetônica do Templo de Salomão.", "fontes": "2 Reis 11-12; 2 Crônicas 23-24.", "wikipedia_url": "https://en.wikipedia.org/wiki/Jehoash_of_Judah", "localizacao": "Jerusalém (Templo)", "latitude": 31.778, "longitude": 35.2354, "tags": "joas,atalia,joiada,reparo_templo,juda", "concilio": null}, "end": "-000796-12-31"}, {"id": "ev_47", "group": 2, "content": "<span class='item-titulo'>👑 Rei Jeroboão II (Reinado: 41 anos)</span>", "start": "-000793-01-01", "type": "range", "className": "item-biblico cat-rei_israel", "meta": {"tipo_item": "evento", "titulo": "Rei Jeroboão II (Reinado: 41 anos)", "subtitulo": "Idade de Ouro Econômica e Expansão do Norte", "eixo_codigo": "BIBLICO", "categoria": "rei_israel", "cultura": "Samaria", "ano_inicio": -793, "ano_fim": -753, "data_legivel": "793 a.C. até 753 a.C.", "incerteza": 2, "descricao": "Monarca de maior longevidade e poder militar no Reino do Norte; recuperou fronteiras desde Hamate até o Mar Morto; prosperidade atestada pelos Óstracos de Samaria, contemporâneo dos profetas Amós e Oseias.", "fontes": "2 Reis 14:23-29; Amós 6; Oseias 1:1; Óstracos de Samaria.", "wikipedia_url": "https://en.wikipedia.org/wiki/Jeroboam_II", "localizacao": "Samaria", "latitude": 32.277, "longitude": 35.1906, "tags": "jeroboao_ii,prosperidade,amos,oseias,samaria", "concilio": null}, "end": "-000753-12-31"}, {"id": "ev_53", "group": 2, "content": "<span class='item-titulo'>👑 Rei Uzias / Azarias (Reinado: 52 anos)</span>", "start": "-000790-01-01", "type": "range", "className": "item-biblico cat-rei_juda", "meta": {"tipo_item": "evento", "titulo": "Rei Uzias / Azarias (Reinado: 52 anos)", "subtitulo": "Prosperidade Tecnológica, Força Militar e Lepra", "eixo_codigo": "BIBLICO", "categoria": "rei_juda", "cultura": "Jerusalém", "ano_inicio": -790, "ano_fim": -739, "data_legivel": "790 a.C. até 739 a.C.", "incerteza": 2, "descricao": "Reinou longamente com grande sucesso militar contra filisteus e árabes; desenvolveu engenhos mecânicos para projetar flechas e pedras em Jerusalém; no auge de seu orgulho, usurpou as funções sacerdotais entrando no Templo para queimar incenso, sendo ferido de lepra.", "fontes": "2 Reis 15:1-7; 2 Crônicas 26; Isaías 6:1; Inscrição Funerária de Uzias.", "wikipedia_url": "https://en.wikipedia.org/wiki/Uzziah", "localizacao": "Jerusalém", "latitude": 31.7767, "longitude": 35.2345, "tags": "uzias,lepra,tecnologia,isaias,juda", "concilio": null}, "end": "-000739-12-31"}, {"id": "ev_62", "group": 2, "content": "<span class='item-titulo'>🔥 Profeta Jonas</span>", "start": "-000785-01-01", "type": "range", "className": "item-biblico cat-profeta", "meta": {"tipo_item": "evento", "titulo": "Profeta Jonas", "subtitulo": "A Missão a Nínive e o Grande Peixe", "eixo_codigo": "BIBLICO", "categoria": "profeta", "cultura": "Gate-Hefer / Nínive", "ano_inicio": -785, "ano_fim": -760, "data_legivel": "785 a.C. até 760 a.C.", "incerteza": 10, "descricao": "Profeta do norte sob Jeroboão II; tentou fugir de seu chamado embarcando para Társis; engolido por um grande peixe, orou e foi expelido; pregou o juízo em Nínive, capital assíria, resultando em arrependimento coletivo.", "fontes": "Livro de Jonas; 2 Reis 14:25; Mateus 12:39-41.", "wikipedia_url": "https://en.wikipedia.org/wiki/Jonah", "localizacao": "Nínive (Mossul, Iraque)", "latitude": 36.3596, "longitude": 43.1528, "tags": "jonas,ninive,arrependimento,peixe,profeta", "concilio": null}, "end": "-000760-12-31"}, {"id": "ev_65", "group": 2, "content": "<span class='item-titulo'>🔥 Profeta Isaías de Jerusalém (Proto-Isaías)</span>", "start": "-000765-01-01", "type": "range", "className": "item-biblico cat-profeta", "meta": {"tipo_item": "evento", "titulo": "Profeta Isaías de Jerusalém (Proto-Isaías)", "subtitulo": "O Santo de Israel e o Rei Messias", "eixo_codigo": "BIBLICO", "categoria": "profeta", "cultura": "Jerusalém", "ano_inicio": -765, "ano_fim": -686, "data_legivel": "765 a.C. até 686 a.C.", "incerteza": 10, "descricao": "Cortesão e teólogo monumental em Jerusalém sob os reis Uzias, Jotão, Acaz e Ezequias; teve a visão de Deus no Templo ('Santo, Santo, Santo'); profetizou o nascimento do Emanuel (7:14) e o Príncipe da Paz (9:6); segundo a tradição judaica foi serrado ao meio sob Manassés.", "fontes": "Livro de Isaías 1-39; 2 Reis 19-20; Hebreus 11:37.", "wikipedia_url": "https://en.wikipedia.org/wiki/Isaiah", "localizacao": "Jerusalém", "latitude": 31.7767, "longitude": 35.2345, "tags": "isaias,emanuel,santo_de_israel,serafins,profeta", "concilio": null}, "end": "-000686-12-31"}, {"id": "ev_63", "group": 2, "content": "<span class='item-titulo'>🔥 Profeta Amós de Tecoa</span>", "start": "-000760-01-01", "type": "range", "className": "item-biblico cat-profeta", "meta": {"tipo_item": "evento", "titulo": "Profeta Amós de Tecoa", "subtitulo": "Voz da Justiça Social e Retidão Moral", "eixo_codigo": "BIBLICO", "categoria": "profeta", "cultura": "Tecoa (Judá) / Betel", "ano_inicio": -760, "ano_fim": -750, "data_legivel": "760 a.C. até 750 a.C.", "incerteza": 5, "descricao": "Pastor e cultivador de sicômoros do sul; enviado por Deus ao próspero e idólatra Reino do Norte sob Jeroboão II; denunciou a opressão aos pobres e hipocrisia cúltica: 'Corra, porém, a justiça como as águas, e a retidão, como um ribeiro perene' (Amós 5:24).", "fontes": "Livro de Amós; Atos 7:42-43.", "wikipedia_url": "https://en.wikipedia.org/wiki/Amos_(prophet)", "localizacao": "Betel / Tecoa", "latitude": 31.6167, "longitude": 35.2167, "tags": "amos,justica_social,betel,profeta", "concilio": null}, "end": "-000750-12-31"}, {"id": "ev_64", "group": 2, "content": "<span class='item-titulo'>🔥 Profeta Oseias</span>", "start": "-000755-01-01", "type": "range", "className": "item-biblico cat-profeta", "meta": {"tipo_item": "evento", "titulo": "Profeta Oseias", "subtitulo": "O Amor Incondicional de Deus e a Esposa Infiel", "eixo_codigo": "BIBLICO", "categoria": "profeta", "cultura": "Reino do Norte (Israel)", "ano_inicio": -755, "ano_fim": -715, "data_legivel": "755 a.C. até 715 a.C.", "incerteza": 10, "descricao": "Instruído por Deus a desposar Gômer, mulher infiel, como alegoria viva do adultério espiritual de Israel com ídolos pagãos; profetizou a ruína iminente de Samaria combinada com a promessa da reconciliação compassiva de Yahweh.", "fontes": "Livro de Oseias; Romanos 9:25-26.", "wikipedia_url": "https://en.wikipedia.org/wiki/Hosea", "localizacao": "Samaria", "latitude": 32.277, "longitude": 35.1906, "tags": "oseias,amor_de_deus,gomer,reconciliacao,profeta", "concilio": null}, "end": "-000715-12-31"}, {"id": "ev_3", "group": 1, "content": "<span class='item-titulo'>🏛️ Império Neoassírio (Hegemonia Militar)</span>", "start": "-000745-01-01", "type": "range", "className": "item-secular cat-imperio", "meta": {"tipo_item": "evento", "titulo": "Império Neoassírio (Hegemonia Militar)", "subtitulo": "De Tiglath-Pileser III à queda de Nínive", "eixo_codigo": "SECULAR", "categoria": "imperio", "cultura": "Assíria", "ano_inicio": -745, "ano_fim": -612, "data_legivel": "745 a.C. até 612 a.C.", "incerteza": 5, "descricao": "Monarquia imperialista altamente militarizada; introduziu transferências populacionais em massa e conquistou o Levante e Egito.", "fontes": "Anais Reais Assírios; Prisma de Senaqueribe (Museu Britânico); Reliefs de Laquis.", "wikipedia_url": "https://en.wikipedia.org/wiki/Neo-Assyrian_Empire", "localizacao": "Nínive / Assur (Iraque)", "latitude": 36.3596, "longitude": 43.1528, "tags": "assiria,ninive,guerra,senaqueribe", "concilio": null}, "end": "-000612-08-01"}, {"id": "ev_66", "group": 2, "content": "<span class='item-titulo'>🔥 Profeta Miqueias de Moresete</span>", "start": "-000740-01-01", "type": "range", "className": "item-biblico cat-profeta", "meta": {"tipo_item": "evento", "titulo": "Profeta Miqueias de Moresete", "subtitulo": "A Origem Eterna do Messias em Belém", "eixo_codigo": "BIBLICO", "categoria": "profeta", "cultura": "Moresete-Gate / Jerusalém", "ano_inicio": -740, "ano_fim": -690, "data_legivel": "740 a.C. até 690 a.C.", "incerteza": 10, "descricao": "Profeta camponês das colinas de Judá; defendeu agricultores espoliados pelos poderosos de Jerusalém; imortalizou a profecia do Messias: 'E tu, Belém-Efrata, de ti me sairá aquele que há de reinar em Israel, cujas saídas são desde a eternidade' (Miquéias 5:2).", "fontes": "Livro de Miqueias; Jeremias 26:18; Mateus 2:5-6.", "wikipedia_url": "https://en.wikipedia.org/wiki/Micah_(prophet)", "localizacao": "Moresete / Belém", "latitude": 31.6, "longitude": 34.9, "tags": "miqueias,belem,messias,moresete,profeta", "concilio": null}, "end": "-000690-12-31"}, {"id": "ev_54", "group": 2, "content": "<span class='item-titulo'>👑 Rei Acaz (Reinado: 16 anos)</span>", "start": "-000735-01-01", "type": "range", "className": "item-biblico cat-rei_juda", "meta": {"tipo_item": "evento", "titulo": "Rei Acaz (Reinado: 16 anos)", "subtitulo": "Guerra Siro-Efraimita e Submissão à Assíria", "eixo_codigo": "BIBLICO", "categoria": "rei_juda", "cultura": "Jerusalém", "ano_inicio": -735, "ano_fim": -715, "data_legivel": "735 a.C. até 715 a.C.", "incerteza": 2, "descricao": "Monarca idólatra que sacrificou o próprio filho no fogo no vale de Ben-Hinom; rejeitou o sinal de fé oferecido pelo profeta Isaías (a profecia de Emanuel em Isaías 7); pagou tributo a Tiglath-Pileser III para atacar Damasco e Samaria.", "fontes": "2 Reis 16; 2 Crônicas 28; Isaías 7; Selo Bulla do Rei Acaz.", "wikipedia_url": "https://en.wikipedia.org/wiki/Ahaz", "localizacao": "Jerusalém", "latitude": 31.7767, "longitude": 35.2345, "tags": "acaz,emanuel,isaias,siro_efraimita,assiria,juda", "concilio": null}, "end": "-000715-12-31"}, {"id": "ev_48", "group": 2, "content": "<span class='item-titulo'>👑 Rei Oseias (Último Rei de Israel: 732-722 a.C.)</span>", "start": "-000732-01-01", "type": "range", "className": "item-biblico cat-rei_israel", "meta": {"tipo_item": "evento", "titulo": "Rei Oseias (Último Rei de Israel: 732-722 a.C.)", "subtitulo": "Queda de Samaria e Fim do Reino do Norte", "eixo_codigo": "BIBLICO", "categoria": "rei_israel", "cultura": "Samaria", "ano_inicio": -732, "ano_fim": -722, "data_legivel": "732 a.C. até 722 a.C.", "incerteza": 0, "descricao": "Assassinou Peca com apoio assírio; rebelou-se contra Salmaneser V buscando aliança com o faraó egípcio So; Samaria foi sitiada por 3 anos e conquistada por Sargão II em 722 a.C., selando a dispersão das 10 tribos.", "fontes": "2 Reis 17:1-6; Anais de Sargão II em Corsabade.", "wikipedia_url": "https://en.wikipedia.org/wiki/Hoshea", "localizacao": "Samaria", "latitude": 32.277, "longitude": 35.1906, "tags": "oseias,queda_samaria,assiria,deportacao,reino_norte", "concilio": null}, "end": "-000722-12-31"}, {"id": "ev_83", "group": 3, "content": "<span class='item-titulo'>🏺 Teogonia de Hesíodo (Cosmogonia Grega)</span>", "start": "-000730-01-01", "type": "range", "className": "item-mitologia cat-mito", "meta": {"tipo_item": "evento", "titulo": "Teogonia de Hesíodo (Cosmogonia Grega)", "subtitulo": "Do Caos Primordial à Soberania Olímpica de Zeus", "eixo_codigo": "MITOLOGIA", "categoria": "mito", "cultura": "Grécia", "ano_inicio": -730, "ano_fim": -700, "data_legivel": "730 a.C. até 700 a.C.", "incerteza": 30, "descricao": "Poema épico genealógico grego: nascimento do cosmos a partir do Caos primordial, Terra (Gaia) e Amor (Eros); castração de Urano por Cronos e a Titanomaquia que coroa Zeus.", "fontes": "Texto poético em hexâmetro dactílico de Hesíodo.", "wikipedia_url": "https://en.wikipedia.org/wiki/Theogony", "localizacao": "Beócia / Monte Hélicon (Grécia)", "latitude": 38.375, "longitude": 23.32, "tags": "hesiodo,teogonia,zeus,caos,grecia", "concilio": null}, "end": "-000700-01-01"}, {"id": "ev_55", "group": 2, "content": "<span class='item-titulo'>👑 Rei Ezequias (Reinado: 29 anos)</span>", "start": "-000715-01-01", "type": "range", "className": "item-biblico cat-rei_juda", "meta": {"tipo_item": "evento", "titulo": "Rei Ezequias (Reinado: 29 anos)", "subtitulo": "O Cerco de Senaqueribe e o Túnel de Siloé", "eixo_codigo": "BIBLICO", "categoria": "rei_juda", "cultura": "Jerusalém", "ano_inicio": -715, "ano_fim": -686, "data_legivel": "715 a.C. até 686 a.C.", "incerteza": 1, "descricao": "Piedoso reformador; destruiu a serpente de bronze Neustã transformada em ídolo; perfurou o impressionante Túnel de Siloé na rocha viva (533 metros) para assegurar água durante o cerco assírio de 701 a.C.; Jerusalém foi milagrosamente poupada.", "fontes": "2 Reis 18-20; Isaías 36-39; Prisma de Senaqueribe; Inscrição de Siloé (Museu de Istambul).", "wikipedia_url": "https://en.wikipedia.org/wiki/Hezekiah", "localizacao": "Jerusalém (Túnel de Siloé)", "latitude": 31.7725, "longitude": 35.2356, "tags": "ezequias,siloe,senaqueribe,milagre,juda", "concilio": null}, "end": "-000686-12-31"}, {"id": "ev_56", "group": 2, "content": "<span class='item-titulo'>👑 Rei Manassés (Reinado: 55 anos)</span>", "start": "-000697-01-01", "type": "range", "className": "item-biblico cat-rei_juda", "meta": {"tipo_item": "evento", "titulo": "Rei Manassés (Reinado: 55 anos)", "subtitulo": "O Reinado Mais Longo e Idólatra de Judá", "eixo_codigo": "BIBLICO", "categoria": "rei_juda", "cultura": "Jerusalém", "ano_inicio": -697, "ano_fim": -642, "data_legivel": "697 a.C. até 642 a.C.", "incerteza": 1, "descricao": "Filho de Ezequias; reconstruiu altares a Baal, adorou o exército dos céus e derramou sangue inocente em profusão; aprisionado e levado em cadeias à Babilônia pelos assírios, arrependeu-se amargamente em oração e foi restaurado.", "fontes": "2 Reis 21; 2 Crônicas 33; Oração de Manassés; Anais de Assurbanipal.", "wikipedia_url": "https://en.wikipedia.org/wiki/Manasseh_of_Judah", "localizacao": "Jerusalém", "latitude": 31.7767, "longitude": 35.2345, "tags": "manasses,arrependimento,oracao_manasses,juda", "concilio": null}, "end": "-000642-12-31"}, {"id": "ev_67", "group": 2, "content": "<span class='item-titulo'>🔥 Profeta Naum de Elcos</span>", "start": "-000660-01-01", "type": "range", "className": "item-biblico cat-profeta", "meta": {"tipo_item": "evento", "titulo": "Profeta Naum de Elcos", "subtitulo": "O Juízo Final sobre a Sanguinária Nínive", "eixo_codigo": "BIBLICO", "categoria": "profeta", "cultura": "Judá / Nínive", "ano_inicio": -660, "ano_fim": -612, "data_legivel": "660 a.C. até 612 a.C.", "incerteza": 10, "descricao": "Predisse com vivacidade poética impressionante a queda catastrófica de Nínive (-612 a.C.), a capital do Império Assírio, vingando as nações oprimidas por sua crueldade militar.", "fontes": "Livro de Naum.", "wikipedia_url": "https://en.wikipedia.org/wiki/Nahum", "localizacao": "Elcos / Nínive", "latitude": 36.3596, "longitude": 43.1528, "tags": "naum,ninive,queda_ninive,juizo,profeta", "concilio": null}, "end": "-000612-12-31"}, {"id": "ev_70", "group": 2, "content": "<span class='item-titulo'>🔥 Profeta Jeremias (O Profeta Chorão)</span>", "start": "-000645-01-01", "type": "range", "className": "item-biblico cat-profeta", "meta": {"tipo_item": "evento", "titulo": "Profeta Jeremias (O Profeta Chorão)", "subtitulo": "Quarenta Anos de Advertência, a Nova Aliança e o Exílio", "eixo_codigo": "BIBLICO", "categoria": "profeta", "cultura": "Anatote / Jerusalém / Egito", "ano_inicio": -645, "ano_fim": -570, "data_legivel": "645 a.C. até 570 a.C.", "incerteza": 5, "descricao": "Chamado desde o ventre sob Josias; advertiu incessantemente contra falsas seguranças cúlticas; foi lançado em cisternas de lama por oficiais rebeldes; testemunhou com lágrimas o incêndio de Jerusalém e a deportação; profetizou o cativeiro de 70 anos e a Nova Aliança gravada no coração (Jr 31:31).", "fontes": "Livro de Jeremias; Lamentações; 2 Crônicas 36:21-22.", "wikipedia_url": "https://en.wikipedia.org/wiki/Jeremiah", "localizacao": "Anatote / Jerusalém / Tafnes (Egito)", "latitude": 31.8167, "longitude": 35.2667, "tags": "jeremias,nova_alianca,exilio,lamentacoes,profeta", "concilio": null}, "end": "-000570-12-31"}, {"id": "ev_68", "group": 2, "content": "<span class='item-titulo'>🔥 Profeta Sofonias</span>", "start": "-000640-01-01", "type": "range", "className": "item-biblico cat-profeta", "meta": {"tipo_item": "evento", "titulo": "Profeta Sofonias", "subtitulo": "O Grande e Terrível Dia do Senhor", "eixo_codigo": "BIBLICO", "categoria": "profeta", "cultura": "Jerusalém", "ano_inicio": -640, "ano_fim": -621, "data_legivel": "640 a.C. até 621 a.C.", "incerteza": 10, "descricao": "Bisneto do piedoso rei Ezequias; profetizou nos primórdios do reinado de Josias, preparando espiritualmente a corte e a nação para as reformas purificadoras após décadas de degradação sob Manassés.", "fontes": "Livro de Sofonias.", "wikipedia_url": "https://en.wikipedia.org/wiki/Zephaniah", "localizacao": "Jerusalém", "latitude": 31.7767, "longitude": 35.2345, "tags": "sofonias,dia_do_senhor,reforma_josias,profeta", "concilio": null}, "end": "-000621-12-31"}, {"id": "ev_57", "group": 2, "content": "<span class='item-titulo'>👑 Rei Josias (Reinado: 31 anos)</span>", "start": "-000640-01-01", "type": "range", "className": "item-biblico cat-rei_juda", "meta": {"tipo_item": "evento", "titulo": "Rei Josias (Reinado: 31 anos)", "subtitulo": "Achado do Livro da Lei e Morte em Megido", "eixo_codigo": "BIBLICO", "categoria": "rei_juda", "cultura": "Jerusalém / Megido", "ano_inicio": -640, "ano_fim": -609, "data_legivel": "640 a.C. até 609 a.C.", "incerteza": 1, "descricao": "Coroado aos 8 anos; aos 18 anos promoveu reforma profunda quando o sumo sacerdote Hilquias encontrou o rolo da Lei no Templo (622 a.C.); expurgou todo culto idólatra e celebrou uma Páscoa sem paralelo; tombou na Batalha de Megido contra o Faraó Neco II.", "fontes": "2 Reis 22-23; 2 Crônicas 34-35; Jeremias 22:15-16.", "wikipedia_url": "https://en.wikipedia.org/wiki/Josiah", "localizacao": "Jerusalém / Tel Megido", "latitude": 32.585, "longitude": 35.1844, "tags": "josias,livro_da_lei,megido,pascoa,reforma,juda", "concilio": null}, "end": "-000609-12-31"}, {"id": "ev_4", "group": 1, "content": "<span class='item-titulo'>🏛️ Império Neobabilônico (Nabucodonosor II)</span>", "start": "-000626-01-01", "type": "range", "className": "item-secular cat-imperio", "meta": {"tipo_item": "evento", "titulo": "Império Neobabilônico (Nabucodonosor II)", "subtitulo": "Dinastia Caldeia e Domínio Mesopotâmico", "eixo_codigo": "SECULAR", "categoria": "imperio", "cultura": "Babilônia", "ano_inicio": -626, "ano_fim": -539, "data_legivel": "626 a.C. até 539 a.C.", "incerteza": 0, "descricao": "Restauração do poder caldeu, florescimento arquitetônico (Porta de Ishtar), vitórias sobre o Egito na Batalha de Carquemis (-605) e cerco e destruição de Jerusalém.", "fontes": "Crônicas Babilônicas (ABC 5 - Crônica de Jerusalém); Cilindro de Nabucodonosor.", "wikipedia_url": "https://en.wikipedia.org/wiki/Neo-Babylonian_Empire", "localizacao": "Babilônia", "latitude": 32.5363, "longitude": 44.4208, "tags": "babilonia,nabucodonosor,exilio,carquemis", "concilio": null}, "end": "-000539-10-29"}, {"id": "ev_71", "group": 2, "content": "<span class='item-titulo'>🔥 Profeta Ezequiel</span>", "start": "-000622-01-01", "type": "range", "className": "item-biblico cat-profeta", "meta": {"tipo_item": "evento", "titulo": "Profeta Ezequiel", "subtitulo": "O Vale de Ossos Secos e a Glória no Rio Quebar", "eixo_codigo": "BIBLICO", "categoria": "profeta", "cultura": "Babilônia (Rio Quebar)", "ano_inicio": -622, "ano_fim": -565, "data_legivel": "622 a.C. até 565 a.C.", "incerteza": 5, "descricao": "Sacerdote de 25 anos deportado com o rei Joaquim em 597 a.C.; aos 30 anos contemplou a carruagem da glória divina na Babilônia; realizou dramatizações proféticas chocantes; profetizou a ressurreição nacional no vale de ossos secos (Ez 37) e a visão do novo Templo sagrado.", "fontes": "Livro de Ezequiel.", "wikipedia_url": "https://en.wikipedia.org/wiki/Ezekiel", "localizacao": "Tel-Abibe (Rio Quebar, Babilônia)", "latitude": 32.1, "longitude": 45.0, "tags": "ezequiel,ossos_secos,novo_templo,quebar,profeta", "concilio": null}, "end": "-000565-12-31"}, {"id": "ev_72", "group": 2, "content": "<span class='item-titulo'>🔥 Profeta Daniel (Belsazar / Ciro)</span>", "start": "-000620-01-01", "type": "range", "className": "item-biblico cat-profeta", "meta": {"tipo_item": "evento", "titulo": "Profeta Daniel (Belsazar / Ciro)", "subtitulo": "A Cova dos Leões e as Visões dos Quatro Impérios Mundiais", "eixo_codigo": "BIBLICO", "categoria": "profeta", "cultura": "Babilônia / Susa", "ano_inicio": -620, "ano_fim": -536, "data_legivel": "620 a.C. até 536 a.C.", "incerteza": 5, "descricao": "Nobre judeu levado adolescente à Babilônia em 605 a.C.; manteve-se fiel recusando a comida real; decifrou os sonhos da estátua dos impérios mundiais e a escrita na parede para Belsazar; salvo milagrosamente da cova dos leões famintos sob Dario o Medo; revelou as 70 semanas messiânicas.", "fontes": "Livro de Daniel; Mateus 24:15; Hebreus 11:33.", "wikipedia_url": "https://en.wikipedia.org/wiki/Daniel_(biblical_figure)", "localizacao": "Babilônia / Susa (Pérsia)", "latitude": 32.1892, "longitude": 48.2578, "tags": "daniel,cova_dos_leoes,estatua,70_semanas,profeta", "concilio": null}, "end": "-000536-12-31"}, {"id": "ev_69", "group": 2, "content": "<span class='item-titulo'>🔥 Profeta Habacuque</span>", "start": "-000612-01-01", "type": "range", "className": "item-biblico cat-profeta", "meta": {"tipo_item": "evento", "titulo": "Profeta Habacuque", "subtitulo": "O Justo Viverá pela Fé diante da Invasão Caldeia", "eixo_codigo": "BIBLICO", "categoria": "profeta", "cultura": "Jerusalém", "ano_inicio": -612, "ano_fim": -589, "data_legivel": "612 a.C. até 589 a.C.", "incerteza": 5, "descricao": "Filósofo-profeta que dialoga honestamente com Deus sobre o mistério da providência: como o Todo-Poderoso podia usar os perversos babilônios (caldeus) para punir Judá? Recebe a resposta canônica: 'O justo viverá pela sua fé' (Hab 2:4).", "fontes": "Livro de Habacuque; Romanos 1:17; Gálatas 3:11.", "wikipedia_url": "https://en.wikipedia.org/wiki/Habakkuk", "localizacao": "Jerusalém", "latitude": 31.7767, "longitude": 35.2345, "tags": "habacuque,fe,caldeus,soberania,profeta", "concilio": null}, "end": "-000589-12-31"}, {"id": "ev_58", "group": 2, "content": "<span class='item-titulo'>👑 Rei Joaquim / Jeconias</span>", "start": "-000598-12-09", "type": "range", "className": "item-biblico cat-rei_juda", "meta": {"tipo_item": "evento", "titulo": "Rei Joaquim / Jeconias", "subtitulo": "Primeira Deportação e Cativeiro em Babilônia", "eixo_codigo": "BIBLICO", "categoria": "rei_juda", "cultura": "Jerusalém / Babilônia", "ano_inicio": -598, "ano_fim": -597, "data_legivel": "598 a.C. até 597 a.C.", "incerteza": 0, "descricao": "Reinou por apenas 3 meses e 10 dias; Nabucodonosor sitiou Jerusalém em 597 a.C. e levou Joaquim, sua mãe e 10.000 artesãos e guerreiros cativos para Babilônia (entre eles o profeta Ezequiel); mais tarde foi libertado da prisão pelo rei Evil-Merodaque.", "fontes": "2 Reis 24:8-17; Crônica Babilônica ABC 5; Tabuletas de Ração de Joaquim em Berlim.", "wikipedia_url": "https://en.wikipedia.org/wiki/Jeconiah", "localizacao": "Jerusalém / Babilônia", "latitude": 32.5363, "longitude": 44.4208, "tags": "jeconias,primeira_deportacao,nabucodonosor,juda", "concilio": null}, "end": "-000597-03-16"}, {"id": "ev_59", "group": 2, "content": "<span class='item-titulo'>👑 Rei Zedequias (Último Rei de Judá: 597-586 a.C.)</span>", "start": "-000597-01-01", "type": "range", "className": "item-biblico cat-rei_juda", "meta": {"tipo_item": "evento", "titulo": "Rei Zedequias (Último Rei de Judá: 597-586 a.C.)", "subtitulo": "Queda Definitiva de Jerusalém e Cegueira em Ribla", "eixo_codigo": "BIBLICO", "categoria": "rei_juda", "cultura": "Jerusalém / Ribla / Babilônia", "ano_inicio": -597, "ano_fim": -586, "data_legivel": "597 a.C. até 586 a.C.", "incerteza": 0, "descricao": "Último monarca davídico a reinar em Jerusalém; rebelou-se imprudentemente contra a Babilônia; após cerco devastador de 18 meses, a cidade sucumbiu; viu seus filhos serem executados diante de si em Ribla, teve seus olhos vazados e foi arrastado em correntes de bronze para morrer na Babilônia.", "fontes": "2 Reis 24:18 - 25:7; Jeremias 39, 52; 2 Crônicas 36:11-21.", "wikipedia_url": "https://en.wikipedia.org/wiki/Zedekiah", "localizacao": "Jerusalém / Ribla", "latitude": 34.45, "longitude": 36.5667, "tags": "zedequias,queda_jerusalem,fim_monarquia,babilônia,juda", "concilio": null}, "end": "-000586-07-29"}, {"id": "ev_5", "group": 1, "content": "<span class='item-titulo'>🏛️ Império Aquemênida (Persa)</span>", "start": "-000550-01-01", "type": "range", "className": "item-secular cat-imperio", "meta": {"tipo_item": "evento", "titulo": "Império Aquemênida (Persa)", "subtitulo": "Fundado por Ciro, o Grande até Alexandre", "eixo_codigo": "SECULAR", "categoria": "imperio", "cultura": "Pérsia", "ano_inicio": -550, "ano_fim": -330, "data_legivel": "550 a.C. até 330 a.C.", "incerteza": 2, "descricao": "Primeiro império global da Antiguidade, célebre por sua administração em satrapias, sistema de estradas reais e edito de tolerância e repatriação religiosa.", "fontes": "Cilindro de Ciro (BM 90920); Inscrição de Behistun de Dario I; Heródoto.", "wikipedia_url": "https://en.wikipedia.org/wiki/Achaemenid_Empire", "localizacao": "Persépolis / Susa / Pasárgada", "latitude": 29.9344, "longitude": 52.8914, "tags": "persia,ciro,dario,tolerancia", "concilio": null}, "end": "-000330-01-01"}, {"id": "ev_73", "group": 2, "content": "<span class='item-titulo'>🔥 Profeta Ageu</span>", "start": "-000520-08-01", "type": "range", "className": "item-biblico cat-profeta", "meta": {"tipo_item": "evento", "titulo": "Profeta Ageu", "subtitulo": "A Glória da Segunda Casa e o Apelo à Reconstrução", "eixo_codigo": "BIBLICO", "categoria": "profeta", "cultura": "Jerusalém Pós-Exílica", "ano_inicio": -520, "ano_fim": -520, "data_legivel": "520 a.C. até 520 a.C.", "incerteza": 0, "descricao": "Desafiou com veemência a indiferença dos repatriados que viviam em casas apaineladas enquanto a casa de Deus jazia em ruínas; profetizou: 'A glória desta última casa será maior do que a da primeira' (Ageu 2:9).", "fontes": "Livro de Ageu; Esdras 5:1, 6:14.", "wikipedia_url": "https://en.wikipedia.org/wiki/Haggai", "localizacao": "Jerusalém", "latitude": 31.7767, "longitude": 35.2345, "tags": "ageu,reconstrucao_templo,esdras,segundo_templo,profeta", "concilio": null}, "end": "-000520-12-31"}, {"id": "ev_74", "group": 2, "content": "<span class='item-titulo'>🔥 Profeta Zacarias</span>", "start": "-000520-01-01", "type": "range", "className": "item-biblico cat-profeta", "meta": {"tipo_item": "evento", "titulo": "Profeta Zacarias", "subtitulo": "O Rei Humilde Montado em um Jumento e as 30 Moedas de Prata", "eixo_codigo": "BIBLICO", "categoria": "profeta", "cultura": "Jerusalém", "ano_inicio": -520, "ano_fim": -480, "data_legivel": "520 a.C. até 480 a.C.", "incerteza": 5, "descricao": "Contemporâneo de Ageu e Zorobabel; suas visões noturnas descortinam a restauração cósmica e sacerdotal de Jerusalém; profetizou a entrada triunfal do Rei montado num jumentinho (Zc 9:9), o preço da traição por 30 moedas de prata (11:12) e 'olharão para aquele a quem traspassaram' (12:10).", "fontes": "Livro de Zacarias; Mateus 21:4-5, 27:9; João 19:37.", "wikipedia_url": "https://en.wikipedia.org/wiki/Zechariah_(Hebrew_prophet)", "localizacao": "Jerusalém", "latitude": 31.7767, "longitude": 35.2345, "tags": "zacarias,messias,trinta_moedas,segundo_templo,profeta", "concilio": null}, "end": "-000480-12-31"}, {"id": "ev_75", "group": 2, "content": "<span class='item-titulo'>🔥 Profeta Malaquias</span>", "start": "-000450-01-01", "type": "range", "className": "item-biblico cat-profeta", "meta": {"tipo_item": "evento", "titulo": "Profeta Malaquias", "subtitulo": "O Mensageiro da Aliança e a Promessa de Elias", "eixo_codigo": "BIBLICO", "categoria": "profeta", "cultura": "Jerusalém", "ano_inicio": -450, "ano_fim": -430, "data_legivel": "450 a.C. até 430 a.C.", "incerteza": 5, "descricao": "Último dos profetas do Antigo Testamento; repreendeu o sacerdócio corrompido e dízimos negligenciados nos dias de Neemias; encerrou o cânon hebraico profetizando o Sol da Justiça e o envio de Elias precursor antes do grande Dia do Senhor.", "fontes": "Livro de Malaquias; Mateus 11:10-14.", "wikipedia_url": "https://en.wikipedia.org/wiki/Malachi", "localizacao": "Jerusalém", "latitude": 31.7767, "longitude": 35.2345, "tags": "malaquias,mensageiro,dizimos,ultimo_profeta_at,profeta", "concilio": null}, "end": "-000430-12-31"}, {"id": "ev_6", "group": 1, "content": "<span class='item-titulo'>🏛️ Império Macedônio & Diádocos Helenísticos</span>", "start": "-000336-01-01", "type": "range", "className": "item-secular cat-imperio", "meta": {"tipo_item": "evento", "titulo": "Império Macedônio & Diádocos Helenísticos", "subtitulo": "Alexandre Magno e os Reinos Selêucida e Ptolomaico", "eixo_codigo": "SECULAR", "categoria": "imperio", "cultura": "Grécia/Macedônia", "ano_inicio": -336, "ano_fim": -63, "data_legivel": "336 a.C. até 63 a.C.", "incerteza": 1, "descricao": "Conquista do Oriente Próximo por Alexandre, o Grande, promovendo a helenização, a universalização do grego Koiné e a fundação de Alexandria.", "fontes": "Arriano (Anábase); Diodoro Sículo; Políbio.", "wikipedia_url": "https://en.wikipedia.org/wiki/Hellenistic_period", "localizacao": "Alexandria / Antioquia / Pela", "latitude": 31.2001, "longitude": 29.9187, "tags": "grecia,alexandre,helenismo,koine", "concilio": null}, "end": "-000063-01-01"}, {"id": "ev_84", "group": 3, "content": "<span class='item-titulo'>🏺 Cultos de Mistério Greco-Romanos & Mitraísmo</span>", "start": "-000300-01-01", "type": "range", "className": "item-mitologia cat-mito", "meta": {"tipo_item": "evento", "titulo": "Cultos de Mistério Greco-Romanos & Mitraísmo", "subtitulo": "Mistérios Eleusinos, Ísis e o Culto Solar de Mitra", "eixo_codigo": "MITOLOGIA", "categoria": "mito", "cultura": "Grécia/Roma", "ano_inicio": -300, "ano_fim": 350, "data_legivel": "300 a.C. até 350 d.C.", "incerteza": 50, "descricao": "Religiões iniciáticas de salvação pessoal e imortalidade da alma; o culto a Mitra com o sacrifício do touro cósmico (tauroctonia) tornou-se a religião militar mais difundida do Império Romano.", "fontes": "Mitreus arqueológicos de Óstia e Roma; Apuleio (O Asno de Ouro XI).", "wikipedia_url": "https://en.wikipedia.org/wiki/Mithraism", "localizacao": "Roma / Óstia / Eleusis", "latitude": 41.9028, "longitude": 12.4964, "tags": "misterios,mitra,eleusis,iniciacao,roma", "concilio": null}, "end": "0350-01-01"}, {"id": "ev_85", "group": 4, "content": "<span class='item-titulo'>Tradução da Septuaginta (LXX)</span>", "start": "-000250-01-01", "type": "range", "className": "item-canon cat-manuscrito", "meta": {"tipo_item": "evento", "titulo": "Tradução da Septuaginta (LXX)", "subtitulo": "A Bíblia Hebraica traduzida para o Grego Koiné", "eixo_codigo": "CANON", "categoria": "manuscrito", "cultura": "Alexandria (Judaísmo Helenístico)", "ano_inicio": -250, "ano_fim": -132, "data_legivel": "250 a.C. até 132 a.C.", "incerteza": 30, "descricao": "Tradução da Torá e livros históricos/poéticos para o grego em Alexandria sob mecenato dos Ptolomeus; incluiu livros deuterocanônicos e tornou-se a base textual citada pelos apóstolos do NT.", "fontes": "Carta de Aristeias; Prólogo grego do Eclesiástico (132 a.C.).", "wikipedia_url": "https://en.wikipedia.org/wiki/Septuagint", "localizacao": "Alexandria (Egito)", "latitude": 31.2001, "longitude": 29.9187, "tags": "septuaginta,lxx,alexandria,grego_koine", "concilio": null}, "end": "-000132-01-01"}, {"id": "ev_86", "group": 4, "content": "<span class='item-titulo'>Manuscritos do Mar Morto (Comunidade de Qumran)</span>", "start": "-000250-01-01", "type": "range", "className": "item-canon cat-manuscrito", "meta": {"tipo_item": "evento", "titulo": "Manuscritos do Mar Morto (Comunidade de Qumran)", "subtitulo": "A mais antiga biblioteca bíblica descoberta", "eixo_codigo": "CANON", "categoria": "manuscrito", "cultura": "Judeia/Qumran", "ano_inicio": -250, "ano_fim": 68, "data_legivel": "250 a.C. até 68 d.C.", "incerteza": 20, "descricao": "Mais de 900 manuscritos hebraicos e aramaicos em 11 cavernas; atesta o texto bíblico com mil anos de antecedência ao Códice de Leningrado e preserva obras como 1 Enoque e Jubileus.", "fontes": "Grande Rolo de Isaías (1QIsaa); Regra da Comunidade (1QS); Rolo do Templo (11Q19).", "wikipedia_url": "https://en.wikipedia.org/wiki/Dead_Sea_Scrolls", "localizacao": "Cavernas de Qumran (Mar Morto)", "latitude": 31.741, "longitude": 35.459, "tags": "qumran,mar_morto,manuscritos,rolos", "concilio": null}, "end": "0068-06-01"}, {"id": "ev_7", "group": 1, "content": "<span class='item-titulo'>🏛️ Império Romano (Pax Romana)</span>", "start": "-000027-01-01", "type": "range", "className": "item-secular cat-imperio", "meta": {"tipo_item": "evento", "titulo": "Império Romano (Pax Romana)", "subtitulo": "De Otávio Augusto à Queda do Ocidente", "eixo_codigo": "SECULAR", "categoria": "imperio", "cultura": "Roma", "ano_inicio": -27, "ano_fim": 476, "data_legivel": "27 a.C. até 476 d.C.", "incerteza": 0, "descricao": "Estrutura imperial universal no Mediterrâneo; pacificação de rotas comerciais e expansão jurídica sobre a Judeia provincial durante as origens do cristianismo.", "fontes": "Res Gestae Divi Augusti; Tácito (Anais); Suetônio (Vidas dos Césares).", "wikipedia_url": "https://en.wikipedia.org/wiki/Roman_Empire", "localizacao": "Roma (Itália)", "latitude": 41.9028, "longitude": 12.4964, "tags": "roma,augusto,pax_romana,imperio", "concilio": null}, "end": "0476-09-04"}, {"id": "ev_76", "group": 2, "content": "<span class='item-titulo'>🔥 João Batista (O Precursor do Messias)</span>", "start": "-000005-01-01", "type": "range", "className": "item-biblico cat-profeta", "meta": {"tipo_item": "evento", "titulo": "João Batista (O Precursor do Messias)", "subtitulo": "A Voz que Clama no Deserto e o Batismo no Jordão", "eixo_codigo": "BIBLICO", "categoria": "profeta", "cultura": "Deserto da Judeia / Rio Jordão", "ano_inicio": -5, "ano_fim": 29, "data_legivel": "5 a.C. até 29 d.C.", "incerteza": 1, "descricao": "Filho do sacerdote Zacarias e Isabel; viveu no deserto trajado de pelos de camelo alimentando-se de gafanhotos e mel silvestre; batizou as multidões e o próprio Jesus no Jordão proclamando o Cordeiro de Deus; degolado na fortaleza de Maquero por Herodes Antipas.", "fontes": "Mateus 3, 11, 14; Marcos 1, 6; Lucas 1, 3; Flávio Josefo (Antiguidades XVIII.5.2).", "wikipedia_url": "https://en.wikipedia.org/wiki/John_the_Baptist", "localizacao": "Rio Jordão / Fortaleza de Maquero", "latitude": 31.5647, "longitude": 35.6319, "tags": "joao_batista,precursor,batismo,jordao,maquero,profeta", "concilio": null}, "end": "0029-08-29"}, {"id": "ev_77", "group": 2, "content": "<span class='item-titulo'>Vida e Ministério de Jesus de Nazaré</span>", "start": "-000004-01-01", "type": "range", "className": "item-biblico cat-narrativa", "meta": {"tipo_item": "evento", "titulo": "Vida e Ministério de Jesus de Nazaré", "subtitulo": "Crucificação sob Pôncio Pilatos", "eixo_codigo": "BIBLICO", "categoria": "narrativa", "cultura": "Judeia/Galileia", "ano_inicio": -4, "ano_fim": 30, "data_legivel": "4 a.C. até 30 d.C.", "incerteza": 3, "descricao": "Nascimento (~6-4 a.C. sob Herodes), ministério na Galileia e Judeia, condenação por ordem do prefeito romano Pôncio Pilatos em Jerusalém e surgimento do movimento cristão.", "fontes": "Evangelhos de Marcos, Mateus, Lucas e João; Tácito (Anais XV.44); Josefo (Ant. XVIII.3.3).", "wikipedia_url": "https://en.wikipedia.org/wiki/Jesus", "localizacao": "Galileia / Jerusalém", "latitude": 31.7767, "longitude": 35.2345, "tags": "jesus,cristianismo,evangelho,pilatos", "concilio": null}, "end": "0030-04-07"}, {"id": "ev_78", "group": 2, "content": "<span class='item-titulo'>Queda de Jerusalém e Destruição do Segundo Templo</span>", "start": "0070-04-01", "type": "range", "className": "item-biblico cat-batalha", "meta": {"tipo_item": "evento", "titulo": "Queda de Jerusalém e Destruição do Segundo Templo", "subtitulo": "Primeira Guerra Judaico-Romana (Tito)", "eixo_codigo": "BIBLICO", "categoria": "batalha", "cultura": "Roma/Judeia", "ano_inicio": 70, "ano_fim": 70, "data_legivel": "70 d.C. até 70 d.C.", "incerteza": 0, "descricao": "General Tito sitia e incendeia o Segundo Templo de Jerusalém; dispersão da nação judaica, fim do sacerdócio sacrificial saduceu e consolidação do judaísmo rabínico em Jâmnia.", "fontes": "Flávio Josefo (A Guerra dos Judeus); Arco de Tito no Fórum Romano.", "wikipedia_url": "https://en.wikipedia.org/wiki/Siege_of_Jerusalem_(70_CE)", "localizacao": "Jerusalém", "latitude": 31.778, "longitude": 35.2354, "tags": "queda_templo,tito,roma,guerra_judaica,jamnia", "concilio": null}, "end": "0070-09-08"}, {"id": "ev_87", "group": 4, "content": "<span class='item-titulo'>Cânon de Marcião e Fragmento Muratoriano</span>", "start": "0144-01-01", "type": "range", "className": "item-canon cat-manuscrito", "meta": {"tipo_item": "evento", "titulo": "Cânon de Marcião e Fragmento Muratoriano", "subtitulo": "Primeiras catalogações formais de livros do NT", "eixo_codigo": "CANON", "categoria": "manuscrito", "cultura": "Roma", "ano_inicio": 144, "ano_fim": 200, "data_legivel": "144 d.C. até 200 d.C.", "incerteza": 25, "descricao": "A heresia de Marcião em Roma (144 d.C.) rejeita todo o Antigo Testamento e restringe o NT a Lucas e 10 epístolas de Paulo; em réplica, a Igreja formula listas canônicas como o Cânon Muratoriano.", "fontes": "Fragmento Muratoriano (Códice do séc. VII na Bibl. Ambrosiana de Milão).", "wikipedia_url": "https://en.wikipedia.org/wiki/Muratorian_fragment", "localizacao": "Roma (Itália)", "latitude": 41.9028, "longitude": 12.4964, "tags": "muratori,marciao,canon_nt,heresias", "concilio": null}, "end": "0200-12-31"}, {"id": "ev_88", "group": 4, "content": "<span class='item-titulo'>⛪ Concílio de Roma (382 d.C.)</span>", "start": "0382-01-01", "type": "box", "className": "item-canon cat-concilio", "meta": {"tipo_item": "evento", "titulo": "Concílio de Roma (382 d.C.)", "subtitulo": "Decreto Damasino sobre o Cânon Bíblico Ocidental", "eixo_codigo": "CANON", "categoria": "concilio", "cultura": "Igreja Ocidental", "ano_inicio": 382, "ano_fim": 382, "data_legivel": "382 d.C. até 382 d.C.", "incerteza": 0, "descricao": "Sínodo sob o Papa Dâmaso I, com São Jerônimo como secretário; estabelece o cânon bíblico ocidental com os 73 livros (incluindo deuterocanônicos) e encomenda a revisão da Bíblia Latina (Vulgata).", "fontes": "Decretum Damasi / Decretum Gelasianum de libris recipiendis et non recipiendis.", "wikipedia_url": "https://en.wikipedia.org/wiki/Council_of_Rome", "localizacao": "Roma (Itália)", "latitude": 41.9028, "longitude": 12.4964, "tags": "concilio_roma,damaso,jeronimo,vulgata,canon", "concilio": {"id": 1, "evento_id": 88, "nome": "Concílio de Roma (382 d.C.)", "ano": 382, "ano_fim": null, "cidade": "Roma", "regiao": "Itália", "coordenadas_lat": 41.9028, "coordenadas_lon": 12.4964, "papa_ou_lideranca": "Papa Dâmaso I", "participantes_principais": "São Jerônimo (consultor e tradutor da Vulgata)", "contexto_historico": "Convocado em Roma sob o Papa Dâmaso I durante as controvérsias arianas e apolinaristas.", "decisoes_canonicidade": "Primeira lista canônica do Ocidente latino preservada no Decretum Damasi, contendo os 46 livros do AT (com deuterocanônicos) e os 27 do NT. Dâmaso comissiona São Jerônimo para revisar os manuscritos latinos antigos e traduzir as Escrituras a partir do hebraico e grego originais (origem da Vulgata).", "documento_oficial": "Decretum Damasi / Decretum Gelasianum de libris recipiendis et non recipiendis.", "anatemas_declarados": 0, "wikipedia_url": "https://en.wikipedia.org/wiki/Council_of_Rome", "evento_titulo": "Concílio de Roma (382 d.C.)"}}, "end": "0382-12-31"}, {"id": "ev_89", "group": 4, "content": "<span class='item-titulo'>⛪ Sínodo de Hipona (393) e Concílios de Cartago (397 e 419)</span>", "start": "0393-01-01", "type": "range", "className": "item-canon cat-concilio", "meta": {"tipo_item": "evento", "titulo": "Sínodo de Hipona (393) e Concílios de Cartago (397 e 419)", "subtitulo": "Fixação Canônica com Santo Agostinho", "eixo_codigo": "CANON", "categoria": "concilio", "cultura": "Igreja Norte-Africana", "ano_inicio": 393, "ano_fim": 397, "data_legivel": "393 d.C. até 397 d.C.", "incerteza": 0, "descricao": "Sob a liderança de Aurélio de Cartago e Santo Agostinho, a Igreja Africana promulga no Cânon 36 a lista oficial de 46 livros do AT e 27 do NT, solicitando confirmação da sé episcopal de Roma.", "fontes": "Breviarium Hipponense; Atas do III Concílio de Cartago (397); Codex Canonum Ecclesiae Africanae.", "wikipedia_url": "https://en.wikipedia.org/wiki/Councils_of_Carthage", "localizacao": "Hipona e Cartago (Norte da África)", "latitude": 36.9, "longitude": 7.7667, "tags": "hipona,cartago,agostinho,canon_africano", "concilio": {"id": 2, "evento_id": 89, "nome": "Sínodo de Hipona (393 d.C.)", "ano": 393, "ano_fim": null, "cidade": "Hipona Regius (Annaba)", "regiao": "Argélia (África Proconsular)", "coordenadas_lat": 36.9, "coordenadas_lon": 7.7667, "papa_ou_lideranca": "Aurélio de Cartago e Santo Agostinho (como presbítero influente)", "participantes_principais": "Bispos católicos da África", "contexto_historico": "Reunião plenária dos bispos norte-africanos para regularizar a disciplina eclesiástica e a liturgia.", "decisoes_canonicidade": "Aprovou o Breviarium Hipponense que estipulou que 'nada além das Escrituras canônicas seja lido na igreja sob o título de Escrituras divinas'. Fixou a lista de 46 livros do AT e 27 do NT, orientando envio das resoluções à Sé de Roma para confirmação.", "documento_oficial": "Breviarium Hipponense", "anatemas_declarados": 0, "wikipedia_url": "https://en.wikipedia.org/wiki/Synod_of_Hippo", "evento_titulo": "Sínodo de Hipona (393) e Concílios de Cartago (397 e 419)"}}, "end": "0397-08-28"}, {"id": "ev_90", "group": 4, "content": "<span class='item-titulo'>⛪ Concílio de Florença (1442 d.C.)</span>", "start": "1442-02-04", "type": "box", "className": "item-canon cat-concilio", "meta": {"tipo_item": "evento", "titulo": "Concílio de Florença (1442 d.C.)", "subtitulo": "Bula Cantate Domino para a União com os Coptas", "eixo_codigo": "CANON", "categoria": "concilio", "cultura": "Igreja Católica / União Oriental", "ano_inicio": 1442, "ano_fim": 1442, "data_legivel": "1442 d.C. até 1442 d.C.", "incerteza": 0, "descricao": "O Papa Eugênio IV sela a comunhão com a Igreja Copta do Egito e decreta formalmente a lista completa dos 73 livros inspirados do Antigo e do Novo Testamento.", "fontes": "Bula Papal Cantate Domino (Denzinger 1334-1336).", "wikipedia_url": "https://en.wikipedia.org/wiki/Council_of_Florence", "localizacao": "Florença (Itália)", "latitude": 43.7696, "longitude": 11.2558, "tags": "florenca,cantate_domino,eugenio_iv,uniao_coptas", "concilio": {"id": 4, "evento_id": 90, "nome": "Concílio de Florença (1442 d.C.)", "ano": 1442, "ano_fim": null, "cidade": "Florença", "regiao": "Itália", "coordenadas_lat": 43.7696, "coordenadas_lon": 11.2558, "papa_ou_lideranca": "Papa Eugênio IV", "participantes_principais": "Prelados católicos latinos e delegação copta do Egito", "contexto_historico": "17º Concílio Ecumênico da Igreja Católica; buscava restaurar a plena comunhão doutrinária com as igrejas do Oriente.", "decisoes_canonicidade": "A solene Bula Papal 'Cantate Domino' (4 de fevereiro de 1442) proclamou que um e o mesmo Deus inspirou os profetas do AT e os apóstolos do NT, enumerando de forma exaustiva o cânon de 73 livros.", "documento_oficial": "Bula Papal Cantate Domino (Denzinger 1334-1336)", "anatemas_declarados": 0, "wikipedia_url": "https://en.wikipedia.org/wiki/Council_of_Florence", "evento_titulo": "Concílio de Florença (1442 d.C.)"}}, "end": "1442-02-04"}, {"id": "ev_91", "group": 4, "content": "<span class='item-titulo'>⛪ Concílio de Trento (1546 d.C. - 4ª Sessão)</span>", "start": "1546-04-08", "type": "box", "className": "item-canon cat-concilio", "meta": {"tipo_item": "evento", "titulo": "Concílio de Trento (1546 d.C. - 4ª Sessão)", "subtitulo": "Definição Dogmática Solene com Anátema contra a Reforma", "eixo_codigo": "CANON", "categoria": "concilio", "cultura": "Igreja Católica (Contrarreforma)", "ano_inicio": 1546, "ano_fim": 1546, "data_legivel": "1546 d.C. até 1546 d.C.", "incerteza": 0, "descricao": "Em resposta à distinção protestante feita por Lutero, os Padres Conciliares definem sob anátema a igual autoridade e inspiração divina de todos os 73 livros com todas as suas partes tal como contidos na Vulgata Latina.", "fontes": "Decretum de Canonicis Scripturis, Sessão IV do Concílio de Trento.", "wikipedia_url": "https://en.wikipedia.org/wiki/Council_of_Trent", "localizacao": "Trento (Itália)", "latitude": 46.0711, "longitude": 11.1211, "tags": "trento,dogma,anatema,contrarreforma,lutero", "concilio": {"id": 5, "evento_id": 91, "nome": "Concílio de Trento (1546 d.C. - 4ª Sessão)", "ano": 1546, "ano_fim": 1563, "cidade": "Trento", "regiao": "Itália", "coordenadas_lat": 46.0711, "coordenadas_lon": 11.1211, "papa_ou_lideranca": "Papa Paulo III / Legados Cardeais Del Monte e Marcello Cervini", "participantes_principais": "Padres Conciliares e Teólogos da Cristandade", "contexto_historico": "19º Concílio Ecumênico; principal marco da Contrarreforma Católica para responder às teses da Reforma Protestante.", "decisoes_canonicidade": "Em 8 de abril de 1546, o decreto 'De Canonicis Scripturis' estabelece como artigo de FÉ DOGMÁTICA a igual reverência e inspiração divina de todos os 73 livros com todas as suas partes tal como contidos na Vulgata Latina, pronunciando solene ANÁTEMA contra quem recusar recebê-los.", "documento_oficial": "Decretum de Canonicis Scripturis (Sessio IV)", "anatemas_declarados": 1, "wikipedia_url": "https://en.wikipedia.org/wiki/Council_of_Trent", "evento_titulo": "Concílio de Trento (1546 d.C. - 4ª Sessão)"}}, "end": "1546-04-08"}, {"id": "ev_92", "group": 4, "content": "<span class='item-titulo'>⛪ Sínodo de Jerusalém / Belém (1672 d.C.)</span>", "start": "1672-03-16", "type": "box", "className": "item-canon cat-concilio", "meta": {"tipo_item": "evento", "titulo": "Sínodo de Jerusalém / Belém (1672 d.C.)", "subtitulo": "Confissão de Fé de Dositeu (Igreja Ortodoxa)", "eixo_codigo": "CANON", "categoria": "concilio", "cultura": "Igreja Ortodoxa Oriental", "ano_inicio": 1672, "ano_fim": 1672, "data_legivel": "1672 d.C. até 1672 d.C.", "incerteza": 0, "descricao": "Convocado pelo Patriarca Dositeu de Jerusalém para repelir teses calvinistas infiltradas; ratifica no Decreto 18 a plena canonicidade dos Anaginoskomena (Sabedoria, Eclesiástico, Tobias, Judite, etc.).", "fontes": "Confissão de Dositeu, Decreto 18 (Sínodo de Belém/Jerusalém).", "wikipedia_url": "https://en.wikipedia.org/wiki/Synod_of_Jerusalem_(1672)", "localizacao": "Jerusalém / Belém", "latitude": 31.7054, "longitude": 35.2024, "tags": "ortodoxia,dositeu,jerusalem,anaginoskomena", "concilio": null}, "end": "1672-03-20"}, {"id": "livro_1", "group": 4, "content": "<span class='item-livro'>📖 Gênesis</span>", "start": "-001440-01-01", "end": "-000500-01-01", "type": "range", "className": "item-livro-bloco testamento-at cat-livro", "meta": {"tipo_item": "livro", "titulo": "Gênesis", "subtitulo": "Original: Bereshit (בְּרֵאשִׁית) (Hebraico)", "eixo_codigo": "CANON", "categoria": "livro", "testamento": "AT", "genero": "Torá/Pentateuco", "idioma": "Hebraico", "autor_tradicional": "Moisés (tradicional)", "data_legivel": "Composição estimada: 1440 a.C. a 500 a.C.", "ano_inicio": -1440, "ano_fim": -500, "consenso_critico": "Fontes JEDP unificadas na redação sacerdotal pós-exílica (~séc. VI a.C.)", "descricao": "Origens cósmicas, dilúvio primordial, narrativas patriarcais (Abraão a José) e a escolha da linhagem da aliança.", "wikipedia_url": "https://en.wikipedia.org/wiki/Book_of_Genesis", "status_canonico": {"JUDAICA": {"status": "CANONICO", "motivo": "Primeiro livro da Torá (Tanakh)."}, "PROTESTANTE": {"status": "CANONICO", "motivo": "Primeiro livro canônico do Antigo Testamento."}, "CATOLICA": {"status": "CANONICO", "motivo": "Livro plenamente canônico e inspirado."}, "ORTODOXA": {"status": "CANONICO", "motivo": "Livro plenamente canônico e inspirado."}}}}, {"id": "livro_2", "group": 4, "content": "<span class='item-livro'>📖 Êxodo</span>", "start": "-001440-01-01", "end": "-000500-01-01", "type": "range", "className": "item-livro-bloco testamento-at cat-livro", "meta": {"tipo_item": "livro", "titulo": "Êxodo", "subtitulo": "Original: Shemot (שְׁמוֹת) (Hebraico)", "eixo_codigo": "CANON", "categoria": "livro", "testamento": "AT", "genero": "Torá/Pentateuco", "idioma": "Hebraico", "autor_tradicional": "Moisés (tradicional)", "data_legivel": "Composição estimada: 1440 a.C. a 500 a.C.", "ano_inicio": -1440, "ano_fim": -500, "consenso_critico": "Tradições mosaicas pré-monárquicas codificadas na redação sacerdotal", "descricao": "Libertação do cativeiro egípcio, travessia do Mar Vermelho, outorga do Decálogo no Monte Sinai e tabernáculo.", "wikipedia_url": "https://en.wikipedia.org/wiki/Book_of_Exodus", "status_canonico": {"JUDAICA": {"status": "CANONICO", "motivo": "Segundo livro da Torá."}, "PROTESTANTE": {"status": "CANONICO", "motivo": "Livro canônico histórico da Lei."}, "CATOLICA": {"status": "CANONICO", "motivo": "Livro plenamente canônico."}, "ORTODOXA": {"status": "CANONICO", "motivo": "Livro plenamente canônico."}}}}, {"id": "livro_3", "group": 4, "content": "<span class='item-livro'>📖 Isaías</span>", "start": "-000740-01-01", "end": "-000515-01-01", "type": "range", "className": "item-livro-bloco testamento-at cat-livro", "meta": {"tipo_item": "livro", "titulo": "Isaías", "subtitulo": "Original: Yeshayahu (יְשַׁעְיָהוּ) (Hebraico)", "eixo_codigo": "CANON", "categoria": "livro", "testamento": "AT", "genero": "Profético", "idioma": "Hebraico", "autor_tradicional": "Isaías filho de Amoz e discípulos (Proto, Dêutero e Trito-Isaías)", "data_legivel": "Composição estimada: 740 a.C. a 515 a.C.", "ano_inicio": -740, "ano_fim": -515, "consenso_critico": "Divisão crítica em 3 períodos: caps 1-39 (século VIII a.C.), caps 40-55 (exílio), caps 56-66 (pós-exílio)", "descricao": "Julgamento sobre Judá e nações, oráculos messiânicos (Emanuel, Servo Sofredor) e promessa de consolo e restauração.", "wikipedia_url": "https://en.wikipedia.org/wiki/Book_of_Isaiah", "status_canonico": {"JUDAICA": {"status": "CANONICO", "motivo": "Nevi'im (Profetas)."}, "PROTESTANTE": {"status": "CANONICO", "motivo": "Profeta Maior canônico."}, "CATOLICA": {"status": "CANONICO", "motivo": "Profeta Maior canônico."}, "ORTODOXA": {"status": "CANONICO", "motivo": "Profeta Maior canônico."}}}}, {"id": "livro_4", "group": 4, "content": "<span class='item-livro'>📖 Salmos</span>", "start": "-001000-01-01", "end": "-000300-01-01", "type": "range", "className": "item-livro-bloco testamento-at cat-livro", "meta": {"tipo_item": "livro", "titulo": "Salmos", "subtitulo": "Original: Tehilim (תְּהִלִּים) (Hebraico)", "eixo_codigo": "CANON", "categoria": "livro", "testamento": "AT", "genero": "Sapiencial/Poético", "idioma": "Hebraico", "autor_tradicional": "Davi, Asafe, Filhos de Corá e anônimos", "data_legivel": "Composição estimada: 1000 a.C. a 300 a.C.", "ano_inicio": -1000, "ano_fim": -300, "consenso_critico": "Antologia poética e litúrgica compilada progressivamente ao longo de séculos", "descricao": "Hinário sagrado de Israel em 150 poemas divididos em 5 livros: súplicas, louvores cósmicos, arrependimento e salmos reais messiânicos.", "wikipedia_url": "https://en.wikipedia.org/wiki/Psalms", "status_canonico": {"JUDAICA": {"status": "CANONICO", "motivo": "Ketuvim (Escritos Sagrados)."}, "PROTESTANTE": {"status": "CANONICO", "motivo": "Hinário canônico em 150 salmos."}, "CATOLICA": {"status": "CANONICO", "motivo": "Hinário canônico fundamental da Liturgia."}, "ORTODOXA": {"status": "CANONICO", "motivo": "Saltério canônico litúrgico."}}}}, {"id": "livro_5", "group": 4, "content": "<span class='item-livro'>📖 Tobias</span>", "start": "-000225-01-01", "end": "-000175-01-01", "type": "range", "className": "item-livro-bloco testamento-intertestamentario cat-livro", "meta": {"tipo_item": "livro", "titulo": "Tobias", "subtitulo": "Original: Tobi (Τωβίθ) (Aramaico/Hebraico (preservado em Grego))", "eixo_codigo": "CANON", "categoria": "livro", "testamento": "INTERTESTAMENTARIO", "genero": "Histórico/Edificante", "idioma": "Aramaico/Hebraico (preservado em Grego)", "autor_tradicional": "Anônimo judeu da Diáspora", "data_legivel": "Composição estimada: 225 a.C. a 175 a.C.", "ano_inicio": -225, "ano_fim": -175, "consenso_critico": "Composição helenística tardia; fragmentos hebraicos e aramaicos encontrados em Qumran (4Q196-200)", "descricao": "Narra a piedade de Tobit na Assíria, a jornada curativa de seu filho Tobias guiado pelo arcanjo Rafael e o exorcismo de Asmodeu.", "wikipedia_url": "https://en.wikipedia.org/wiki/Book_of_Tobit", "status_canonico": {"JUDAICA": {"status": "APOCRIFO", "motivo": "Não incluído no cânon hebraico masorético."}, "PROTESTANTE": {"status": "APOCRIFO", "motivo": "Classificado por Lutero como livro apócrifo: não igual às Escrituras, mas útil para leitura."}, "CATOLICA": {"status": "DEUTEROCANONICO", "motivo": "Canônico dogmático sob anátema (Concílio de Trento, 1546)."}, "ORTODOXA": {"status": "ANAGINOSKOMENA", "motivo": "Canônico (Anaginoskomena) pelo Sínodo de Jerusalém (1672)."}}}}, {"id": "livro_6", "group": 4, "content": "<span class='item-livro'>📖 Judite</span>", "start": "-000150-01-01", "end": "-000100-01-01", "type": "range", "className": "item-livro-bloco testamento-intertestamentario cat-livro", "meta": {"tipo_item": "livro", "titulo": "Judite", "subtitulo": "Original: Ioudith (Ἰουδίθ) (Hebraico original perdido (preservado na Septuaginta))", "eixo_codigo": "CANON", "categoria": "livro", "testamento": "INTERTESTAMENTARIO", "genero": "Histórico/Narrativo", "idioma": "Hebraico original perdido (preservado na Septuaginta)", "autor_tradicional": "Anônimo judeu da Judeia", "data_legivel": "Composição estimada: 150 a.C. a 100 a.C.", "ano_inicio": -150, "ano_fim": -100, "consenso_critico": "Escrito durante a resistência macabeia em grego ou hebraico", "descricao": "A virtuosa viúva Judite infiltra-se no acampamento do general invasor Holofernes e o decapita, salvando a cidade de Betúlia e o Templo.", "wikipedia_url": "https://en.wikipedia.org/wiki/Book_of_Judith", "status_canonico": {"JUDAICA": {"status": "APOCRIFO", "motivo": "Excluído da Bíblia Hebraica."}, "PROTESTANTE": {"status": "APOCRIFO", "motivo": "Apócrifo instrutivo sem força dogmática."}, "CATOLICA": {"status": "DEUTEROCANONICO", "motivo": "Canônico dogmático (Trento)."}, "ORTODOXA": {"status": "ANAGINOSKOMENA", "motivo": "Canônico na tradição da Septuaginta grega."}}}}, {"id": "livro_7", "group": 4, "content": "<span class='item-livro'>📖 Sabedoria de Salomão</span>", "start": "-000100-01-01", "end": "-000030-01-01", "type": "range", "className": "item-livro-bloco testamento-intertestamentario cat-livro", "meta": {"tipo_item": "livro", "titulo": "Sabedoria de Salomão", "subtitulo": "Original: Sophia Salomonis (Σοφία Σαλoμῶντος) (Grego Koiné)", "eixo_codigo": "CANON", "categoria": "livro", "testamento": "INTERTESTAMENTARIO", "genero": "Sapiencial", "idioma": "Grego Koiné", "autor_tradicional": "Pseudo-Salomão (sábio judeu alexandrino)", "data_legivel": "Composição estimada: 100 a.C. a 30 a.C.", "ano_inicio": -100, "ano_fim": -30, "consenso_critico": "Composto em Alexandria; obra-prima do judaísmo helenístico filosófico", "descricao": "Tratado sapiencial que exalta a Sabedoria personificada emanada de Deus, defende a imortalidade da alma e ataca a idolatria pagã.", "wikipedia_url": "https://en.wikipedia.org/wiki/Book_of_Wisdom", "status_canonico": {"JUDAICA": {"status": "APOCRIFO", "motivo": "Composição em grego alexandrino; fora do Tanakh."}, "PROTESTANTE": {"status": "APOCRIFO", "motivo": "Apócrifo intertestamentário sem base para doutrina."}, "CATOLICA": {"status": "DEUTEROCANONICO", "motivo": "Canônico e divinamente inspirado."}, "ORTODOXA": {"status": "ANAGINOSKOMENA", "motivo": "Canônico (Anaginoskomena)."}}}}, {"id": "livro_8", "group": 4, "content": "<span class='item-livro'>📖 Eclesiástico (Sirácida)</span>", "start": "-000190-01-01", "end": "-000175-01-01", "type": "range", "className": "item-livro-bloco testamento-intertestamentario cat-livro", "meta": {"tipo_item": "livro", "titulo": "Eclesiástico (Sirácida)", "subtitulo": "Original: Hokmat Ben Sira (Σοφία Ἰησοῦ Σειράχ) (Hebraico (traduzido ao Grego em 132 a.C.))", "eixo_codigo": "CANON", "categoria": "livro", "testamento": "INTERTESTAMENTARIO", "genero": "Sapiencial", "idioma": "Hebraico (traduzido ao Grego em 132 a.C.)", "autor_tradicional": "Jesus Ben Sira (Yeshua ben Eleazar ben Sira)", "data_legivel": "Composição estimada: 190 a.C. a 175 a.C.", "ano_inicio": -190, "ano_fim": -175, "consenso_critico": "Original hebraico escrito em Jerusalém; prólogo grego do neto em Alexandria em 132 a.C.", "descricao": "Compêndio monumental de ética prática, temor de Deus, amizade, família e elogio aos antepassados ilustres de Israel.", "wikipedia_url": "https://en.wikipedia.org/wiki/Sirach", "status_canonico": {"JUDAICA": {"status": "APOCRIFO", "motivo": "Citado no Talmude como obra de sabedoria, mas excluído do cânon bíblico."}, "PROTESTANTE": {"status": "APOCRIFO", "motivo": "Apócrifo de elevado teor ético-moral."}, "CATOLICA": {"status": "DEUTEROCANONICO", "motivo": "Canônico dogmático confirmado em Hipona, Cartago e Trento."}, "ORTODOXA": {"status": "ANAGINOSKOMENA", "motivo": "Canônico e amplamente usado na teologia patrística."}}}}, {"id": "livro_9", "group": 4, "content": "<span class='item-livro'>📖 Baruc</span>", "start": "-000200-01-01", "end": "-000060-01-01", "type": "range", "className": "item-livro-bloco testamento-intertestamentario cat-livro", "meta": {"tipo_item": "livro", "titulo": "Baruc", "subtitulo": "Original: Baruch (Βαρούχ) (Hebraico/Aramaico (preservado em Grego))", "eixo_codigo": "CANON", "categoria": "livro", "testamento": "INTERTESTAMENTARIO", "genero": "Profético/Exortativo", "idioma": "Hebraico/Aramaico (preservado em Grego)", "autor_tradicional": "Atribuído a Baruc ben Nerias (secretário de Jeremias)", "data_legivel": "Composição estimada: 200 a.C. a 60 a.C.", "ano_inicio": -200, "ano_fim": -60, "consenso_critico": "Composição pós-exílica com adições helenísticas (inclui a Carta de Jeremias)", "descricao": "Oração penitencial do cativeiro, reflexão sobre a Sabedoria divina manifestada na Torá e mensagem consoladora para Jerusalém.", "wikipedia_url": "https://en.wikipedia.org/wiki/Book_of_Baruch", "status_canonico": {"JUDAICA": {"status": "APOCRIFO", "motivo": "Fora do cânon masorético."}, "PROTESTANTE": {"status": "APOCRIFO", "motivo": "Livro apócrifo ligado a Jeremias."}, "CATOLICA": {"status": "DEUTEROCANONICO", "motivo": "Canônico (inclui a Epístola de Jeremias no cap. 6)."}, "ORTODOXA": {"status": "ANAGINOSKOMENA", "motivo": "Canônico na Septuaginta."}}}}, {"id": "livro_10", "group": 4, "content": "<span class='item-livro'>📖 1 Macabeus</span>", "start": "-000104-01-01", "end": "-000063-01-01", "type": "range", "className": "item-livro-bloco testamento-intertestamentario cat-livro", "meta": {"tipo_item": "livro", "titulo": "1 Macabeus", "subtitulo": "Original: Makkabaion A (Μακκαβαίων Αʹ) (Hebraico original perdido (preservado em Grego))", "eixo_codigo": "CANON", "categoria": "livro", "testamento": "INTERTESTAMENTARIO", "genero": "Histórico", "idioma": "Hebraico original perdido (preservado em Grego)", "autor_tradicional": "Historiador oficial da corte dos príncipes asmoneus", "data_legivel": "Composição estimada: 104 a.C. a 63 a.C.", "ano_inicio": -104, "ano_fim": -63, "consenso_critico": "Redigido na Judeia sob João Hircano I", "descricao": "Crônica militar e política da insurreição de Matatias e da liderança de Judas Macabeu contra a tirania selêucida até a fundação da dinastia asmoneia.", "wikipedia_url": "https://en.wikipedia.org/wiki/1_Maccabees", "status_canonico": {"JUDAICA": {"status": "APOCRIFO", "motivo": "História venerada de Hanucá, porém sem inspiração profética no Tanakh."}, "PROTESTANTE": {"status": "APOCRIFO", "motivo": "Apócrifo com imenso valor para a história do período intertestamentário."}, "CATOLICA": {"status": "DEUTEROCANONICO", "motivo": "Canônico dogmático pleno."}, "ORTODOXA": {"status": "ANAGINOSKOMENA", "motivo": "Canônico pleno."}}}}, {"id": "livro_11", "group": 4, "content": "<span class='item-livro'>📖 2 Macabeus</span>", "start": "-000124-01-01", "end": "-000060-01-01", "type": "range", "className": "item-livro-bloco testamento-intertestamentario cat-livro", "meta": {"tipo_item": "livro", "titulo": "2 Macabeus", "subtitulo": "Original: Makkabaion B (Μακκαβαίων Βʹ) (Grego Koiné)", "eixo_codigo": "CANON", "categoria": "livro", "testamento": "INTERTESTAMENTARIO", "genero": "Histórico/Teológico", "idioma": "Grego Koiné", "autor_tradicional": "Jasão de Cirene (compilado por autor anônimo)", "data_legivel": "Composição estimada: 124 a.C. a 60 a.C.", "ano_inicio": -124, "ano_fim": -60, "consenso_critico": "Epítome em grego retórico de cinco volumes originais de Jasão de Cirene", "descricao": "Foca na teologia do martírio, na ressurreição corpórea dos justos, na oração em favor dos mortos (2 Mac 12) e na criação ex-nihilo.", "wikipedia_url": "https://en.wikipedia.org/wiki/2_Maccabees", "status_canonico": {"JUDAICA": {"status": "APOCRIFO", "motivo": "Fora do cânon hebraico."}, "PROTESTANTE": {"status": "APOCRIFO", "motivo": "Apócrifo rejeitado dogmaticamente por Lutero devido à doutrina do sufrágio pelos mortos."}, "CATOLICA": {"status": "DEUTEROCANONICO", "motivo": "Canônico dogmático pleno (apoio bíblico para oração pelos defuntos)."}, "ORTODOXA": {"status": "ANAGINOSKOMENA", "motivo": "Canônico pleno."}}}}, {"id": "livro_12", "group": 4, "content": "<span class='item-livro'>📖 3 Macabeus</span>", "start": "-000100-01-01", "end": "-000050-01-01", "type": "range", "className": "item-livro-bloco testamento-intertestamentario cat-livro", "meta": {"tipo_item": "livro", "titulo": "3 Macabeus", "subtitulo": "Original: Makkabaion C (Μακκαβαίων Γʹ) (Grego Koiné)", "eixo_codigo": "CANON", "categoria": "livro", "testamento": "INTERTESTAMENTARIO", "genero": "Histórico/Narrativo", "idioma": "Grego Koiné", "autor_tradicional": "Judeu alexandrino", "data_legivel": "Composição estimada: 100 a.C. a 50 a.C.", "ano_inicio": -100, "ano_fim": -50, "consenso_critico": "Narrativa helenística sobre o reinado de Ptolomeu IV Filopátor", "descricao": "Relata a tentativa de profanação do Templo pelo faraó ptolomaico e o milagroso livramento dos judeus de Alexandria condenados ao pisoteio por elefantes embriagados.", "wikipedia_url": "https://en.wikipedia.org/wiki/3_Maccabees", "status_canonico": {"JUDAICA": {"status": "APOCRIFO", "motivo": "Fora do cânon judaico."}, "PROTESTANTE": {"status": "APOCRIFO", "motivo": "Pseudepígrafo histórico."}, "CATOLICA": {"status": "APOCRIFO", "motivo": "Não aceito nem listado nos concílios ocidentais."}, "ORTODOXA": {"status": "ANAGINOSKOMENA", "motivo": "Canônico na Bíblia Ortodoxa Grega e Eslava."}}}}, {"id": "livro_13", "group": 4, "content": "<span class='item-livro'>📖 Oração de Manassés</span>", "start": "-000150-01-01", "end": "0050-01-01", "type": "range", "className": "item-livro-bloco testamento-intertestamentario cat-livro", "meta": {"tipo_item": "livro", "titulo": "Oração de Manassés", "subtitulo": "Original: Proseuche Manasse (Προσευχὴ Μανασσῆ) (Grego Koiné)", "eixo_codigo": "CANON", "categoria": "livro", "testamento": "INTERTESTAMENTARIO", "genero": "Poético/Penitencial", "idioma": "Grego Koiné", "autor_tradicional": "Atribuído ao Rei Manassés de Judá (2 Crônicas 33)", "data_legivel": "Composição estimada: 150 a.C. a 50 d.C.", "ano_inicio": -150, "ano_fim": 50, "consenso_critico": "Hino penitencial helenístico preservado nas Odes da Septuaginta", "descricao": "Súplica de profundo arrependimento proferida em cadeias na Babilônia, ressaltando que a misericórdia de Deus supera a multidão dos pecados.", "wikipedia_url": "https://en.wikipedia.org/wiki/Prayer_of_Manasseh", "status_canonico": {"JUDAICA": {"status": "APOCRIFO", "motivo": "Fora do Tanakh."}, "PROTESTANTE": {"status": "APOCRIFO", "motivo": "Apêndice apócrifo."}, "CATOLICA": {"status": "APOCRIFO", "motivo": "Não dogmático; preservado apenas em apêndice da Vulgata Clementina para não se perder."}, "ORTODOXA": {"status": "ANAGINOSKOMENA", "motivo": "Canônico, incorporado nas Odes litúrgicas."}}}}, {"id": "livro_14", "group": 4, "content": "<span class='item-livro'>📖 Salmo 151</span>", "start": "-000200-01-01", "end": "-000100-01-01", "type": "range", "className": "item-livro-bloco testamento-intertestamentario cat-livro", "meta": {"tipo_item": "livro", "titulo": "Salmo 151", "subtitulo": "Original: Psalmos 151 (Ψαλμὸς 151) (Hebraico (encontrado em 11QPs de Qumran))", "eixo_codigo": "CANON", "categoria": "livro", "testamento": "INTERTESTAMENTARIO", "genero": "Poético", "idioma": "Hebraico (encontrado em 11QPs de Qumran)", "autor_tradicional": "Atribuído a Davi", "data_legivel": "Composição estimada: 200 a.C. a 100 a.C.", "ano_inicio": -200, "ano_fim": -100, "consenso_critico": "Salmo presente na Septuaginta grega e confirmado em hebraico nos Rolos do Mar Morto", "descricao": "Davi relata sua juventude humilde pastoreando ovelhas, a unção por Samuel e a vitória decepando o gigante Golias com sua própria espada.", "wikipedia_url": "https://en.wikipedia.org/wiki/Psalm_151", "status_canonico": {"JUDAICA": {"status": "APOCRIFO", "motivo": "Não numerado no Saltério de 150 salmos masoréticos."}, "PROTESTANTE": {"status": "APOCRIFO", "motivo": "Não reconhecido."}, "CATOLICA": {"status": "APOCRIFO", "motivo": "Não consta no cânon dogmático da Vulgata."}, "ORTODOXA": {"status": "ANAGINOSKOMENA", "motivo": "Canônico no Saltério da Septuaginta."}}}}, {"id": "livro_15", "group": 4, "content": "<span class='item-livro'>📖 Evangelho de Mateus</span>", "start": "0070-01-01", "end": "0085-01-01", "type": "range", "className": "item-livro-bloco testamento-nt cat-livro", "meta": {"tipo_item": "livro", "titulo": "Evangelho de Mateus", "subtitulo": "Original: Kata Matthaion (Κατὰ Μαθθαῖον) (Grego Koiné)", "eixo_codigo": "CANON", "categoria": "livro", "testamento": "NT", "genero": "Evangelho", "idioma": "Grego Koiné", "autor_tradicional": "Apóstolo Mateus (Levi)", "data_legivel": "Composição estimada: 70 d.C. a 85 d.C.", "ano_inicio": 70, "ano_fim": 85, "consenso_critico": "Composto após a queda do Segundo Templo para uma comunidade judaico-cristã", "descricao": "Retrata Jesus como o Messias davídico e novo Moisés no Sermão da Montanha, cumpridor rigoroso de toda a Lei e Profetas.", "wikipedia_url": "https://en.wikipedia.org/wiki/Gospel_of_Matthew", "status_canonico": {"JUDAICA": {"status": "REJEITADO", "motivo": "Literatura do Novo Testamento não reconhecida pelo judaísmo."}, "PROTESTANTE": {"status": "CANONICO", "motivo": "Primeiro livro do Novo Testamento."}, "CATOLICA": {"status": "CANONICO", "motivo": "Livro apostólico plenamente canônico."}, "ORTODOXA": {"status": "CANONICO", "motivo": "Livro apostólico plenamente canônico."}}}}, {"id": "livro_16", "group": 4, "content": "<span class='item-livro'>📖 Epístola aos Romanos</span>", "start": "0056-01-01", "end": "0058-01-01", "type": "range", "className": "item-livro-bloco testamento-nt cat-livro", "meta": {"tipo_item": "livro", "titulo": "Epístola aos Romanos", "subtitulo": "Original: Pros Romaious (Πρὸς Ῥωμαίους) (Grego Koiné)", "eixo_codigo": "CANON", "categoria": "livro", "testamento": "NT", "genero": "Epístola", "idioma": "Grego Koiné", "autor_tradicional": "Apóstolo Paulo de Tarso", "data_legivel": "Composição estimada: 56 d.C. a 58 d.C.", "ano_inicio": 56, "ano_fim": 58, "consenso_critico": "Escrita em Corinto durante sua terceira viagem missionária", "descricao": "Magna Carta da teologia paulina: justificação universal pela fé em Cristo, graça, redenção, eleição de Israel e ética comunitária.", "wikipedia_url": "https://en.wikipedia.org/wiki/Epistle_to_the_Romans", "status_canonico": {"JUDAICA": {"status": "REJEITADO", "motivo": "Epístola apostólica cristã."}, "PROTESTANTE": {"status": "CANONICO", "motivo": "Centro da soteriologia da Reforma."}, "CATOLICA": {"status": "CANONICO", "motivo": "Epístola apostólica canônica."}, "ORTODOXA": {"status": "CANONICO", "motivo": "Epístola apostólica canônica."}}}}, {"id": "livro_17", "group": 4, "content": "<span class='item-livro'>📖 Apocalipse de João</span>", "start": "0090-01-01", "end": "0096-01-01", "type": "range", "className": "item-livro-bloco testamento-nt cat-livro", "meta": {"tipo_item": "livro", "titulo": "Apocalipse de João", "subtitulo": "Original: Apokalypsis Ioannou (Ἀποκάλυψις Ἰωάννου) (Grego Koiné)", "eixo_codigo": "CANON", "categoria": "livro", "testamento": "NT", "genero": "Apocalíptico", "idioma": "Grego Koiné", "autor_tradicional": "João em Patmos", "data_legivel": "Composição estimada: 90 d.C. a 96 d.C.", "ano_inicio": 90, "ano_fim": 96, "consenso_critico": "Redigido durante as perseguições imperiais sob Domiciano", "descricao": "Visões proféticas do Cordeiro imolado, juízos cósmicos sobre a Besta e Babilônia, e o triunfo final com a descida da Nova Jerusalém.", "wikipedia_url": "https://en.wikipedia.org/wiki/Book_of_Revelation", "status_canonico": {"JUDAICA": {"status": "REJEITADO", "motivo": "Apocalíptica cristã."}, "PROTESTANTE": {"status": "CANONICO", "motivo": "Último livro canônico do NT."}, "CATOLICA": {"status": "CANONICO", "motivo": "Dogmaticamente canônico (Cartago, Florença e Trento)."}, "ORTODOXA": {"status": "CANONICO", "motivo": "Reconhecido no cânon, porém tradicionalmente não lido na Divina Liturgia bizantina."}}}}, {"id": "livro_18", "group": 4, "content": "<span class='item-livro'>📖 Evangelho de Tomé</span>", "start": "0130-01-01", "end": "0180-01-01", "type": "range", "className": "item-livro-bloco testamento-apocrifo_nt cat-livro", "meta": {"tipo_item": "livro", "titulo": "Evangelho de Tomé", "subtitulo": "Original: Evangelho Copta de Tomé (Copta (original grego fragmentário em Oxirrinco))", "eixo_codigo": "CANON", "categoria": "livro", "testamento": "APOCRIFO_NT", "genero": "Ditos / Gnóstico", "idioma": "Copta (original grego fragmentário em Oxirrinco)", "autor_tradicional": "Pseudo-Tomé (comunidade gnóstica)", "data_legivel": "Composição estimada: 130 d.C. a 180 d.C.", "ano_inicio": 130, "ano_fim": 180, "consenso_critico": "Coleção de 114 sentenças secretas; redescoberto na Biblioteca de Nag Hammadi em 1945", "descricao": "Rejeita a redenção histórica pela crucificação e prega o despertar gnóstico do divino interior para superar a morte.", "wikipedia_url": "https://en.wikipedia.org/wiki/Gospel_of_Thomas", "status_canonico": {"JUDAICA": {"status": "REJEITADO", "motivo": "Texto gnóstico herético."}, "PROTESTANTE": {"status": "REJEITADO", "motivo": "Apócrifo gnóstico pseudepígrafo."}, "CATOLICA": {"status": "REJEITADO", "motivo": "Condenado como herético pelos primeiros Padres da Igreja."}, "ORTODOXA": {"status": "REJEITADO", "motivo": "Condenado como espúrio e fora da sucessão apostólica."}}}}, {"id": "livro_19", "group": 4, "content": "<span class='item-livro'>📖 Didaquê (Ensino dos Doze Apóstolos)</span>", "start": "0070-01-01", "end": "0110-01-01", "type": "range", "className": "item-livro-bloco testamento-apocrifo_nt cat-livro", "meta": {"tipo_item": "livro", "titulo": "Didaquê (Ensino dos Doze Apóstolos)", "subtitulo": "Original: Didache (Διδαχή) (Grego Koiné)", "eixo_codigo": "CANON", "categoria": "livro", "testamento": "APOCRIFO_NT", "genero": "Manual Litúrgico Eclesiástico", "idioma": "Grego Koiné", "autor_tradicional": "Líderes anônimos da Igreja Apostólica", "data_legivel": "Composição estimada: 70 d.C. a 110 d.C.", "ano_inicio": 70, "ano_fim": 110, "consenso_critico": "Mais antigo catecismo cristão primitivo; manuscrito redescoberto em Istambul em 1873 por Bryennios", "descricao": "A Doutrina dos Dois Caminhos (Vida e Morte), fórmulas batismais por imersão/aspersão, jejum semanal, oração do Pai Nosso e a Eucaristia.", "wikipedia_url": "https://en.wikipedia.org/wiki/Didache", "status_canonico": {"JUDAICA": {"status": "REJEITADO", "motivo": "Manual eclesiástico cristão."}, "PROTESTANTE": {"status": "APOCRIFO", "motivo": "Texto dos Padres Apostólicos de grande valor histórico, mas fora do cânon bíblico."}, "CATOLICA": {"status": "APOCRIFO", "motivo": "Documento patrístico venerável, mas não Escritura inspirada."}, "ORTODOXA": {"status": "APOCRIFO", "motivo": "Patrístico primordial respeitado, porém não canônico."}}}}, {"id": "livro_20", "group": 4, "content": "<span class='item-livro'>📖 Pastor de Hermas</span>", "start": "0130-01-01", "end": "0155-01-01", "type": "range", "className": "item-livro-bloco testamento-apocrifo_nt cat-livro", "meta": {"tipo_item": "livro", "titulo": "Pastor de Hermas", "subtitulo": "Original: Poimen tou Herma (Ποιμὴν τοῦ Ἑρμᾶ) (Grego Koiné)", "eixo_codigo": "CANON", "categoria": "livro", "testamento": "APOCRIFO_NT", "genero": "Apocalíptico/Alegórico", "idioma": "Grego Koiné", "autor_tradicional": "Hermas de Roma", "data_legivel": "Composição estimada: 130 d.C. a 155 d.C.", "ano_inicio": 130, "ano_fim": 155, "consenso_critico": "Texto altamente estimado na Igreja Antiga (presente no Códice Sinaítico junto ao NT)", "descricao": "Série de visões, mandamentos morais e parábolas concedidas por um anjo em trajes pastoris sobre a possibilidade de penitência pós-batismal.", "wikipedia_url": "https://en.wikipedia.org/wiki/The_Shepherd_of_Hermas", "status_canonico": {"JUDAICA": {"status": "REJEITADO", "motivo": "Sem relação com a Bíblia."}, "PROTESTANTE": {"status": "APOCRIFO", "motivo": "Apócrifo/Patrístico não inspirado."}, "CATOLICA": {"status": "APOCRIFO", "motivo": "Excluído expressamente pelo Cânon Muratoriano e Atanásio da lista de livros divinamente inspirados."}, "ORTODOXA": {"status": "APOCRIFO", "motivo": "Respeitado na patrística antiga, porém fora do cânon bíblico."}}}}];
+    const RAW_LIVROS = [{"id": 1, "nome": "Gênesis", "nome_original": "Bereshit (בְּרֵאשִׁית)", "testamento": "AT", "genero_literario": "Torá/Pentateuco", "idioma_original": "Hebraico", "autor_tradicional": "Moisés (tradicional)", "ano_composicao_inicio": -1440, "ano_composicao_fim": -500, "data_consenso_critico": "Fontes JEDP unificadas na redação sacerdotal pós-exílica (~séc. VI a.C.)", "wikipedia_url": "https://en.wikipedia.org/wiki/Book_of_Genesis", "resumo": "Origens cósmicas, dilúvio primordial, narrativas patriarcais (Abraão a José) e a escolha da linhagem da aliança.", "status_judaica": "CANONICO", "motivo_judaica": "Primeiro livro da Torá (Tanakh).", "status_protestante": "CANONICO", "motivo_protestante": "Primeiro livro canônico do Antigo Testamento.", "status_catolica": "CANONICO", "motivo_catolica": "Livro plenamente canônico e inspirado.", "status_ortodoxa": "CANONICO", "motivo_ortodoxa": "Livro plenamente canônico e inspirado."}, {"id": 2, "nome": "Êxodo", "nome_original": "Shemot (שְׁמוֹת)", "testamento": "AT", "genero_literario": "Torá/Pentateuco", "idioma_original": "Hebraico", "autor_tradicional": "Moisés (tradicional)", "ano_composicao_inicio": -1440, "ano_composicao_fim": -500, "data_consenso_critico": "Tradições mosaicas pré-monárquicas codificadas na redação sacerdotal", "wikipedia_url": "https://en.wikipedia.org/wiki/Book_of_Exodus", "resumo": "Libertação do cativeiro egípcio, travessia do Mar Vermelho, outorga do Decálogo no Monte Sinai e tabernáculo.", "status_judaica": "CANONICO", "motivo_judaica": "Segundo livro da Torá.", "status_protestante": "CANONICO", "motivo_protestante": "Livro canônico histórico da Lei.", "status_catolica": "CANONICO", "motivo_catolica": "Livro plenamente canônico.", "status_ortodoxa": "CANONICO", "motivo_ortodoxa": "Livro plenamente canônico."}, {"id": 3, "nome": "Isaías", "nome_original": "Yeshayahu (יְשַׁעְיָהוּ)", "testamento": "AT", "genero_literario": "Profético", "idioma_original": "Hebraico", "autor_tradicional": "Isaías filho de Amoz e discípulos (Proto, Dêutero e Trito-Isaías)", "ano_composicao_inicio": -740, "ano_composicao_fim": -515, "data_consenso_critico": "Divisão crítica em 3 períodos: caps 1-39 (século VIII a.C.), caps 40-55 (exílio), caps 56-66 (pós-exílio)", "wikipedia_url": "https://en.wikipedia.org/wiki/Book_of_Isaiah", "resumo": "Julgamento sobre Judá e nações, oráculos messiânicos (Emanuel, Servo Sofredor) e promessa de consolo e restauração.", "status_judaica": "CANONICO", "motivo_judaica": "Nevi'im (Profetas).", "status_protestante": "CANONICO", "motivo_protestante": "Profeta Maior canônico.", "status_catolica": "CANONICO", "motivo_catolica": "Profeta Maior canônico.", "status_ortodoxa": "CANONICO", "motivo_ortodoxa": "Profeta Maior canônico."}, {"id": 4, "nome": "Salmos", "nome_original": "Tehilim (תְּהִלִּים)", "testamento": "AT", "genero_literario": "Sapiencial/Poético", "idioma_original": "Hebraico", "autor_tradicional": "Davi, Asafe, Filhos de Corá e anônimos", "ano_composicao_inicio": -1000, "ano_composicao_fim": -300, "data_consenso_critico": "Antologia poética e litúrgica compilada progressivamente ao longo de séculos", "wikipedia_url": "https://en.wikipedia.org/wiki/Psalms", "resumo": "Hinário sagrado de Israel em 150 poemas divididos em 5 livros: súplicas, louvores cósmicos, arrependimento e salmos reais messiânicos.", "status_judaica": "CANONICO", "motivo_judaica": "Ketuvim (Escritos Sagrados).", "status_protestante": "CANONICO", "motivo_protestante": "Hinário canônico em 150 salmos.", "status_catolica": "CANONICO", "motivo_catolica": "Hinário canônico fundamental da Liturgia.", "status_ortodoxa": "CANONICO", "motivo_ortodoxa": "Saltério canônico litúrgico."}, {"id": 5, "nome": "Tobias", "nome_original": "Tobi (Τωβίθ)", "testamento": "INTERTESTAMENTARIO", "genero_literario": "Histórico/Edificante", "idioma_original": "Aramaico/Hebraico (preservado em Grego)", "autor_tradicional": "Anônimo judeu da Diáspora", "ano_composicao_inicio": -225, "ano_composicao_fim": -175, "data_consenso_critico": "Composição helenística tardia; fragmentos hebraicos e aramaicos encontrados em Qumran (4Q196-200)", "wikipedia_url": "https://en.wikipedia.org/wiki/Book_of_Tobit", "resumo": "Narra a piedade de Tobit na Assíria, a jornada curativa de seu filho Tobias guiado pelo arcanjo Rafael e o exorcismo de Asmodeu.", "status_judaica": "APOCRIFO", "motivo_judaica": "Não incluído no cânon hebraico masorético.", "status_protestante": "APOCRIFO", "motivo_protestante": "Classificado por Lutero como livro apócrifo: não igual às Escrituras, mas útil para leitura.", "status_catolica": "DEUTEROCANONICO", "motivo_catolica": "Canônico dogmático sob anátema (Concílio de Trento, 1546).", "status_ortodoxa": "ANAGINOSKOMENA", "motivo_ortodoxa": "Canônico (Anaginoskomena) pelo Sínodo de Jerusalém (1672)."}, {"id": 6, "nome": "Judite", "nome_original": "Ioudith (Ἰουδίθ)", "testamento": "INTERTESTAMENTARIO", "genero_literario": "Histórico/Narrativo", "idioma_original": "Hebraico original perdido (preservado na Septuaginta)", "autor_tradicional": "Anônimo judeu da Judeia", "ano_composicao_inicio": -150, "ano_composicao_fim": -100, "data_consenso_critico": "Escrito durante a resistência macabeia em grego ou hebraico", "wikipedia_url": "https://en.wikipedia.org/wiki/Book_of_Judith", "resumo": "A virtuosa viúva Judite infiltra-se no acampamento do general invasor Holofernes e o decapita, salvando a cidade de Betúlia e o Templo.", "status_judaica": "APOCRIFO", "motivo_judaica": "Excluído da Bíblia Hebraica.", "status_protestante": "APOCRIFO", "motivo_protestante": "Apócrifo instrutivo sem força dogmática.", "status_catolica": "DEUTEROCANONICO", "motivo_catolica": "Canônico dogmático (Trento).", "status_ortodoxa": "ANAGINOSKOMENA", "motivo_ortodoxa": "Canônico na tradição da Septuaginta grega."}, {"id": 7, "nome": "Sabedoria de Salomão", "nome_original": "Sophia Salomonis (Σοφία Σαλoμῶντος)", "testamento": "INTERTESTAMENTARIO", "genero_literario": "Sapiencial", "idioma_original": "Grego Koiné", "autor_tradicional": "Pseudo-Salomão (sábio judeu alexandrino)", "ano_composicao_inicio": -100, "ano_composicao_fim": -30, "data_consenso_critico": "Composto em Alexandria; obra-prima do judaísmo helenístico filosófico", "wikipedia_url": "https://en.wikipedia.org/wiki/Book_of_Wisdom", "resumo": "Tratado sapiencial que exalta a Sabedoria personificada emanada de Deus, defende a imortalidade da alma e ataca a idolatria pagã.", "status_judaica": "APOCRIFO", "motivo_judaica": "Composição em grego alexandrino; fora do Tanakh.", "status_protestante": "APOCRIFO", "motivo_protestante": "Apócrifo intertestamentário sem base para doutrina.", "status_catolica": "DEUTEROCANONICO", "motivo_catolica": "Canônico e divinamente inspirado.", "status_ortodoxa": "ANAGINOSKOMENA", "motivo_ortodoxa": "Canônico (Anaginoskomena)."}, {"id": 8, "nome": "Eclesiástico (Sirácida)", "nome_original": "Hokmat Ben Sira (Σοφία Ἰησοῦ Σειράχ)", "testamento": "INTERTESTAMENTARIO", "genero_literario": "Sapiencial", "idioma_original": "Hebraico (traduzido ao Grego em 132 a.C.)", "autor_tradicional": "Jesus Ben Sira (Yeshua ben Eleazar ben Sira)", "ano_composicao_inicio": -190, "ano_composicao_fim": -175, "data_consenso_critico": "Original hebraico escrito em Jerusalém; prólogo grego do neto em Alexandria em 132 a.C.", "wikipedia_url": "https://en.wikipedia.org/wiki/Sirach", "resumo": "Compêndio monumental de ética prática, temor de Deus, amizade, família e elogio aos antepassados ilustres de Israel.", "status_judaica": "APOCRIFO", "motivo_judaica": "Citado no Talmude como obra de sabedoria, mas excluído do cânon bíblico.", "status_protestante": "APOCRIFO", "motivo_protestante": "Apócrifo de elevado teor ético-moral.", "status_catolica": "DEUTEROCANONICO", "motivo_catolica": "Canônico dogmático confirmado em Hipona, Cartago e Trento.", "status_ortodoxa": "ANAGINOSKOMENA", "motivo_ortodoxa": "Canônico e amplamente usado na teologia patrística."}, {"id": 9, "nome": "Baruc", "nome_original": "Baruch (Βαρούχ)", "testamento": "INTERTESTAMENTARIO", "genero_literario": "Profético/Exortativo", "idioma_original": "Hebraico/Aramaico (preservado em Grego)", "autor_tradicional": "Atribuído a Baruc ben Nerias (secretário de Jeremias)", "ano_composicao_inicio": -200, "ano_composicao_fim": -60, "data_consenso_critico": "Composição pós-exílica com adições helenísticas (inclui a Carta de Jeremias)", "wikipedia_url": "https://en.wikipedia.org/wiki/Book_of_Baruch", "resumo": "Oração penitencial do cativeiro, reflexão sobre a Sabedoria divina manifestada na Torá e mensagem consoladora para Jerusalém.", "status_judaica": "APOCRIFO", "motivo_judaica": "Fora do cânon masorético.", "status_protestante": "APOCRIFO", "motivo_protestante": "Livro apócrifo ligado a Jeremias.", "status_catolica": "DEUTEROCANONICO", "motivo_catolica": "Canônico (inclui a Epístola de Jeremias no cap. 6).", "status_ortodoxa": "ANAGINOSKOMENA", "motivo_ortodoxa": "Canônico na Septuaginta."}, {"id": 10, "nome": "1 Macabeus", "nome_original": "Makkabaion A (Μακκαβαίων Αʹ)", "testamento": "INTERTESTAMENTARIO", "genero_literario": "Histórico", "idioma_original": "Hebraico original perdido (preservado em Grego)", "autor_tradicional": "Historiador oficial da corte dos príncipes asmoneus", "ano_composicao_inicio": -104, "ano_composicao_fim": -63, "data_consenso_critico": "Redigido na Judeia sob João Hircano I", "wikipedia_url": "https://en.wikipedia.org/wiki/1_Maccabees", "resumo": "Crônica militar e política da insurreição de Matatias e da liderança de Judas Macabeu contra a tirania selêucida até a fundação da dinastia asmoneia.", "status_judaica": "APOCRIFO", "motivo_judaica": "História venerada de Hanucá, porém sem inspiração profética no Tanakh.", "status_protestante": "APOCRIFO", "motivo_protestante": "Apócrifo com imenso valor para a história do período intertestamentário.", "status_catolica": "DEUTEROCANONICO", "motivo_catolica": "Canônico dogmático pleno.", "status_ortodoxa": "ANAGINOSKOMENA", "motivo_ortodoxa": "Canônico pleno."}, {"id": 11, "nome": "2 Macabeus", "nome_original": "Makkabaion B (Μακκαβαίων Βʹ)", "testamento": "INTERTESTAMENTARIO", "genero_literario": "Histórico/Teológico", "idioma_original": "Grego Koiné", "autor_tradicional": "Jasão de Cirene (compilado por autor anônimo)", "ano_composicao_inicio": -124, "ano_composicao_fim": -60, "data_consenso_critico": "Epítome em grego retórico de cinco volumes originais de Jasão de Cirene", "wikipedia_url": "https://en.wikipedia.org/wiki/2_Maccabees", "resumo": "Foca na teologia do martírio, na ressurreição corpórea dos justos, na oração em favor dos mortos (2 Mac 12) e na criação ex-nihilo.", "status_judaica": "APOCRIFO", "motivo_judaica": "Fora do cânon hebraico.", "status_protestante": "APOCRIFO", "motivo_protestante": "Apócrifo rejeitado dogmaticamente por Lutero devido à doutrina do sufrágio pelos mortos.", "status_catolica": "DEUTEROCANONICO", "motivo_catolica": "Canônico dogmático pleno (apoio bíblico para oração pelos defuntos).", "status_ortodoxa": "ANAGINOSKOMENA", "motivo_ortodoxa": "Canônico pleno."}, {"id": 12, "nome": "3 Macabeus", "nome_original": "Makkabaion C (Μακκαβαίων Γʹ)", "testamento": "INTERTESTAMENTARIO", "genero_literario": "Histórico/Narrativo", "idioma_original": "Grego Koiné", "autor_tradicional": "Judeu alexandrino", "ano_composicao_inicio": -100, "ano_composicao_fim": -50, "data_consenso_critico": "Narrativa helenística sobre o reinado de Ptolomeu IV Filopátor", "wikipedia_url": "https://en.wikipedia.org/wiki/3_Maccabees", "resumo": "Relata a tentativa de profanação do Templo pelo faraó ptolomaico e o milagroso livramento dos judeus de Alexandria condenados ao pisoteio por elefantes embriagados.", "status_judaica": "APOCRIFO", "motivo_judaica": "Fora do cânon judaico.", "status_protestante": "APOCRIFO", "motivo_protestante": "Pseudepígrafo histórico.", "status_catolica": "APOCRIFO", "motivo_catolica": "Não aceito nem listado nos concílios ocidentais.", "status_ortodoxa": "ANAGINOSKOMENA", "motivo_ortodoxa": "Canônico na Bíblia Ortodoxa Grega e Eslava."}, {"id": 13, "nome": "Oração de Manassés", "nome_original": "Proseuche Manasse (Προσευχὴ Μανασσῆ)", "testamento": "INTERTESTAMENTARIO", "genero_literario": "Poético/Penitencial", "idioma_original": "Grego Koiné", "autor_tradicional": "Atribuído ao Rei Manassés de Judá (2 Crônicas 33)", "ano_composicao_inicio": -150, "ano_composicao_fim": 50, "data_consenso_critico": "Hino penitencial helenístico preservado nas Odes da Septuaginta", "wikipedia_url": "https://en.wikipedia.org/wiki/Prayer_of_Manasseh", "resumo": "Súplica de profundo arrependimento proferida em cadeias na Babilônia, ressaltando que a misericórdia de Deus supera a multidão dos pecados.", "status_judaica": "APOCRIFO", "motivo_judaica": "Fora do Tanakh.", "status_protestante": "APOCRIFO", "motivo_protestante": "Apêndice apócrifo.", "status_catolica": "APOCRIFO", "motivo_catolica": "Não dogmático; preservado apenas em apêndice da Vulgata Clementina para não se perder.", "status_ortodoxa": "ANAGINOSKOMENA", "motivo_ortodoxa": "Canônico, incorporado nas Odes litúrgicas."}, {"id": 14, "nome": "Salmo 151", "nome_original": "Psalmos 151 (Ψαλμὸς 151)", "testamento": "INTERTESTAMENTARIO", "genero_literario": "Poético", "idioma_original": "Hebraico (encontrado em 11QPs de Qumran)", "autor_tradicional": "Atribuído a Davi", "ano_composicao_inicio": -200, "ano_composicao_fim": -100, "data_consenso_critico": "Salmo presente na Septuaginta grega e confirmado em hebraico nos Rolos do Mar Morto", "wikipedia_url": "https://en.wikipedia.org/wiki/Psalm_151", "resumo": "Davi relata sua juventude humilde pastoreando ovelhas, a unção por Samuel e a vitória decepando o gigante Golias com sua própria espada.", "status_judaica": "APOCRIFO", "motivo_judaica": "Não numerado no Saltério de 150 salmos masoréticos.", "status_protestante": "APOCRIFO", "motivo_protestante": "Não reconhecido.", "status_catolica": "APOCRIFO", "motivo_catolica": "Não consta no cânon dogmático da Vulgata.", "status_ortodoxa": "ANAGINOSKOMENA", "motivo_ortodoxa": "Canônico no Saltério da Septuaginta."}, {"id": 15, "nome": "Evangelho de Mateus", "nome_original": "Kata Matthaion (Κατὰ Μαθθαῖον)", "testamento": "NT", "genero_literario": "Evangelho", "idioma_original": "Grego Koiné", "autor_tradicional": "Apóstolo Mateus (Levi)", "ano_composicao_inicio": 70, "ano_composicao_fim": 85, "data_consenso_critico": "Composto após a queda do Segundo Templo para uma comunidade judaico-cristã", "wikipedia_url": "https://en.wikipedia.org/wiki/Gospel_of_Matthew", "resumo": "Retrata Jesus como o Messias davídico e novo Moisés no Sermão da Montanha, cumpridor rigoroso de toda a Lei e Profetas.", "status_judaica": "REJEITADO", "motivo_judaica": "Literatura do Novo Testamento não reconhecida pelo judaísmo.", "status_protestante": "CANONICO", "motivo_protestante": "Primeiro livro do Novo Testamento.", "status_catolica": "CANONICO", "motivo_catolica": "Livro apostólico plenamente canônico.", "status_ortodoxa": "CANONICO", "motivo_ortodoxa": "Livro apostólico plenamente canônico."}, {"id": 16, "nome": "Epístola aos Romanos", "nome_original": "Pros Romaious (Πρὸς Ῥωμαίους)", "testamento": "NT", "genero_literario": "Epístola", "idioma_original": "Grego Koiné", "autor_tradicional": "Apóstolo Paulo de Tarso", "ano_composicao_inicio": 56, "ano_composicao_fim": 58, "data_consenso_critico": "Escrita em Corinto durante sua terceira viagem missionária", "wikipedia_url": "https://en.wikipedia.org/wiki/Epistle_to_the_Romans", "resumo": "Magna Carta da teologia paulina: justificação universal pela fé em Cristo, graça, redenção, eleição de Israel e ética comunitária.", "status_judaica": "REJEITADO", "motivo_judaica": "Epístola apostólica cristã.", "status_protestante": "CANONICO", "motivo_protestante": "Centro da soteriologia da Reforma.", "status_catolica": "CANONICO", "motivo_catolica": "Epístola apostólica canônica.", "status_ortodoxa": "CANONICO", "motivo_ortodoxa": "Epístola apostólica canônica."}, {"id": 17, "nome": "Apocalipse de João", "nome_original": "Apokalypsis Ioannou (Ἀποκάλυψις Ἰωάννου)", "testamento": "NT", "genero_literario": "Apocalíptico", "idioma_original": "Grego Koiné", "autor_tradicional": "João em Patmos", "ano_composicao_inicio": 90, "ano_composicao_fim": 96, "data_consenso_critico": "Redigido durante as perseguições imperiais sob Domiciano", "wikipedia_url": "https://en.wikipedia.org/wiki/Book_of_Revelation", "resumo": "Visões proféticas do Cordeiro imolado, juízos cósmicos sobre a Besta e Babilônia, e o triunfo final com a descida da Nova Jerusalém.", "status_judaica": "REJEITADO", "motivo_judaica": "Apocalíptica cristã.", "status_protestante": "CANONICO", "motivo_protestante": "Último livro canônico do NT.", "status_catolica": "CANONICO", "motivo_catolica": "Dogmaticamente canônico (Cartago, Florença e Trento).", "status_ortodoxa": "CANONICO", "motivo_ortodoxa": "Reconhecido no cânon, porém tradicionalmente não lido na Divina Liturgia bizantina."}, {"id": 18, "nome": "Evangelho de Tomé", "nome_original": "Evangelho Copta de Tomé", "testamento": "APOCRIFO_NT", "genero_literario": "Ditos / Gnóstico", "idioma_original": "Copta (original grego fragmentário em Oxirrinco)", "autor_tradicional": "Pseudo-Tomé (comunidade gnóstica)", "ano_composicao_inicio": 130, "ano_composicao_fim": 180, "data_consenso_critico": "Coleção de 114 sentenças secretas; redescoberto na Biblioteca de Nag Hammadi em 1945", "wikipedia_url": "https://en.wikipedia.org/wiki/Gospel_of_Thomas", "resumo": "Rejeita a redenção histórica pela crucificação e prega o despertar gnóstico do divino interior para superar a morte.", "status_judaica": "REJEITADO", "motivo_judaica": "Texto gnóstico herético.", "status_protestante": "REJEITADO", "motivo_protestante": "Apócrifo gnóstico pseudepígrafo.", "status_catolica": "REJEITADO", "motivo_catolica": "Condenado como herético pelos primeiros Padres da Igreja.", "status_ortodoxa": "REJEITADO", "motivo_ortodoxa": "Condenado como espúrio e fora da sucessão apostólica."}, {"id": 19, "nome": "Didaquê (Ensino dos Doze Apóstolos)", "nome_original": "Didache (Διδαχή)", "testamento": "APOCRIFO_NT", "genero_literario": "Manual Litúrgico Eclesiástico", "idioma_original": "Grego Koiné", "autor_tradicional": "Líderes anônimos da Igreja Apostólica", "ano_composicao_inicio": 70, "ano_composicao_fim": 110, "data_consenso_critico": "Mais antigo catecismo cristão primitivo; manuscrito redescoberto em Istambul em 1873 por Bryennios", "wikipedia_url": "https://en.wikipedia.org/wiki/Didache", "resumo": "A Doutrina dos Dois Caminhos (Vida e Morte), fórmulas batismais por imersão/aspersão, jejum semanal, oração do Pai Nosso e a Eucaristia.", "status_judaica": "REJEITADO", "motivo_judaica": "Manual eclesiástico cristão.", "status_protestante": "APOCRIFO", "motivo_protestante": "Texto dos Padres Apostólicos de grande valor histórico, mas fora do cânon bíblico.", "status_catolica": "APOCRIFO", "motivo_catolica": "Documento patrístico venerável, mas não Escritura inspirada.", "status_ortodoxa": "APOCRIFO", "motivo_ortodoxa": "Patrístico primordial respeitado, porém não canônico."}, {"id": 20, "nome": "Pastor de Hermas", "nome_original": "Poimen tou Herma (Ποιμὴν τοῦ Ἑρμᾶ)", "testamento": "APOCRIFO_NT", "genero_literario": "Apocalíptico/Alegórico", "idioma_original": "Grego Koiné", "autor_tradicional": "Hermas de Roma", "ano_composicao_inicio": 130, "ano_composicao_fim": 155, "data_consenso_critico": "Texto altamente estimado na Igreja Antiga (presente no Códice Sinaítico junto ao NT)", "wikipedia_url": "https://en.wikipedia.org/wiki/The_Shepherd_of_Hermas", "resumo": "Série de visões, mandamentos morais e parábolas concedidas por um anjo em trajes pastoris sobre a possibilidade de penitência pós-batismal.", "status_judaica": "REJEITADO", "motivo_judaica": "Sem relação com a Bíblia.", "status_protestante": "APOCRIFO", "motivo_protestante": "Apócrifo/Patrístico não inspirado.", "status_catolica": "APOCRIFO", "motivo_catolica": "Excluído expressamente pelo Cânon Muratoriano e Atanásio da lista de livros divinamente inspirados.", "status_ortodoxa": "APOCRIFO", "motivo_ortodoxa": "Respeitado na patrística antiga, porém fora do cânon bíblico."}];
+
+    const groupsDataSet = new vis.DataSet(RAW_GROUPS);
+    const itemsDataSet = new vis.DataSet(RAW_ITEMS);
+
+    const container = document.getElementById('timeline-container');
+    
+    // ZOOM INICIAL CALIBRADO:
+    // Uma janela de ~530 anos (-1050 a.C. a -520 a.C.) onde os textos cabem perfeitamente
+    // dentro das barras (Davi, Salomão, reis de Israel e Judá, profetas e impérios contemporâneos).
+    const options = {
+      stack: true,
+      stackSubgroups: true,
+      horizontalScroll: true,
+      zoomKey: 'ctrlKey',
+      start: '-001050-01-01',
+      end: '-000520-01-01',
+      min: '-004200-01-01',
+      max: '2050-01-01',
+      orientation: 'top',
+      showCurrentTime: false,
+      margin: {
+        item: { horizontal: 6, vertical: 6 },
+        axis: 8
+      }
+    };
+
+    const timeline = new vis.Timeline(container, itemsDataSet, groupsDataSet, options);
+
+    const MARCADOR_ID = 'marcador-epoca';
+    timeline.addCustomTime('-001010-01-01', MARCADOR_ID);
+    timeline.setCustomTimeTitle('Arraste para sincronizar a data nos 4 trilhos', MARCADOR_ID);
+
+    // Linha azul clara contínua de alto a baixo marcando o Dilúvio (2348 a.C.)
+    const DILUVIO_ID = 'marcador-diluvio';
+    timeline.addCustomTime('-002348-01-01', DILUVIO_ID);
+    timeline.setCustomTimeTitle('🌊 O Grande Dilúvio e a Arca de Noé (2348 a.C.)', DILUVIO_ID);
+
+    function formatarAnoLegivel(ano) {
+      if (ano < 0) return `${Math.abs(ano)} a.C.`;
+      if (ano === 0) return `1 a.C.`;
+      return `${ano} d.C.`;
+    }
+
+    function atualizarConfrontoEpoca(dataCustomTime) {
+      const d = new Date(dataCustomTime);
+      const ano = d.getFullYear();
+      document.getElementById('display-ano-marcador').innerText = formatarAnoLegivel(ano);
+
+      let secularAtivo = 'Nenhum grande império dominante cadastrado';
+      let biblicoAtivo = 'Sem personagem central registrado neste ponto';
+      let mitologiaAtiva = 'Nenhum mito proeminente datado';
+      let canonAtivo = 'Sem concílios ou manuscritos formais';
+
+      const biblicosAtivos = [];
+
+      RAW_ITEMS.forEach(item => {
+        const meta = item.meta;
+        if (!meta) return;
+        const ini = meta.ano_inicio;
+        const fim = meta.ano_fim || meta.ano_inicio;
+
+        if (ano >= ini && ano <= fim) {
+          if (meta.eixo_codigo === 'SECULAR') secularAtivo = meta.titulo;
+          else if (meta.eixo_codigo === 'BIBLICO') biblicosAtivos.push(meta.titulo);
+          else if (meta.eixo_codigo === 'MITOLOGIA') mitologiaAtiva = meta.titulo;
+          else if (meta.eixo_codigo === 'CANON') canonAtivo = meta.titulo;
+        }
+      });
+
+      if (biblicosAtivos.length > 0) {
+        biblicoAtivo = biblicosAtivos.slice(0, 2).join(' • ');
+        if (biblicosAtivos.length > 2) biblicoAtivo += ` (+${biblicosAtivos.length - 2})`;
+      }
+
+      const elSec = document.getElementById('txt-secular');
+      const elBib = document.getElementById('txt-biblico');
+      const elMit = document.getElementById('txt-mitologia');
+      const elCan = document.getElementById('txt-canon');
+
+      elSec.innerText = secularAtivo; elSec.parentElement.title = secularAtivo;
+      elBib.innerText = biblicoAtivo; elBib.parentElement.title = biblicosAtivos.join(', ') || biblicoAtivo;
+      elMit.innerText = mitologiaAtiva; elMit.parentElement.title = mitologiaAtiva;
+      elCan.innerText = canonAtivo; elCan.parentElement.title = canonAtivo;
+    }
+
+    timeline.on('timechange', function (properties) {
+      if (properties.id === MARCADOR_ID) {
+        atualizarConfrontoEpoca(properties.time);
+      } else if (properties.id === DILUVIO_ID) {
+        timeline.setCustomTime('-002348-01-01', DILUVIO_ID);
+      }
+    });
+
+    atualizarConfrontoEpoca(new Date('-001010-01-01'));
+
+    // Execução do Salto pelo Dropdown
+    function executarSalto(valor) {
+      if (!valor) return;
+      const partes = valor.split(',');
+      const ano = parseInt(partes[0], 10);
+      const range = parseInt(partes[1], 10);
+
+      const startIso = formatarAnoIsoJS(ano - Math.floor(range / 2));
+      const endIso = formatarAnoIsoJS(ano + Math.ceil(range / 2));
+      timeline.setWindow(startIso, endIso, { animation: { duration: 600, easingFunction: 'easeInOutQuad' } });
+      
+      const marcadorIso = formatarAnoIsoJS(ano);
+      timeline.setCustomTime(marcadorIso, MARCADOR_ID);
+      atualizarConfrontoEpoca(marcadorIso);
+    }
+
+    function formatarAnoIsoJS(ano) {
+      if (ano < 0) return `-${String(Math.abs(ano)).padStart(6, '0')}-01-01`;
+      return `${String(ano).padStart(4, '0')}-01-01`;
+    }
+
+    // Alternar Rótulos Ultra Encolhidos (Modo Compacto de Ícones)
+    let ultraCompacto = false;
+    function toggleRótulos() {
+      ultraCompacto = !ultraCompacto;
+      document.body.classList.toggle('labels-ultra-compact', ultraCompacto);
+      const icone = document.getElementById('icone-toggle-labels');
+      const texto = document.getElementById('texto-toggle-labels');
+      if (icone) icone.innerText = ultraCompacto ? '▶' : '◀';
+      if (texto) texto.innerText = ultraCompacto ? 'Expandir Rótulos' : 'Encolher Rótulos';
+      setTimeout(() => {
+        timeline.redraw();
+      }, 50);
+    }
+
+    // Filtro pelo Dropdown de Categorias
+    function filtrarCategoria(cat) {
+      if (cat === 'TODOS') {
+        itemsDataSet.clear();
+        itemsDataSet.add(RAW_ITEMS);
+        return;
+      }
+
+      const filtrados = RAW_ITEMS.filter(it => {
+        const meta = it.meta || {};
+        if (cat === 'rei') return meta.categoria === 'rei_israel' || meta.categoria === 'rei_juda';
+        return meta.categoria === cat;
+      });
+
+      itemsDataSet.clear();
+      itemsDataSet.add(filtrados);
+    }
+
+    // Filtro pelo Dropdown de Tradição Canônica
+    function filtrarTradicao(tradicao) {
+      const itensAtualizados = RAW_ITEMS.map(it => {
+        const copy = Object.assign({}, it);
+        if (copy.meta && copy.meta.tipo_item === 'livro' && copy.meta.status_canonico) {
+          const stObj = copy.meta.status_canonico[tradicao];
+          const st = stObj ? stObj.status : null;
+
+          if (tradicao === 'TODAS') {
+            copy.className = `item-livro-bloco testamento-${copy.meta.testamento.toLowerCase()}`;
+          } else if (st === 'CANONICO') {
+            copy.className = 'item-livro-bloco status-canonico-destaque';
+          } else if (st === 'DEUTEROCANONICO' || st === 'ANAGINOSKOMENA') {
+            copy.className = 'item-livro-bloco status-deuterocanonico-destaque';
+          } else if (st === 'APOCRIFO') {
+            copy.className = 'item-livro-bloco status-apocrifo-destaque';
+          } else if (st === 'REJEITADO') {
+            copy.className = 'item-livro-bloco status-rejeitado-destaque';
+          }
+        }
+        return copy;
+      });
+
+      itemsDataSet.clear();
+      itemsDataSet.add(itensAtualizados);
+    }
+
+    function buscarTimeline(termo) {
+      termo = termo.toLowerCase().trim();
+      if (!termo) {
+        itemsDataSet.clear();
+        itemsDataSet.add(RAW_ITEMS);
+        return;
+      }
+
+      const filtrados = RAW_ITEMS.filter(it => {
+        const meta = it.meta || {};
+        const strBusca = `${meta.titulo} ${meta.subtitulo} ${meta.descricao} ${meta.cultura} ${meta.tags}`.toLowerCase();
+        return strBusca.includes(termo);
+      });
+
+      itemsDataSet.clear();
+      itemsDataSet.add(filtrados);
+    }
+
+    // Drawer de Detalhes
+    timeline.on('select', function (properties) {
+      if (properties.items.length === 0) return;
+      const itemId = properties.items[0];
+      const item = itemsDataSet.get(itemId);
+      if (!item || !item.meta) return;
+
+      const meta = item.meta;
+      const drawerTitulo = document.getElementById('drawer-titulo');
+      const drawerBody = document.getElementById('drawer-body');
+
+      drawerTitulo.innerHTML = `${meta.titulo}`;
+
+      let html = '';
+
+      // Badges
+      html += `<div style="display:flex; gap:6px; flex-wrap:wrap;">`;
+      html += `<span class="badge badge-${meta.eixo_codigo.toLowerCase()}">${meta.eixo_codigo}</span>`;
+      html += `<span class="badge" style="background:#131c31; color:#38bdf8; border:1px solid #38bdf8;">${meta.categoria.toUpperCase()}</span>`;
+      if (meta.cultura) html += `<span class="badge" style="background:#131c31; color:#94a3b8;">📍 ${meta.cultura}</span>`;
+      html += `</div>`;
+
+      // Datas
+      html += `
+        <div class="detail-card">
+          <div class="card-title">⏳ Cronologia & Baliza Histórica</div>
+          <p><b>${meta.data_legivel}</b></p>
+          ${meta.subtitulo ? `<p style="color:#94a3b8; font-size:11.5px;">${meta.subtitulo}</p>` : ''}
+          ${meta.incerteza ? `<p style="font-size:11px; color:var(--text-muted)">Incerteza historiográfica: &plusmn;${meta.incerteza} anos</p>` : ''}
+        </div>
+      `;
+
+      // Concílio
+      if (meta.concilio) {
+        const c = meta.concilio;
+        html += `
+          <div class="detail-card" style="border-left: 3px solid var(--color-canon);">
+            <div class="card-title">⛪ Metadados do Concílio</div>
+            <p><b>Cidade/Região:</b> ${c.cidade}, ${c.regiao}</p>
+            <p><b>Liderança:</b> ${c.papa_ou_lideranca || 'N/A'}</p>
+            <p><b>Participantes:</b> ${c.participantes_principais || 'N/A'}</p>
+            <p><b>Documento Oficial:</b> <code>${c.documento_oficial || 'Atas'}</code></p>
+            <p><b>Anátema Dogmático:</b> ${c.anatemas_declarados ? '<span style="color:#ef4444; font-weight:700">SIM (Sob anátema)</span>' : 'Não'}</p>
+            <div style="background:rgba(0,0,0,0.3); padding:8px; border-radius:6px; margin-top:4px;">
+              <b>Decisões Canônicas:</b>
+              <p style="font-size:11.5px; margin-top:3px;">${c.decisoes_canonicidade}</p>
+            </div>
+          </div>
+        `;
+      }
+
+      // Livro Bíblico
+      if (meta.tipo_item === 'livro' && meta.status_canonico) {
+        html += `
+          <div class="detail-card">
+            <div class="card-title">📜 Metadados Literários & Canônicos</div>
+            <p><b>Testamento:</b> ${meta.testamento} | <b>Gênero:</b> ${meta.genero}</p>
+            <p><b>Idioma Original:</b> ${meta.idioma}</p>
+            <p><b>Autor Tradicional:</b> ${meta.autor_tradicional}</p>
+            <p><b>Crítica Textual:</b> ${meta.consenso_critico}</p>
+            
+            <div style="margin-top:6px;">
+              <b style="font-size:11px; color:var(--color-accent)">Status nas 4 Tradições:</b>
+              <table class="canon-table">
+                <thead>
+                  <tr>
+                    <th>Tradição</th>
+                    <th>Status</th>
+                    <th>Contexto Histórico</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  ${Object.entries(meta.status_canonico).map(([trad, data]) => `
+                    <tr>
+                      <td><b>${trad}</b></td>
+                      <td><span class="status-pill status-${data.status}">${data.status}</span></td>
+                      <td style="font-size:10px; color:#94a3b8;">${data.motivo || '-'}</td>
+                    </tr>
+                  `).join('')}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        `;
+      }
+
+      // Síntese
+      html += `
+        <div class="detail-card">
+          <div class="card-title">📖 Resumo & Contexto Histórico</div>
+          <p>${meta.descricao}</p>
+          ${meta.fontes ? `<p style="font-size:11px; margin-top:6px; color:#94a3b8"><b>Fontes Primárias:</b> ${meta.fontes}</p>` : ''}
+          ${meta.localizacao ? `<p style="font-size:11px; color:#94a3b8"><b>Localização:</b> ${meta.localizacao}</p>` : ''}
+        </div>
+      `;
+
+      // Wikipedia Link
+      if (meta.wikipedia_url) {
+        html += `
+          <a href="${meta.wikipedia_url}" target="_blank" rel="noopener noreferrer" class="wiki-btn">
+            🌐 Ver Artigo Verificado na Wikipédia &rarr;
+          </a>
+        `;
+      }
+
+      drawerBody.innerHTML = html;
+    });
+  </script>
+</body>
+</html>

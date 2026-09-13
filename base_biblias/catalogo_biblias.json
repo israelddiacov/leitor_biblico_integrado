@@ -1,0 +1,978 @@
+[
+  {
+    "codigo": "AKJV",
+    "arquivo": "AKJV.db",
+    "titulo": "AKJV: American King James Version",
+    "livros": 66,
+    "versiculos": 31102,
+    "licenca": "Copyrighted; Free non-commercial distribution"
+  },
+  {
+    "codigo": "Alb",
+    "arquivo": "Alb.db",
+    "titulo": "Alb: Albanian Bible",
+    "livros": 66,
+    "versiculos": 31102,
+    "licenca": "Public Domain"
+  },
+  {
+    "codigo": "Anderson",
+    "arquivo": "Anderson.db",
+    "titulo": "Anderson: Henry Tompkins Anderson’s 1864 New Testament",
+    "livros": 66,
+    "versiculos": 31102,
+    "licenca": "Public Domain"
+  },
+  {
+    "codigo": "ArmEastern",
+    "arquivo": "ArmEastern.db",
+    "titulo": "ArmEastern: Eastern Armenian Bible",
+    "livros": 66,
+    "versiculos": 31102,
+    "licenca": "Public Domain"
+  },
+  {
+    "codigo": "BBE",
+    "arquivo": "BBE.db",
+    "titulo": "BBE: 1949/1964 Bible in Basic English",
+    "livros": 66,
+    "versiculos": 31102,
+    "licenca": "Public Domain"
+  },
+  {
+    "codigo": "BSB",
+    "arquivo": "BSB.db",
+    "titulo": "BSB: Berean Standard Bible",
+    "livros": 66,
+    "versiculos": 31102,
+    "licenca": "Creative Commons CC0"
+  },
+  {
+    "codigo": "BeaMRK",
+    "arquivo": "BeaMRK.db",
+    "titulo": "BeaMRK: The Gospel of Mark in Beaver (Danezaa)",
+    "livros": 132,
+    "versiculos": 62204,
+    "licenca": "Public Domain"
+  },
+  {
+    "codigo": "BurJudson",
+    "arquivo": "BurJudson.db",
+    "titulo": "BurJudson: 1835 Judson Burmese Bible",
+    "livros": 66,
+    "versiculos": 31102,
+    "licenca": "Public Domain"
+  },
+  {
+    "codigo": "Byz",
+    "arquivo": "Byz.db",
+    "titulo": "Byz: The New Testament in the Original Greek: Byzantine Textform 2013",
+    "livros": 66,
+    "versiculos": 31102,
+    "licenca": "Creative Commons: BY-NC-SA 4.0"
+  },
+  {
+    "codigo": "CPDV",
+    "arquivo": "CPDV.db",
+    "titulo": "CPDV: Catholic Public Domain Version",
+    "livros": 78,
+    "versiculos": 37255,
+    "licenca": "Public Domain"
+  },
+  {
+    "codigo": "CSlElizabeth",
+    "arquivo": "CSlElizabeth.db",
+    "titulo": "CSlElizabeth: 1757 Church Slavonic Elizabeth Bible",
+    "livros": 78,
+    "versiculos": 37099,
+    "licenca": "Public Domain"
+  },
+  {
+    "codigo": "CebPinadayag",
+    "arquivo": "CebPinadayag.db",
+    "titulo": "CebPinadayag: Cebuano Pinadayag",
+    "livros": 132,
+    "versiculos": 62204,
+    "licenca": "Public Domain"
+  },
+  {
+    "codigo": "Che1860",
+    "arquivo": "Che1860.db",
+    "titulo": "Che1860: Cherokee New Testament (1860) with Sequoyah transliterated forms",
+    "livros": 132,
+    "versiculos": 62204,
+    "licenca": "Public Domain"
+  },
+  {
+    "codigo": "ChiSB",
+    "arquivo": "ChiSB.db",
+    "titulo": "ChiSB: 思高本 (Sīgāo Běn), 聖經：思高聖經學會譯釋",
+    "livros": 73,
+    "versiculos": 35502,
+    "licenca": "Public Domain"
+  },
+  {
+    "codigo": "ChiUn",
+    "arquivo": "ChiUn.db",
+    "titulo": "ChiUn: 和合本 (繁體字)",
+    "livros": 66,
+    "versiculos": 31104,
+    "licenca": "Public Domain"
+  },
+  {
+    "codigo": "ChiUnL",
+    "arquivo": "ChiUnL.db",
+    "titulo": "ChiUnL: 聖經 (文理和合)",
+    "livros": 66,
+    "versiculos": 31104,
+    "licenca": "Public Domain"
+  },
+  {
+    "codigo": "CroSaric",
+    "arquivo": "CroSaric.db",
+    "titulo": "CroSaric: Hrvatska Biblija Ivana Šarića",
+    "livros": 73,
+    "versiculos": 35502,
+    "licenca": "Public Domain"
+  },
+  {
+    "codigo": "CzeBKR",
+    "arquivo": "CzeBKR.db",
+    "titulo": "CzeBKR: Czech Bible Kralicka",
+    "livros": 66,
+    "versiculos": 31102,
+    "licenca": "Public Domain"
+  },
+  {
+    "codigo": "CzeCSP",
+    "arquivo": "CzeCSP.db",
+    "titulo": "CzeCSP: Czech Český studijní překlad",
+    "livros": 66,
+    "versiculos": 31172,
+    "licenca": "Creative Commons: BY-NC-ND 4.0"
+  },
+  {
+    "codigo": "DRC",
+    "arquivo": "DRC.db",
+    "titulo": "DRC: Douay-Rheims Bible, Challoner Revision",
+    "livros": 78,
+    "versiculos": 37255,
+    "licenca": "Public Domain"
+  },
+  {
+    "codigo": "DaOT1871NT1907",
+    "arquivo": "DaOT1871NT1907.db",
+    "titulo": "DaOT1871NT1907: Danish OT1871 + NT1907 with original orthography",
+    "livros": 66,
+    "versiculos": 31104,
+    "licenca": "Public Domain"
+  },
+  {
+    "codigo": "Darby",
+    "arquivo": "Darby.db",
+    "titulo": "Darby: Darby Bible (1889)",
+    "livros": 66,
+    "versiculos": 31102,
+    "licenca": "Public Domain"
+  },
+  {
+    "codigo": "DutSVV",
+    "arquivo": "DutSVV.db",
+    "titulo": "DutSVV: Dutch Statenvertaling Bijbel",
+    "livros": 80,
+    "versiculos": 36819,
+    "licenca": "Public Domain"
+  },
+  {
+    "codigo": "DutSVVA",
+    "arquivo": "DutSVVA.db",
+    "titulo": "DutSVVA: De ganse Heilige Schrift bevattende al de kanonieke boeken van het Oude en Nieuwe Testament, met de apocriefe (deuterocanonieke) boeken",
+    "livros": 83,
+    "versiculos": 37791,
+    "licenca": "Public Domain"
+  },
+  {
+    "codigo": "Esperanto",
+    "arquivo": "Esperanto.db",
+    "titulo": "Esperanto: Esperanto Londona Biblio",
+    "livros": 66,
+    "versiculos": 31102,
+    "licenca": "Public Domain"
+  },
+  {
+    "codigo": "Est",
+    "arquivo": "Est.db",
+    "titulo": "Est: Estonian Bible",
+    "livros": 66,
+    "versiculos": 31102,
+    "licenca": "Null"
+  },
+  {
+    "codigo": "FinBiblia",
+    "arquivo": "FinBiblia.db",
+    "titulo": "FinBiblia: Finnish Biblia (1776)",
+    "livros": 83,
+    "versiculos": 37791,
+    "licenca": "Public Domain"
+  },
+  {
+    "codigo": "FinPR",
+    "arquivo": "FinPR.db",
+    "titulo": "FinPR: Finnish Pyhä Raamattu (1933/1938)",
+    "livros": 83,
+    "versiculos": 37791,
+    "licenca": "Public Domain"
+  },
+  {
+    "codigo": "FinSTLK2017",
+    "arquivo": "FinSTLK2017.db",
+    "titulo": "FinSTLK2017: Pyhä Raamattu (STLK 2017)",
+    "livros": 66,
+    "versiculos": 31172,
+    "licenca": "Creative Commons: BY-NC-ND 4.0"
+  },
+  {
+    "codigo": "FreBBB",
+    "arquivo": "FreBBB.db",
+    "titulo": "FreBBB: French Bible Bovet Bonnet (1900)",
+    "livros": 66,
+    "versiculos": 31102,
+    "licenca": "Copyrighted; Free non-commercial distribution"
+  },
+  {
+    "codigo": "FreBDM1744",
+    "arquivo": "FreBDM1744.db",
+    "titulo": "FreBDM1744: Bible David Martin (1744)",
+    "livros": 66,
+    "versiculos": 31170,
+    "licenca": "Public Domain"
+  },
+  {
+    "codigo": "FreCrampon",
+    "arquivo": "FreCrampon.db",
+    "titulo": "FreCrampon: La Bible Augustin Crampon 1923",
+    "livros": 73,
+    "versiculos": 35610,
+    "licenca": "Public Domain"
+  },
+  {
+    "codigo": "FreGeneve1669",
+    "arquivo": "FreGeneve1669.db",
+    "titulo": "FreGeneve1669: Le Nouveau Testament de la Bible de Genève de 1669",
+    "livros": 66,
+    "versiculos": 31104,
+    "licenca": "Public Domain"
+  },
+  {
+    "codigo": "FreJND",
+    "arquivo": "FreJND.db",
+    "titulo": "FreJND: Bible J.N. Darby in French with Strong's numbers",
+    "livros": 66,
+    "versiculos": 31172,
+    "licenca": "Public Domain"
+  },
+  {
+    "codigo": "FreOltramare1874",
+    "arquivo": "FreOltramare1874.db",
+    "titulo": "FreOltramare1874: Le Nouveau Testament Version Oltramare 1874",
+    "livros": 66,
+    "versiculos": 31102,
+    "licenca": "Public Domain"
+  },
+  {
+    "codigo": "FrePGR",
+    "arquivo": "FrePGR.db",
+    "titulo": "FrePGR: Bible Perret-Gentil et Rilliet",
+    "livros": 66,
+    "versiculos": 31102,
+    "licenca": "Public Domain"
+  },
+  {
+    "codigo": "FreStapfer1889",
+    "arquivo": "FreStapfer1889.db",
+    "titulo": "FreStapfer1889: Le Nouveau Testament traduction de Stapfer - 1889",
+    "livros": 66,
+    "versiculos": 31102,
+    "licenca": "Public Domain"
+  },
+  {
+    "codigo": "FreSynodale1921",
+    "arquivo": "FreSynodale1921.db",
+    "titulo": "FreSynodale1921: Le Nouveau Testament Version Synodale 1921 et le livre des Psaumes",
+    "livros": 66,
+    "versiculos": 31102,
+    "licenca": "Public Domain"
+  },
+  {
+    "codigo": "Geneva1599",
+    "arquivo": "Geneva1599.db",
+    "titulo": "Geneva1599: Geneva Bible (1599)",
+    "livros": 66,
+    "versiculos": 31104,
+    "licenca": "Public Domain"
+  },
+  {
+    "codigo": "GerAlbrecht",
+    "arquivo": "GerAlbrecht.db",
+    "titulo": "GerAlbrecht: German Albrecht Neues Testament und Psalmen",
+    "livros": 66,
+    "versiculos": 31102,
+    "licenca": "Public Domain"
+  },
+  {
+    "codigo": "GerBoLut",
+    "arquivo": "GerBoLut.db",
+    "titulo": "GerBoLut: Deutsch Bolsingerߴs Luther 1545 Bibel (moderne Rechtschreibung)",
+    "livros": 66,
+    "versiculos": 31172,
+    "licenca": "Public Domain"
+  },
+  {
+    "codigo": "GerElb1871",
+    "arquivo": "GerElb1871.db",
+    "titulo": "GerElb1871: German Elberfelder (1871) (sogenannt)",
+    "livros": 66,
+    "versiculos": 31102,
+    "licenca": "Public Domain"
+  },
+  {
+    "codigo": "GerElb1905",
+    "arquivo": "GerElb1905.db",
+    "titulo": "GerElb1905: German Darby Unrevidierte Elberfelder (1905)",
+    "livros": 66,
+    "versiculos": 31104,
+    "licenca": "Public Domain"
+  },
+  {
+    "codigo": "GerGruenewald",
+    "arquivo": "GerGruenewald.db",
+    "titulo": "GerGruenewald: 1924 Grünewaldbibel",
+    "livros": 66,
+    "versiculos": 31102,
+    "licenca": "Public Domain"
+  },
+  {
+    "codigo": "GerLeoNA28",
+    "arquivo": "GerLeoNA28.db",
+    "titulo": "GerLeoNA28: Leonberger Bibel, NT (NA28)",
+    "livros": 66,
+    "versiculos": 31104,
+    "licenca": "Creative Commons: BY-NC-ND 4.0"
+  },
+  {
+    "codigo": "GerMenge",
+    "arquivo": "GerMenge.db",
+    "titulo": "GerMenge: Menge-Bibel (1939)",
+    "livros": 76,
+    "versiculos": 35769,
+    "licenca": "Public Domain"
+  },
+  {
+    "codigo": "GerOffBiSt",
+    "arquivo": "GerOffBiSt.db",
+    "titulo": "GerOffBiSt: Offene Bibel - Studienfassung",
+    "livros": 66,
+    "versiculos": 31102,
+    "licenca": "Creative Commons: BY-SA 4.0"
+  },
+  {
+    "codigo": "GerSch",
+    "arquivo": "GerSch.db",
+    "titulo": "GerSch: Schlachter Bibel (1951)",
+    "livros": 66,
+    "versiculos": 31172,
+    "licenca": "Copyrighted; Free non-commercial distribution"
+  },
+  {
+    "codigo": "GerTafel",
+    "arquivo": "GerTafel.db",
+    "titulo": "GerTafel: German Tafelbibel (1911)",
+    "livros": 66,
+    "versiculos": 31102,
+    "licenca": "Public Domain"
+  },
+  {
+    "codigo": "GerTextbibel",
+    "arquivo": "GerTextbibel.db",
+    "titulo": "GerTextbibel: Deutsch Textbibel (1906)",
+    "livros": 66,
+    "versiculos": 31172,
+    "licenca": "Public Domain"
+  },
+  {
+    "codigo": "GerZurcher",
+    "arquivo": "GerZurcher.db",
+    "titulo": "GerZurcher: Deutsche Zürcher Bibel von 1931.",
+    "livros": 66,
+    "versiculos": 31104,
+    "licenca": "Public Domain"
+  },
+  {
+    "codigo": "GreVamvas",
+    "arquivo": "GreVamvas.db",
+    "titulo": "GreVamvas: Neophytos Vamvas's translation of the Holy Bible into modern Greek (1850)",
+    "livros": 66,
+    "versiculos": 31102,
+    "licenca": "Public Domain"
+  },
+  {
+    "codigo": "Haitian",
+    "arquivo": "Haitian.db",
+    "titulo": "Haitian: Haitian Creole Bible",
+    "livros": 66,
+    "versiculos": 31102,
+    "licenca": "Public Domain"
+  },
+  {
+    "codigo": "Haweis",
+    "arquivo": "Haweis.db",
+    "titulo": "Haweis: Thomas Haweis 1795 New Testament",
+    "livros": 66,
+    "versiculos": 31102,
+    "licenca": "Public Domain"
+  },
+  {
+    "codigo": "HebModern",
+    "arquivo": "HebModern.db",
+    "titulo": "HebModern: Modern Hebrew Bible",
+    "livros": 66,
+    "versiculos": 31102,
+    "licenca": "Null"
+  },
+  {
+    "codigo": "HunKar",
+    "arquivo": "HunKar.db",
+    "titulo": "HunKar: Revideált Károli Biblia 1908",
+    "livros": 66,
+    "versiculos": 31170,
+    "licenca": "Public Domain"
+  },
+  {
+    "codigo": "JPS",
+    "arquivo": "JPS.db",
+    "titulo": "JPS: Jewish Publication Society Old Testament",
+    "livros": 39,
+    "versiculos": 23213,
+    "licenca": "Public Domain"
+  },
+  {
+    "codigo": "JapBungo",
+    "arquivo": "JapBungo.db",
+    "titulo": "JapBungo: 明治元訳「舊約聖書」(1953年版) 大正改訳「新約聖書",
+    "livros": 66,
+    "versiculos": 31102,
+    "licenca": "Public Domain"
+  },
+  {
+    "codigo": "JapDenmo",
+    "arquivo": "JapDenmo.db",
+    "titulo": "JapDenmo: Japanese Denmo 電網聖書",
+    "livros": 66,
+    "versiculos": 31102,
+    "licenca": "Public Domain"
+  },
+  {
+    "codigo": "JapKougo",
+    "arquivo": "JapKougo.db",
+    "titulo": "JapKougo: Japanese Kougo-yaku 口語訳「聖書」(1954/1955年版)",
+    "livros": 66,
+    "versiculos": 31102,
+    "licenca": "Public Domain"
+  },
+  {
+    "codigo": "Jubilee2000",
+    "arquivo": "Jubilee2000.db",
+    "titulo": "Jubilee2000: English Jubilee 2000 Bible",
+    "livros": 66,
+    "versiculos": 31102,
+    "licenca": "Copyrighted; Free non-commercial distribution"
+  },
+  {
+    "codigo": "KJVA",
+    "arquivo": "KJVA.db",
+    "titulo": "KJVA: King James Version (1769) with Strongs Numbers and Morphology and CatchWords, including Apocrypha (without glosses)",
+    "livros": 80,
+    "versiculos": 36819,
+    "licenca": "GPL"
+  },
+  {
+    "codigo": "KJVPCE",
+    "arquivo": "KJVPCE.db",
+    "titulo": "KJVPCE: King James Version: Pure Cambridge Edition",
+    "livros": 66,
+    "versiculos": 31102,
+    "licenca": "Public Domain"
+  },
+  {
+    "codigo": "KLV",
+    "arquivo": "KLV.db",
+    "titulo": "KLV: Klingon Language Version of the World English Bible",
+    "livros": 66,
+    "versiculos": 31102,
+    "licenca": "Public Domain"
+  },
+  {
+    "codigo": "KorHKJV",
+    "arquivo": "KorHKJV.db",
+    "titulo": "KorHKJV: Hangul King James Version",
+    "livros": 66,
+    "versiculos": 31102,
+    "licenca": "Copyrighted; Free non-commercial distribution"
+  },
+  {
+    "codigo": "KorRV",
+    "arquivo": "KorRV.db",
+    "titulo": "KorRV: 개역성경",
+    "livros": 66,
+    "versiculos": 31104,
+    "licenca": "Public Domain"
+  },
+  {
+    "codigo": "LEB",
+    "arquivo": "LEB.db",
+    "titulo": "LEB: The Lexham English Bible",
+    "livros": 66,
+    "versiculos": 31102,
+    "licenca": "Unknown"
+  },
+  {
+    "codigo": "LITV",
+    "arquivo": "LITV.db",
+    "titulo": "LITV: Green's Literal Translation",
+    "livros": 66,
+    "versiculos": 31102,
+    "licenca": "Copyrighted; Free non-commercial distribution"
+  },
+  {
+    "codigo": "LvGluck8",
+    "arquivo": "LvGluck8.db",
+    "titulo": "LvGluck8: Latvian Glück 8th edition",
+    "livros": 66,
+    "versiculos": 31102,
+    "licenca": "Public Domain"
+  },
+  {
+    "codigo": "MKJV",
+    "arquivo": "MKJV.db",
+    "titulo": "MKJV: Green's Modern King James Version",
+    "livros": 66,
+    "versiculos": 31102,
+    "licenca": "Copyrighted; Non-commercial distribution"
+  },
+  {
+    "codigo": "Mal1910",
+    "arquivo": "Mal1910.db",
+    "titulo": "Mal1910: Sathyavedapusthakam (Malayalam Bible)",
+    "livros": 66,
+    "versiculos": 31104,
+    "licenca": "Public Domain"
+  },
+  {
+    "codigo": "ManxGaelic",
+    "arquivo": "ManxGaelic.db",
+    "titulo": "ManxGaelic: Manx Gaelic Scripture Portions",
+    "livros": 66,
+    "versiculos": 31102,
+    "licenca": "Public Domain"
+  },
+  {
+    "codigo": "Maori",
+    "arquivo": "Maori.db",
+    "titulo": "Maori: Maori Bible",
+    "livros": 66,
+    "versiculos": 31102,
+    "licenca": "Null"
+  },
+  {
+    "codigo": "MapM",
+    "arquivo": "MapM.db",
+    "titulo": "MapM: מקרא על פי המסורה (Miqra `al pi ha-Mesorah)",
+    "livros": 39,
+    "versiculos": 23213,
+    "licenca": "Creative Commons: BY-SA 4.0"
+  },
+  {
+    "codigo": "Mg1865",
+    "arquivo": "Mg1865.db",
+    "titulo": "Mg1865: Baiboly Malagasy (1865)",
+    "livros": 66,
+    "versiculos": 31172,
+    "licenca": "Public Domain"
+  },
+  {
+    "codigo": "NHEB",
+    "arquivo": "NHEB.db",
+    "titulo": "NHEB: New Heart English Bible",
+    "livros": 66,
+    "versiculos": 31104,
+    "licenca": "Unknown"
+  },
+  {
+    "codigo": "NHEBJE",
+    "arquivo": "NHEBJE.db",
+    "titulo": "NHEBJE: New Heart English Bible: Jehovah Edition",
+    "livros": 66,
+    "versiculos": 31104,
+    "licenca": "Public Domain"
+  },
+  {
+    "codigo": "NHEBME",
+    "arquivo": "NHEBME.db",
+    "titulo": "NHEBME: New Heart English Bible: Messianic Edition",
+    "livros": 66,
+    "versiculos": 31104,
+    "licenca": "Public Domain"
+  },
+  {
+    "codigo": "NlCanisius1939",
+    "arquivo": "NlCanisius1939.db",
+    "titulo": "NlCanisius1939: Petrus Canisius Translation",
+    "livros": 78,
+    "versiculos": 37255,
+    "licenca": "Public Domain"
+  },
+  {
+    "codigo": "NorSMB",
+    "arquivo": "NorSMB.db",
+    "titulo": "NorSMB: Studentmållagsbibelen frå 1921",
+    "livros": 66,
+    "versiculos": 31102,
+    "licenca": "Public Domain"
+  },
+  {
+    "codigo": "Norsk",
+    "arquivo": "Norsk.db",
+    "titulo": "Norsk: Bibelen på Norsk (1930)",
+    "livros": 66,
+    "versiculos": 31102,
+    "licenca": "Public Domain"
+  },
+  {
+    "codigo": "Noyes",
+    "arquivo": "Noyes.db",
+    "titulo": "Noyes: 1869 Noyes Translation",
+    "livros": 66,
+    "versiculos": 31102,
+    "licenca": "Public Domain"
+  },
+  {
+    "codigo": "OEB",
+    "arquivo": "OEB.db",
+    "titulo": "OEB: Open English Bible (US Spelling)",
+    "livros": 66,
+    "versiculos": 31102,
+    "licenca": "Creative Commons: CC0"
+  },
+  {
+    "codigo": "OEBcth",
+    "arquivo": "OEBcth.db",
+    "titulo": "OEBcth: Open English Bible (Commonwealth Spelling)",
+    "livros": 66,
+    "versiculos": 31102,
+    "licenca": "Creative Commons: CC0"
+  },
+  {
+    "codigo": "Peshitta",
+    "arquivo": "Peshitta.db",
+    "titulo": "Peshitta: Syriac Peshitta",
+    "livros": 66,
+    "versiculos": 31102,
+    "licenca": "Public Domain"
+  },
+  {
+    "codigo": "PohnOld",
+    "arquivo": "PohnOld.db",
+    "titulo": "PohnOld: Old Public Domain Pohnpeian Bible",
+    "livros": 66,
+    "versiculos": 31104,
+    "licenca": "Public Domain"
+  },
+  {
+    "codigo": "PolGdanska",
+    "arquivo": "PolGdanska.db",
+    "titulo": "PolGdanska: Polish Biblia Gdanska (1881)",
+    "livros": 66,
+    "versiculos": 31102,
+    "licenca": "Public Domain"
+  },
+  {
+    "codigo": "PolUGdanska",
+    "arquivo": "PolUGdanska.db",
+    "titulo": "PolUGdanska: Updated Gdańsk Bible",
+    "livros": 66,
+    "versiculos": 31102,
+    "licenca": "Copyrighted; Free non-commercial distribution"
+  },
+  {
+    "codigo": "PorBLivre",
+    "arquivo": "PorBLivre.db",
+    "titulo": "PorBLivre: Bíblia Livre",
+    "livros": 66,
+    "versiculos": 31104,
+    "licenca": "Creative Commons Attribution 3.0 Brazil"
+  },
+  {
+    "codigo": "PorNVA",
+    "arquivo": "PorNVA.db",
+    "titulo": "PorNVA: Bíblia Nova Versão de Acesso Livre",
+    "livros": 66,
+    "versiculos": 31104,
+    "licenca": "Creative Commons: BY-SA 4.0"
+  },
+  {
+    "codigo": "RLT",
+    "arquivo": "RLT.db",
+    "titulo": "RLT: Revised Literal Translation (2018) of the King James Version with Strongs Numbers and Morphology",
+    "livros": 66,
+    "versiculos": 31102,
+    "licenca": "GPL"
+  },
+  {
+    "codigo": "RNKJV",
+    "arquivo": "RNKJV.db",
+    "titulo": "RNKJV: Restored Name King James Version",
+    "livros": 66,
+    "versiculos": 31102,
+    "licenca": "Public Domain"
+  },
+  {
+    "codigo": "RWebster",
+    "arquivo": "RWebster.db",
+    "titulo": "RWebster: Revised Webster Version (1833)",
+    "livros": 66,
+    "versiculos": 31102,
+    "licenca": "Public Domain"
+  },
+  {
+    "codigo": "Rotherham",
+    "arquivo": "Rotherham.db",
+    "titulo": "Rotherham: The Emphasised Bible by J. B. Rotherham",
+    "livros": 66,
+    "versiculos": 31102,
+    "licenca": "Public Domain"
+  },
+  {
+    "codigo": "RusMakarij",
+    "arquivo": "RusMakarij.db",
+    "titulo": "RusMakarij: The Pentateuch of Moses in Russian",
+    "livros": 66,
+    "versiculos": 31102,
+    "licenca": "Public Domain"
+  },
+  {
+    "codigo": "SP",
+    "arquivo": "SP.db",
+    "titulo": "SP: Samaritan Pentateuch",
+    "livros": 39,
+    "versiculos": 23213,
+    "licenca": "Copyrighted; Free non-commercial distribution"
+  },
+  {
+    "codigo": "SloChraska",
+    "arquivo": "SloChraska.db",
+    "titulo": "ACV: A Conservative Version",
+    "livros": 66,
+    "versiculos": 31102,
+    "licenca": "Public Domain"
+  },
+  {
+    "codigo": "SloKJV",
+    "arquivo": "SloKJV.db",
+    "titulo": "SloKJV: Slovenian translation of Holy Bible King James Version (1769)",
+    "livros": 66,
+    "versiculos": 31102,
+    "licenca": "Creative Commons: BY-NC-ND 4.0"
+  },
+  {
+    "codigo": "SloOjacano",
+    "arquivo": "SloOjacano.db",
+    "titulo": "SloOjacano: Ojačano Sveto pismo (Ps + Gal)",
+    "livros": 66,
+    "versiculos": 31104,
+    "licenca": "Copyrighted; Free non-commercial distribution"
+  },
+  {
+    "codigo": "SloStritar",
+    "arquivo": "SloStritar.db",
+    "titulo": "SloStritar: Novi testament in Psalmi Davidovi Josipa Stritarja (1882)",
+    "livros": 73,
+    "versiculos": 35502,
+    "licenca": "Public Domain"
+  },
+  {
+    "codigo": "SpaRV1865",
+    "arquivo": "SpaRV1865.db",
+    "titulo": "SpaRV1865: La Santa Biblia Reina-Valera (1865) con arreglos ortográficos",
+    "livros": 66,
+    "versiculos": 31102,
+    "licenca": "Public Domain"
+  },
+  {
+    "codigo": "SrKDEkavski",
+    "arquivo": "SrKDEkavski.db",
+    "titulo": "SrKDEkavski: Serbian Bible Daničić-Karadžić Ekavski",
+    "livros": 66,
+    "versiculos": 31104,
+    "licenca": "Public Domain"
+  },
+  {
+    "codigo": "SrKDIjekav",
+    "arquivo": "SrKDIjekav.db",
+    "titulo": "SrKDIjekav: Serbian Bible Daničić-Karadžić Ijekavski",
+    "livros": 66,
+    "versiculos": 31170,
+    "licenca": "Public Domain"
+  },
+  {
+    "codigo": "StatResGNT",
+    "arquivo": "StatResGNT.db",
+    "titulo": "StatResGNT: Statistical Restoration Greek New Testament",
+    "livros": 84,
+    "versiculos": 39594,
+    "licenca": "Creative Commons: BY 4.0"
+  },
+  {
+    "codigo": "Swe1917",
+    "arquivo": "Swe1917.db",
+    "titulo": "Swe1917: Swedish Bible (1917)",
+    "livros": 83,
+    "versiculos": 37791,
+    "licenca": "Public Domain"
+  },
+  {
+    "codigo": "SweKarlXII",
+    "arquivo": "SweKarlXII.db",
+    "titulo": "SweKarlXII: Svenska Karl XII:s Bibel (1703)",
+    "livros": 66,
+    "versiculos": 31102,
+    "licenca": "Public Domain"
+  },
+  {
+    "codigo": "SweKarlXII1873",
+    "arquivo": "SweKarlXII1873.db",
+    "titulo": "SweKarlXII1873: Svenska Karl XII:s Bibel (1873)",
+    "livros": 66,
+    "versiculos": 31102,
+    "licenca": "Public Domain"
+  },
+  {
+    "codigo": "TagAngBiblia",
+    "arquivo": "TagAngBiblia.db",
+    "titulo": "TagAngBiblia: Philippine Bible Society (1905)",
+    "livros": 66,
+    "versiculos": 31102,
+    "licenca": "Public Domain"
+  },
+  {
+    "codigo": "Tausug",
+    "arquivo": "Tausug.db",
+    "titulo": "Tausug: Tausug Kitab Injil",
+    "livros": 66,
+    "versiculos": 31104,
+    "licenca": "Creative Commons: by-nd 3.0"
+  },
+  {
+    "codigo": "ThaiKJV",
+    "arquivo": "ThaiKJV.db",
+    "titulo": "ThaiKJV: Thai King James Version",
+    "livros": 66,
+    "versiculos": 31102,
+    "licenca": "Copyrighted; Free distribution"
+  },
+  {
+    "codigo": "TpiKJPB",
+    "arquivo": "TpiKJPB.db",
+    "titulo": "TpiKJPB: King Jems Pisin Baibel",
+    "livros": 66,
+    "versiculos": 31102,
+    "licenca": "Creative Commons: BY-NC-ND 4.0"
+  },
+  {
+    "codigo": "Twenty",
+    "arquivo": "Twenty.db",
+    "titulo": "Twenty: Twentieth Century New Testament",
+    "livros": 66,
+    "versiculos": 31102,
+    "licenca": "Public Domain"
+  },
+  {
+    "codigo": "Tyndale",
+    "arquivo": "Tyndale.db",
+    "titulo": "Tyndale: William Tyndale Bible (1525/1530)",
+    "livros": 66,
+    "versiculos": 31102,
+    "licenca": "Public Domain"
+  },
+  {
+    "codigo": "UKJV",
+    "arquivo": "UKJV.db",
+    "titulo": "UKJV: Updated King James Version",
+    "livros": 66,
+    "versiculos": 31102,
+    "licenca": "Public Domain"
+  },
+  {
+    "codigo": "UkrOgienko",
+    "arquivo": "UkrOgienko.db",
+    "titulo": "UkrOgienko: Українська Біблія. Переклад Івана Огієнка.",
+    "livros": 80,
+    "versiculos": 37465,
+    "licenca": "Public Domain"
+  },
+  {
+    "codigo": "Viet",
+    "arquivo": "Viet.db",
+    "titulo": "Viet: Kinh Thánh Tiếng Việt (1934)",
+    "livros": 66,
+    "versiculos": 31102,
+    "licenca": "Public Domain"
+  },
+  {
+    "codigo": "Webster",
+    "arquivo": "Webster.db",
+    "titulo": "Webster: Webster Bible",
+    "livros": 66,
+    "versiculos": 31102,
+    "licenca": "Public Domain"
+  },
+  {
+    "codigo": "Wulfila",
+    "arquivo": "Wulfila.db",
+    "titulo": "Wulfila: Bishop Wulfila Gothic Bible",
+    "livros": 66,
+    "versiculos": 31102,
+    "licenca": "Public Domain"
+  },
+  {
+    "codigo": "Wycliffe",
+    "arquivo": "Wycliffe.db",
+    "titulo": "Wycliffe: John Wycliffe Bible (c.1395)",
+    "livros": 78,
+    "versiculos": 37255,
+    "licenca": "Creative Commons: BY-SA 4.0"
+  },
+  {
+    "codigo": "YLT",
+    "arquivo": "YLT.db",
+    "titulo": "YLT: Young's Literal Translation (1898)",
+    "livros": 66,
+    "versiculos": 31102,
+    "licenca": "Public Domain"
+  },
+  {
+    "codigo": "sml_BL_2008",
+    "arquivo": "sml_BL_2008.db",
+    "titulo": "sml_BL_2008: Kitab Awal-Jaman maka Kitab Injil",
+    "livros": 66,
+    "versiculos": 31104,
+    "licenca": "Creative Commons: by-nd 3.0"
+  },
+  {
+    "codigo": "vlsJoNT",
+    "arquivo": "vlsJoNT.db",
+    "titulo": "vlsJoNT: Het Nieuwe Testament by Nicolaas De Jonge",
+    "livros": 66,
+    "versiculos": 31104,
+    "licenca": "Public Domain"
+  }
+]

@@ -1,0 +1,11 @@
+# Generated automatically by RequirementsGenerator
+# Project: biblia_referencia
+
+generators
+mysql
+pandas
+past
+pymysql
+pysword
+PyYAML
+streamlit
