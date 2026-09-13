@@ -138,3 +138,11 @@ Contribuições são muito bem-vindas! Se você deseja adicionar novas fontes hi
 3. Faça commit das suas alterações (`git commit -m 'Adiciona novo recurso'`).
 4. Envie para a branch (`git push origin feature/minha-melhoria`).
 5. Abra um Pull Request.
+
+---
+
+## ⚖️ Aviso Legal e Direitos Autorais (*Copyright & Disclaimer*)
+
+* **Finalidade do Software:** Este projeto foi desenvolvido com finalidade estritamente **acadêmica, educacional, histórica e de pesquisa teológica comparada**, de código aberto e sem qualquer fim comercial ou lucrativo.
+* **Textos em Domínio Público:** Mais de 95% das fontes textuais utilizadas (como o *Texto Massorético Hebraico*, *Textus Receptus Grego*, *Septuaginta LXX*, *Vulgata Latina*, *King James 1611*, *Reina Valera 1909*, *Louis Segond 1910*, entre outras) pertencem integralmente ao **Domínio Público** mundial ou a licenças abertas como **Creative Commons (CC BY-SA)**.
+* **Política de Remoção (*Notice and Takedown*):** Se você representa uma editora, sociedade bíblica ou detentor de direitos sobre alguma tradução específica e não deseja que ela conste neste agregador de estudo comparado, favor abrir uma [Issue no GitHub](https://github.com/israelddiacov/leitor_biblico_integrado/issues) informando a versão que procederemos com a **remoção imediata** do arquivo correspondente.
