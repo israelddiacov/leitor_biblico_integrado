@@ -1189,7 +1189,10 @@ elif aba_selecionada == "⚡ Confronto de Épocas & Impérios":
     dict_ep = dict(epocas_predefinidas)
     rev_dict_ep = {v: k for k, v in epocas_predefinidas}
     
-    ano_atual = st.session_state.get("num_ano_confronto", -587)
+    if "num_ano_confronto" not in st.session_state:
+        st.session_state["num_ano_confronto"] = -587
+        
+    ano_atual = st.session_state["num_ano_confronto"]
     idx_padrao = 10
     if ano_atual in rev_dict_ep:
         idx_padrao = [e[1] for e in epocas_predefinidas].index(ano_atual)
@@ -1212,7 +1215,6 @@ elif aba_selecionada == "⚡ Confronto de Épocas & Impérios":
     with col_custom_ano:
         ano_digitado = st.number_input(
             "Ou digite um ano exato (a.C. negativo):", 
-            value=ano_atual, 
             step=10,
             key="num_ano_confronto"
         )
