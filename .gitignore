@@ -63,3 +63,15 @@ Desktop.ini
 # O repositório armazena biblia.db.zip (38MB) que é descompactado automaticamente no runtime.
 biblia.db
 !biblia.db.zip
+
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.venv/
+venv/
+env/
+.env*
+.vscode/
+.idea/
+*.log
